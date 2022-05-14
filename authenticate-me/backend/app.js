@@ -12,6 +12,12 @@ const isProduction = environment === 'production';
 //initialize express application
 const app = express();
 
+//require routes
+const routes = require('./routes')
+
+//connect routers
+app.use(routes);
+
 //connect morgan middlewarre- logging info about req and res
 app.use(morgan('dev'));
 
@@ -44,3 +50,5 @@ app.use(
         }
     })
 );
+
+module.exports = app;
