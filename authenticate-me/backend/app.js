@@ -15,8 +15,7 @@ const app = express();
 //require routes
 const routes = require('./routes')
 
-//connect routers
-app.use(routes);
+
 
 //connect morgan middlewarre- logging info about req and res
 app.use(morgan('dev'));
@@ -50,5 +49,8 @@ app.use(
         }
     })
 );
+
+//connect routers
+app.use(routes);
 
 module.exports = app;
