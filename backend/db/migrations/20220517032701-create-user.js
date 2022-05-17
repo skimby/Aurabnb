@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
-        type: Sequelize.INTEGER
-      },
       firstName: {
         type: Sequelize.STRING
       },
@@ -25,12 +22,6 @@ module.exports = {
       },
       isHost: {
         type: Sequelize.BOOLEAN
-      },
-      createdAt: {
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
