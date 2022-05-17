@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![AirBnb Database Schema](https://github.com/skimby/AirBnB-project/blob/main/AirBnB%20Database%20Schema.png)
+![AirBnb Database Schema](https://github.com/skimby/AirBnB/blob/main/AirBnB%20Database%20Schema.png)
 
 ## API Documentation
 
