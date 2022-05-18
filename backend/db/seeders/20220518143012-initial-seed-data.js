@@ -1,6 +1,6 @@
 'use strict';
 const bcrypt = require('bcryptjs');
-const { Op } = require('sequelize');
+const { Op } = require('sequelize'); //same thing as const Op = Sequelize.Op; ?
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-
+    const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Users'), {
       email: { [Op.in]: ['amytan@gmail.com', 'ladygaga@gmail.com', 'joebiden@gmail.com'] }
     }

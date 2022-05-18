@@ -41,15 +41,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING.BINARY,
       allowNull: false
     },
     isHost: {
       type: DataTypes.BOOLEAN,
       allowNull: false
-    },
-    createdAt: DataTypes.DATETIME,
-    updatedAt: DataTypes.DATETIME
+    }
   }, {
     sequelize,
     modelName: 'User',
