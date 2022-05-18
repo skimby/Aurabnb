@@ -37,18 +37,18 @@ module.exports = {
       lat: {
         type: Sequelize.FLOAT,
         allowNull: false,
-        unique: true
+
       },
       lng: {
         type: Sequelize.FLOAT,
         allowNull: false,
-        unique: true
+
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      desciption: {
+      description: {
         type: Sequelize.TEXT,
         allowNull: false
       },
