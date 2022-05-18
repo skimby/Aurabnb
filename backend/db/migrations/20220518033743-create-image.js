@@ -18,11 +18,21 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
+        onDelete: 'CASCADE',
+        reference: {
+          model: 'Spot',
+          key: 'id'
+        }
       },
       reviewId: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
+        onDelete: 'CASCADE',
+        reference: {
+          model: 'Review',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
