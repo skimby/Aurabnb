@@ -1,49 +1,51 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING(20),
-        allowNull: false
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'User',
+          key: 'id'
+        }
       },
-      lastName: {
-        type: Sequelize.STRING(20),
-        allowNull: false
+      spotId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Spot',
+          key: 'id'
+        }
       },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
+      review: {
+        type: Sequelize.TEXT
       },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      isHost: {
-        type: Sequelize.BOOLEAN,
+      stars: {
+        type: Sequelize.INTEGER(5),
         allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATETIME,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
 
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATETIME,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
 
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Reviews');
   }
 };
