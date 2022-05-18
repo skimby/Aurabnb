@@ -5,26 +5,27 @@ module.exports = {
     return queryInterface.bulkInsert('Images', [
       {
         imageableType: 'spot',
-        url: ''
+        url: 'https://github.com/skimby/AirBnB/blob/main/red-house.jpeg',
+        spotId: 1,
+        reviewId: null
+      },
+      {
+        imageableType: 'spot',
+        url: 'https://github.com/skimby/AirBnB/blob/main/big-house.jpeg',
+        spotId: 2,
+        reviewId: null
+      },
+      {
+        imageableType: 'spot',
+        url: 'https://github.com/skimby/AirBnB/blob/main/old-house.jpeg',
+        spotId: 3,
+        reviewId: null
       }
     ])
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    return queryInterface.bulkDelete('Images', {})
   }
 };
