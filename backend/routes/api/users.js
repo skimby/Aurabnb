@@ -91,37 +91,62 @@ router.get('/me', requireAuth, (req, res) => {
 
 
 //checks the body of request's credentials and password
-const validateLogin = [
-    check('credential')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('Please provide a valid email.'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .withMessage('Please provide a password.'),
-    handleValidationErrors
-];
+// const validateLogin = [
+//     check('credential')
+//         .exists({ checkFalsy: true })
+//         .notEmpty()
+//         .withMessage('Please provide a valid email.'),
+//     check('password')
+//         .exists({ checkFalsy: true })
+//         .withMessage('Please provide a password.'),
+//     handleValidationErrors
+// ];
 
-//login attempt, if user with req credentials and password exists, then set the cookie token
-router.post('/login', validateLogin, async (req, res, next) => {
-    const { credential, password } = req.body;
 
-    const user = await User.login({ credential, password });
+// LOG IN USER
+// *** landing page is error screen.. how to remove?
+router.post(
+    '/login',
+    async (req, res, next) => {
+        const { credential, password } = req.body;
 
-    if (!user) {
-        const err = new Error('Login failed');
-        err.status = 401;
-        err.title = 'Login failed';
-        err.errors = ['The provided credentials were invalid.'];
-        return next(err);
+        const user = await User.login({ credential, password });
+
+        if (!user) {
+            const err = new Error('Login failed');
+            err.status = 401;
+            err.title = 'Login failed';
+            err.errors = ['The provided credentials were invalid.'];
+            return next(err);
+        }
+
+        await setTokenCookie(res, user);
+
+        return res.json({
+            user
+        });
     }
+);
+//login attempt, if user with req credentials and password exists, then set the cookie token
+// router.post('/login', validateLogin, async (req, res, next) => {
+//     const { credential, password } = req.body;
 
-    await setTokenCookie(res, user);
+//     const user = await User.login({ credential, password });
 
-    return res.json({
-        user
-    })
-}
-)
+//     if (!user) {
+//         const err = new Error('Login failed');
+//         err.status = 401;
+//         err.title = 'Login failed';
+//         err.errors = ['The provided credentials were invalid.'];
+//         return next(err);
+//     }
+
+//     await setTokenCookie(res, user);
+
+//     return res.json({
+//         user
+//     })
+// }
+// )
 
 module.exports = router;

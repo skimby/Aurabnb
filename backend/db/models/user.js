@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     validatePassword(password) {
       //compare input password hashed to the user instance hashed password
-      return bcrypt.compareSync(password, this.hashedPassword.toString());
+      return bcrypt.compareSync(password, this.password.toString());
     }
     //static method that is called on the instance of User. User1.getCurrentUserById(id) will return the scope of current user found by Id
     static getCurrentUserById(id) {
@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         where: {
           //[Op.or] = checking is username OR email is equale to input credential
           [Op.or]: {
-            username: credential,
             email: credential
           }
         }
