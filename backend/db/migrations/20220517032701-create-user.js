@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false
       },
       password: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING.BINARY,
         allowNull: false
       },
       isHost: {
@@ -31,13 +31,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
 
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
 
       }

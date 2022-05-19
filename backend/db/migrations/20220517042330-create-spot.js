@@ -1,37 +1,59 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Bookings', {
+    await queryInterface.createTable('Spots', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         onDelete: 'CASCADE',
-        references: {
+        reference: {
           model: 'Users',
           key: 'id'
         }
       },
-      spotId: {
-        type: Sequelize.INTEGER,
+      address: {
+        type: Sequelize.STRING,
         allowNull: false,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Spots',
-          key: 'id'
-        }
+        unique: true
       },
-      startDate: {
-        type: Sequelize.DATE,
+      city: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      endDate: {
-        type: Sequelize.DATE,
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      country: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lat: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+
+      },
+      lng: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      price: {
+        type: Sequelize.DECIMAL,
         allowNull: false
       },
       createdAt: {
@@ -43,11 +65,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bookings');
+    await queryInterface.dropTable('Spots');
   }
 };
