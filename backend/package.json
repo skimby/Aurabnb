@@ -1,19 +1,9 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "sequelize": "sequelize",
-    "sequelize-cli": "sequelize-cli",
-    "start": "per-env",
-    "start:development": "nodemon ./bin/www",
-    "start:production": "node ./bin/www"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "",
+  "main": "app.js",
   "dependencies": {
-    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -26,14 +16,19 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "per-env": "^1.0.2",
-    "pg": "^8.7.3",
-    "sequelize": "^6.19.1",
+    "sequelize": "^6.19.2",
     "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.0.8"
   },
-  "devDependencies": {
-    "dotenv-cli": "^5.1.0",
-    "nodemon": "^2.0.16"
+  "devDependencies": {},
+  "scripts": {
+    "sequelize": "sequelize",
+    "sequelize-cli": "sequelize-cli",
+    "start": "per-env",
+    "start:development": "nodemon ./bin/www",
+    "start:production": "node ./bin/www"
   },
-  "description": ""
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
