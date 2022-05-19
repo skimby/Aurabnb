@@ -74,17 +74,54 @@ router.get('/restore-user', restoreUser, (req, res) => {
 // GET /api/require-auth
 // const { requireAuth } = require('../../utils/auth.js');
 router.get('/me', requireAuth, (req, res) => {
-    const user = req.user
+    //where is user coming from???
+    const { id, firstName, lastName, email } = req.user;
 
     res.status(200);
     return res.json({
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email
+        id,
+        firstName,
+        lastName,
+        email
     });
 }
 );
 
+// LOGS IN USER
+
+
+//checks the body of request's credentials and password
+const validateLogin = [
+    check('credential')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Please provide a valid email.'),
+    check('password')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a password.'),
+    handleValidationErrors
+];
+
+//login attempt, if user with req credentials and password exists, then set the cookie token
+router.post('/login', validateLogin, async (req, res, next) => {
+    const { credential, password } = req.body;
+
+    const user = await User.login({ credential, password });
+
+    if (!user) {
+        const err = new Error('Login failed');
+        err.status = 401;
+        err.title = 'Login failed';
+        err.errors = ['The provided credentials were invalid.'];
+        return next(err);
+    }
+
+    await setTokenCookie(res, user);
+
+    return res.json({
+        user
+    })
+}
+)
 
 module.exports = router;
