@@ -10,14 +10,16 @@ router.post('/test', function (req, res) {
     res.json({ requestBody: req.body });
 });
 
-//running into error
+
 // GET /api/set-token-cookie
 const { setTokenCookie } = require('../../utils/auth.js');
 const { User } = require('../../db/models');
+
+//delete this later
 router.get('/set-token-cookie', async (_req, res) => {
     const user = await User.findOne({
         where: {
-            username: 'user1'
+            email: 'ladygaga@gmail.com'
         }
     });
     setTokenCookie(res, user);
