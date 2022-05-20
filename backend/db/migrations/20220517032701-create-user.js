@@ -22,12 +22,13 @@ module.exports = {
         allowNull: false
       },
       password: {
-        type: Sequelize.STRING.BINARY,
-        allowNull: false
+        type: Sequelize.STRING.BINARY
+        // allowNull: false
       },
       isHost: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        defaultValue: false
+        // allowNull: false
       },
       createdAt: {
         allowNull: false,

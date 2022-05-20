@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         firstName,
         lastName,
         email,
-        hashedPassword
+        password
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
@@ -83,12 +83,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false
+      type: DataTypes.STRING.BINARY
+      // allowNull: false
     },
     isHost: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      defaultValue: false
     }
   }, {
     sequelize,

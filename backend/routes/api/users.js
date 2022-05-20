@@ -7,43 +7,9 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-//express validator
-const validateSignup = [
-    check('email')
-        .exists({ checkFalsy: true })
-        .isEmail()
-        .withMessage('Please provide a valid email.'),
-    check('username')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-        .not()
-        .isEmail()
-        .withMessage('Username cannot be an email.'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
-    handleValidationErrors
-];
+
 
 const router = express.Router();
-
-// Sign up
-router.post(
-    '/', validateSignup,
-    async (req, res) => {
-        const { email, password, username } = req.body;
-        const user = await User.signup({ email, username, password });
-
-        await setTokenCookie(res, user);
-
-        return res.json({
-            user
-        });
-    }
-);
 
 // GET CURRENT USER
 // GET /api/set-token-cookie
@@ -88,8 +54,6 @@ router.get('/me', requireAuth, (req, res) => {
 );
 
 // LOGS IN USER
-
-
 //checks the body of request's credentials and password
 const validateLogin = [
     check('credential')
@@ -101,7 +65,6 @@ const validateLogin = [
         .withMessage("Password is required"),
     handleValidationErrors
 ];
-
 
 // LOG IN USER
 router.post('/login', validateLogin,
@@ -134,26 +97,59 @@ router.post('/login', validateLogin,
         });
     }
 );
-//login attempt, if user with req credentials and password exists, then set the cookie token
-// router.post('/login', validateLogin, async (req, res, next) => {
-//     const { credential, password } = req.body;
 
-//     const user = await User.login({ credential, password });
+// SIGN UP
+//express validator //this only tests the inputs
+const validateSignup = [
+    check('firstName')
+        .exists({ checkFalsy: true })
+        .withMessage("First Name is required"),
+    check('lastName')
+        .exists({ checkFalsy: true })
+        .withMessage("Last Name is required"),
+    check('email')
+        .exists({ checkFalsy: true })
+        .isEmail()
+        .withMessage('Please provide a valid email.'),
+    check('password')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 6 })
+        .withMessage('Password must be 6 characters or more.'),
+    handleValidationErrors
+];
 
-//     if (!user) {
-//         const err = new Error('Login failed');
-//         err.status = 401;
-//         err.title = 'Login failed';
-//         err.errors = ['The provided credentials were invalid.'];
-//         return next(err);
-//     }
+// SIGN UP
+router.post('/signUp', validateSignup, async (req, res) => {
+    const { firstName, lastName, email, password } = req.body;
 
-//     await setTokenCookie(res, user);
+    const ifDuplicateEmail = await User.findOne(
+        {
+            where: { email: email }
+        }
+    );
+    if (ifDuplicateEmail) {
+        const err = new Error('User already exists');
+        err.message = 'User already exists';
+        err.status = 403;
+    }
+    // find user by email,
+    //and if you find a user, if exists then create new error
+    //otherwise ...
+    const user = await User.signup({ firstName, lastName, email, password });
 
-//     return res.json({
-//         user
-//     })
-// }
-// )
+    await setTokenCookie(res, user);
+
+    res.status(200);
+    return res.json({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        token: req.cookies.token
+    });
+}
+);
+
+
+
 
 module.exports = router;
