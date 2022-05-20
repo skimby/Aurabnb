@@ -74,7 +74,7 @@ router.get('/restore-user', restoreUser, (req, res) => {
 // GET /api/require-auth
 // const { requireAuth } = require('../../utils/auth.js');
 router.get('/me', requireAuth, (req, res) => {
-    //where is user coming from???
+    // *** where is user coming from??? utils>auth.js
     const { id, firstName, lastName, email } = req.user;
 
     res.status(200);
@@ -91,39 +91,46 @@ router.get('/me', requireAuth, (req, res) => {
 
 
 //checks the body of request's credentials and password
-// const validateLogin = [
-//     check('credential')
-//         .exists({ checkFalsy: true })
-//         .notEmpty()
-//         .withMessage('Please provide a valid email.'),
-//     check('password')
-//         .exists({ checkFalsy: true })
-//         .withMessage('Please provide a password.'),
-//     handleValidationErrors
-// ];
+const validateLogin = [
+    check('credential')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage("Email is required"),
+    check('password')
+        .exists({ checkFalsy: true })
+        .withMessage("Password is required"),
+    handleValidationErrors
+];
 
 
 // LOG IN USER
-// *** landing page is error screen.. how to remove?
-router.post(
-    '/login',
+router.post('/login', validateLogin,
     async (req, res, next) => {
         const { credential, password } = req.body;
 
         const user = await User.login({ credential, password });
 
         if (!user) {
-            const err = new Error('Login failed');
+            const err = new Error("Invalid credentials");
+            err.message = "Invalid credentials";
             err.status = 401;
-            err.title = 'Login failed';
-            err.errors = ['The provided credentials were invalid.'];
+            // err.errors = ['The provided credentials were invalid.'];
+
             return next(err);
+
         }
 
+        //setting token cookie with the data you get logging in
         await setTokenCookie(res, user);
 
         return res.json({
-            user
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            //req.cookie.token looking for the token, user data,
+            //authorizes user
+            token: req.cookies.token
         });
     }
 );
