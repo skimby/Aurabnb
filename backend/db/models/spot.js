@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    desciption: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false
     },
@@ -72,6 +72,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    defaultScope: {
+      attributes: {
+        include: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "description", "price", "createdAt", "updatedAt"]
+      }
+    }
   });
   return Spot;
 };
