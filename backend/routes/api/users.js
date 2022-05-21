@@ -154,14 +154,10 @@ router.post('/signUp', validateSignup, async (req, res, next) => {
 
 // ERROR MIDDLEWARE
 router.use((err, _req, res, _next) => {
-    // res.status(err.status || 500);
-    // console.error(err);
     res.json({
-        // title: err.title || 'Server Error',
         message: err.message,
         statusCode: err.status,
         errors: err.errors,
-        // stack: isProduction ? null : err.stack
     });
 });
 
