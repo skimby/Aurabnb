@@ -22,14 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     // checks User.scope, if username or email is same as input.
-    static async login({ credential, password }) {
+    static async login({ email, password }) {
       //importing Op object which are the operators
       const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
           //[Op.or] = checking is username OR email is equale to input credential
           [Op.or]: {
-            email: credential
+            email: email
           }
         }
       });
