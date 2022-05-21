@@ -119,7 +119,7 @@ const validateSignup = [
 ];
 
 // SIGN UP
-router.post('/signUp', validateSignup, async (req, res) => {
+router.post('/signUp', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
     const ifDuplicateEmail = await User.findOne(
@@ -127,28 +127,43 @@ router.post('/signUp', validateSignup, async (req, res) => {
             where: { email: email }
         }
     );
+    // find user by email,
+    //and if you find a user, if exists then create new error
+    //otherwise ...
     if (ifDuplicateEmail) {
         const err = new Error('User already exists');
         err.message = 'User already exists';
         err.status = 403;
+        err.errors = { email: "User with that email already exists" };
+        next(err);
+    } else {
+        const user = await User.signup({ firstName, lastName, email, password });
+
+        await setTokenCookie(res, user);
+
+        res.status(200);
+        return res.json({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            token: req.cookies.token
+        });
     }
-    // find user by email,
-    //and if you find a user, if exists then create new error
-    //otherwise ...
-    const user = await User.signup({ firstName, lastName, email, password });
-
-    await setTokenCookie(res, user);
-
-    res.status(200);
-    return res.json({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        token: req.cookies.token
-    });
 }
 );
 
+// ERROR MIDDLEWARE
+router.use((err, _req, res, _next) => {
+    // res.status(err.status || 500);
+    // console.error(err);
+    res.json({
+        // title: err.title || 'Server Error',
+        message: err.message,
+        statusCode: err.status,
+        errors: err.errors,
+        // stack: isProduction ? null : err.stack
+    });
+});
 
 
 
