@@ -2,12 +2,14 @@
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api');
+// const usersRouter = require('./users.js');
 
 // router.get('/hello/world', function (req, res) {
 ////attaching a cookie to the response
 //     res.cookie('XSRF-TOKEN', req.csrfToken());
 //     res.send('Hello World!');
 // });
+
 
 router.get("/api/csrf/restore", (req, res) => {
     const csrfToken = req.csrfToken();
@@ -17,7 +19,8 @@ router.get("/api/csrf/restore", (req, res) => {
     });
 });
 
-router.use('/api', apiRouter);
+//connecting all API folder routers
+router.use('/', apiRouter);
 
 
 
