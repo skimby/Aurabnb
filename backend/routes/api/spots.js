@@ -115,6 +115,31 @@ router.put('/:spotId', restoreUser, validateSpot, async (req, res) => {
             "statusCode": 404
         })
     }
+});
+
+// DELETE SPOT BY ID
+router.delete('/:spotId', restoreUser, async (req, res) => {
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+
+    if (spot) {
+        if (spot.ownerId === req.user.id) {
+            await spot.destroy();
+
+            res.status(200);
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+            });
+        }
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+
 })
 
 router.get('/', async (req, res) => {
