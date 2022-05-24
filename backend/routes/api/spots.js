@@ -62,6 +62,33 @@ router.get('/', async (req, res) => {
     return res.json({ Spots });
 })
 
+router.post('/', restoreUser, async (req, res) => {
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    const spotCount = await Spot.count();
+    console.log(spotCount)
+    const spot = await Spot.create({
+        id: (spotCount + 1),
+        ownerId: req.user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    });
+    const newSpot = await Spot.findOne({
+        where: {
+            id: spotCount + 1
+        }
+    })
+    res.status(201);
+    res.json(newSpot);
+})
+
 
 
 module.exports = router;
