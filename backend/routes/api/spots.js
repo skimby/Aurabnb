@@ -65,8 +65,9 @@ router.get('/me', restoreUser, async (req, res) => {
 
     res.status(200);
     res.json({ Spots })
-})
+});
 
+// GET SPOT BY ID
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params;
 
@@ -83,6 +84,15 @@ router.get('/:spotId', async (req, res) => {
         })
     }
 });
+// EDIT A SPOT BY ID
+router.put('/:spotId', restoreUser, async (req, res) => {
+    const { id } = req.params;
+    const spot = await Spot.findByPk(id);
+
+    if (req.user.d === id) {
+
+    }
+})
 
 router.get('/', async (req, res) => {
     const Spots = await Spot.findAll({
