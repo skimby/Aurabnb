@@ -84,13 +84,36 @@ router.get('/:spotId', async (req, res) => {
         })
     }
 });
+
 // EDIT A SPOT BY ID
-router.put('/:spotId', restoreUser, async (req, res) => {
-    const { id } = req.params;
-    const spot = await Spot.findByPk(id);
+router.put('/:spotId', restoreUser, validateSpot, async (req, res) => {
+    const { spotId } = req.params;
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
-    if (req.user.d === id) {
+    const spot = await Spot.findByPk(spotId);
 
+    if (spot) {
+        if (req.user.id === spot.ownerId) {
+            spot.address = address;
+            spot.city = city;
+            spot.state = state;
+            spot.country = country;
+            spot.lat = lat;
+            spot.lng = lng;
+            spot.name = name;
+            spot.description = description;
+            spot.price = price;
+
+            await spot.save();
+            res.status(200);
+            res.json(spot);
+        }
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
     }
 })
 
@@ -105,7 +128,7 @@ router.get('/', async (req, res) => {
     res.status(200);
     return res.json({ Spots });
 })
-
+// CREATE A NEW SPOT
 router.post('/', restoreUser, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
