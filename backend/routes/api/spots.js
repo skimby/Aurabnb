@@ -91,15 +91,28 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
     const reviewCount = await Review.count();
     const spotCount = await Spot.count();
 
-    // console.log(`ID IS: ${req.user.id}`)
-
-    const newReview = await Review.create({
-        id: reviewCount + 1,
-        userId: req.user.id,
-        spotId,
-        review,
-        stars
+    const spotReviews = await Review.findOne({
+        where: {
+            spotId
+        }
     });
+
+    if (spotReviews.userId !== req.user.id) {
+        const newReview = await Review.create({
+            id: reviewCount + 1,
+            userId: req.user.id,
+            spotId,
+            review,
+            stars
+        });
+    } else {
+        res.status(403);
+        res.json({
+            "message": "User already has a review for this spot",
+            "statusCode": 403
+        })
+    }
+
 
     const resReview = await Review.findByPk(reviewCount + 1);
 
