@@ -113,7 +113,6 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
         })
     }
 
-
     const resReview = await Review.findByPk(reviewCount + 1);
 
     if (spotId <= spotCount) {
