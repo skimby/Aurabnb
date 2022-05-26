@@ -32,8 +32,9 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
     const { reviewId } = req.params;
     const { review, stars } = req.body;
     const editReview = await Review.findByPk(reviewId);
+    const reviewCount = await Review.count();
 
-    if (editReview) {
+    if (editReview && (reviewId <= reviewCount)) {
         if (editReview.userId === req.user.id) {
             editReview.review = review;
             editReview.start = stars;
@@ -47,14 +48,38 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
         res.json({
             "message": "Review couldn't be found",
             "statusCode": 404
-        })
+        });
+    }
+});
+
+// DELETE REVIEW
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+    const { reviewId } = req.params;
+    const reviewCount = await Review.count();
+    const review = await Review.findByPk(reviewId);
+
+    if (review && (reviewId <= reviewCount)) {
+        if (review.userId === req.user.id) {
+            await review.destroy();
+            res.status(200);
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+            })
+        }
+
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
     }
 
-});
+})
 
 // GET REVIEWS OF CURRENT USER
 router.get('/', restoreUser, async (req, res) => {
-
     const Reviews = await Review.findAll({
         where: {
             userId: req.user.id
@@ -68,6 +93,7 @@ router.get('/', restoreUser, async (req, res) => {
     });
     res.status(200);
     res.json({ Reviews });
-})
+});
+
 
 module.exports = router;
