@@ -194,7 +194,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     });
 
 
-    console.log(`OUTPUT: ${isClearBooking}`)
+    // console.log(`OUTPUT: ${isClearBooking}`)
     if (isClearBooking) {
         res.status(403);
         res.json({
@@ -335,7 +335,7 @@ router.post('/', restoreUser, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const spotCount = await Spot.count();
-    console.log(spotCount)
+    // console.log(spotCount)
     const spot = await Spot.create({
         id: (spotCount + 1),
         ownerId: req.user.id,
