@@ -252,7 +252,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/spots'
+  * URL: '/spots/me'
   * Body: none
 
 * Successful Response
@@ -837,7 +837,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: 'me/bookings'
+  * URL: 'bookings/me'
   * Body: none
 
 * Successful Response
