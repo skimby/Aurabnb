@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
-const { Spot, Image, Review } = require('../../db/models');
+const { Spot, Image, Review, Booking, User } = require('../../db/models');
 const router = express.Router();
 
 
@@ -125,7 +125,48 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
             "statusCode": 404
         });
     }
+});
+
+// GET ALL BOOKINGS FROM SPOT BASED ON SPOT ID
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+    const spotCount = await Spot.count();
+
+    if (spot && (spot <= spotCount)) {
+        if (req.user.id !== spot.ownerId) {
+            res.status(200);
+            const Bookings = await Booking.findOne({
+                where: {
+                    spotId: spot.id
+                },
+                attributes:
+                    ['spotId', 'startDate', 'endDate']
+            });
+            res.json({ Bookings })
+        } else {
+            res.status(200);
+            const Bookings = await Booking.findOne({
+                include: [{
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
+                }],
+                where: {
+                    spotId: spot.id
+                }
+            });
+            res.json({ Bookings })
+        }
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
 })
+
+// CREATE A BOOKING FROM A SPOT BASED ON THE SPOT'S ID
 
 // GET ALL SPOTS OF CURRENT USER
 router.get('/me', restoreUser, async (req, res) => {

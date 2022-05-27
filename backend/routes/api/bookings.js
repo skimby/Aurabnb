@@ -26,7 +26,7 @@ router.get('/me', requireAuth, async (req, res) => {
     res.json({ Bookings });
 });
 
-// GET ALL BOOKINGS FROM SPOT BASED ON SPOT ID
+
 
 
 module.exports = router;
