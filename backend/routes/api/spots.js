@@ -335,7 +335,7 @@ router.post('/', restoreUser, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const spotCount = await Spot.count();
-    // console.log(spotCount)
+    console.log(spotCount)
     const spot = await Spot.create({
         id: (spotCount + 1),
         ownerId: req.user.id,

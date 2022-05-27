@@ -1,5 +1,5 @@
 {
-  "name": "practice-for-week-12-authenticate-me-long-practice",
+  "name": "AirBnB",
   "version": "1.0.0",
   "description": "## Database Schema Design",
   "main": "index.js",
@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/appacademy/practice-for-week-12-authenticate-me-long-practice.git"
+    "url": "git+https://github.com/skimby/AirBnB.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/appacademy/practice-for-week-12-authenticate-me-long-practice/issues"
+    "url": "https://github.com/skimby/AirBnB/issues"
   },
-  "homepage": "https://github.com/appacademy/practice-for-week-12-authenticate-me-long-practice#readme"
+  "homepage": "https://github.com/skimby/AirBnB#readme"
 }
