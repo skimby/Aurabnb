@@ -30,6 +30,17 @@ router.get('/me', requireAuth, async (req, res) => {
     res.json({ Bookings });
 });
 
+// GET A BOOKING BY ID
+router.get('/:bookingId', async (req, res) => {
+    const { bookingId } = req.params;
+    const Bookings = await Booking.findOne({
+        where: {
+            id: bookingId
+        }
+    });
+    res.status(200);
+    res.json({ Bookings })
+})
 
 // EDIT A BOOKING
 router.put('/:bookingId', requireAuth, async (req, res) => {
@@ -101,6 +112,45 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             "statusCode": 404
         })
     }
+});
+
+// DELETE A BOOKING
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+    const { bookingId } = req.params;
+    const booking = await Booking.findOne({
+        where: {
+            id: bookingId
+        }
+    });
+    const date = new Date();
+
+
+    if (booking) {
+        if (date >= booking.startDate) {
+            res.status(400);
+            res.json({
+                "message": "Bookings that have been started can't be deleted",
+                "statusCode": 400
+            })
+        } else {
+            if (req.user.id === booking.userId) {
+                booking.destroy();
+                res.status(200);
+                res.json({
+                    "message": "Successfully deleted",
+                    "statusCode": 200
+                })
+            }
+        }
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Booking couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+
 })
 
 
