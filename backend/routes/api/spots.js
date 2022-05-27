@@ -59,6 +59,17 @@ const validateReview = [
     handleValidationErrors
 ];
 
+// const validateBooking = [
+//     check('startDate')
+//         .exists({ checkFalsy: false })
+//         .withMessage("Start date conflicts with an existing booking"),
+//     check('endDate')
+//         .exists({ checkFalsy: false })
+//         .withMessage("End date conflicts with an existing booking"
+//         ),
+//     handleValidationErrors
+// ];
+
 
 //ROUTES
 // GET ALL REVIEWS BY SPOT ID
@@ -177,55 +188,52 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const spotCount = await Spot.count();
     const bookingCount = await Booking.count();
     const { id, userId, startDate, endDate } = req.body;
-    // const newStartDate = new Date(startDate);
-    // const newEndDate = new Date(endDate);
 
 
-    // console.log(newStartDate, endDate)
-    const isClearBooking = await Booking.findOne({
-        where: {
-            startDate: {
-                [Op.gte]: [endDate]
-            }
-            // endDate: {
-            //     [Op.lte]: [newEndDate]
-            // }
-        }
-    });
+    //     const isClearBooking = await Booking.findOne({
+    //         where: {
 
+    //             startDate: {
+    //         [Op.eq]: [startDate]
+    //         // [Op.between]: [startDate, endDate]
+    //     }
+    //         }
+    //     });
+
+    // console.log(startDate, endDate, isClearBooking)
 
     // console.log(`OUTPUT: ${isClearBooking}`)
-    if (isClearBooking) {
-        res.status(403);
+    // if (isClearBooking) {
+    // res.status(403);
+    // res.json({
+    //     "message": "Sorry, this spot is already booked for the specified dates",
+    //     "statusCode": 403,
+    //     "errors": {
+    //         "startDate": "Start date conflicts with an existing booking",
+    //         "endDate": "End date conflicts with an existing booking"
+    //     }
+    // });
+    // } else {
+    if (spot && (spot <= spotCount)) {
+        res.status(404)
         res.json({
-            "message": "Sorry, this spot is already booked for the specified dates",
-            "statusCode": 403,
-            "errors": {
-                "startDate": "Start date conflicts with an existing booking",
-                "endDate": "End date conflicts with an existing booking"
-            }
-        });
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
     } else {
-        if (spot && (spot <= spotCount)) {
-            res.status(404)
-            res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
+        if (req.user.id !== spot.id) {
+            const booking = await Booking.create({
+                id: bookingCount + 1,
+                spotId,
+                userId,
+                startDate,
+                endDate
             })
-        } else {
-            if (req.user.id !== spot.id) {
-                const booking = await Booking.create({
-                    id: bookingCount + 1,
-                    spotId,
-                    userId,
-                    startDate,
-                    endDate
-                })
-                res.status(200);
-                res.json(booking);
-            };
-        }
+            res.status(200);
+            res.json(booking);
+        };
     }
+
 })
 
 // GET ALL SPOTS OF CURRENT USER
