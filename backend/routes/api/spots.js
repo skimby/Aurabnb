@@ -7,7 +7,11 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const { Spot, Image, Review, Booking, User } = require('../../db/models');
+const spot = require('../../db/models/spot');
 const router = express.Router();
+
+const { Op } = require("sequelize");
+
 
 
 
@@ -167,6 +171,62 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 })
 
 // CREATE A BOOKING FROM A SPOT BASED ON THE SPOT'S ID
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+    const spotCount = await Spot.count();
+    const bookingCount = await Booking.count();
+    const { id, userId, startDate, endDate } = req.body;
+    // const newStartDate = new Date(startDate);
+    // const newEndDate = new Date(endDate);
+
+
+    // console.log(newStartDate, endDate)
+    const isClearBooking = await Booking.findOne({
+        where: {
+            startDate: {
+                [Op.gte]: [endDate]
+            }
+            // endDate: {
+            //     [Op.lte]: [newEndDate]
+            // }
+        }
+    });
+
+
+    console.log(`OUTPUT: ${isClearBooking}`)
+    if (isClearBooking) {
+        res.status(403);
+        res.json({
+            "message": "Sorry, this spot is already booked for the specified dates",
+            "statusCode": 403,
+            "errors": {
+                "startDate": "Start date conflicts with an existing booking",
+                "endDate": "End date conflicts with an existing booking"
+            }
+        });
+    } else {
+        if (spot && (spot <= spotCount)) {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        } else {
+            if (req.user.id !== spot.id) {
+                const booking = await Booking.create({
+                    id: bookingCount + 1,
+                    spotId,
+                    userId,
+                    startDate,
+                    endDate
+                })
+                res.status(200);
+                res.json(booking);
+            };
+        }
+    }
+})
 
 // GET ALL SPOTS OF CURRENT USER
 router.get('/me', restoreUser, async (req, res) => {
