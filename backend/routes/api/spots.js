@@ -190,51 +190,120 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const { id, userId, startDate, endDate } = req.body;
 
 
-    //     const isClearBooking = await Booking.findOne({
-    //         where: {
+    const isClearBooking = await Booking.findAll({
+        where: {
 
-    //             startDate: {
-    //         [Op.eq]: [startDate]
-    //         // [Op.between]: [startDate, endDate]
-    //     }
-    //         }
-    //     });
+            //[Op.lte]: startDate
+            //[Op.gte]: endDate
+            [Op.or]: [
+                {
+                    startDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+                {
+                    endDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+            ]
+        }
+    });
 
-    // console.log(startDate, endDate, isClearBooking)
+    if (isClearBooking) {
+        res.status(403);
+        res.json({
+            "message": "Sorry, this spot is already booked for the specified dates",
+            "statusCode": 403,
+            "errors": {
+                "startDate": "Start date conflicts with an existing booking",
+                "endDate": "End date conflicts with an existing booking"
+            }
+        });
+    } else {
+        if (spot && (spot <= spotCount)) {
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        } else {
+            if (req.user.id !== spot.id) {
+                const booking = await Booking.create({
+                    id: bookingCount + 1,
+                    spotId,
+                    userId,
+                    startDate,
+                    endDate
+                })
+                res.status(200);
+                res.json(booking);
+            };
+        }
+    }
 
-    // console.log(`OUTPUT: ${isClearBooking}`)
-    // if (isClearBooking) {
-    // res.status(403);
-    // res.json({
-    //     "message": "Sorry, this spot is already booked for the specified dates",
-    //     "statusCode": 403,
-    //     "errors": {
-    //         "startDate": "Start date conflicts with an existing booking",
-    //         "endDate": "End date conflicts with an existing booking"
-    //     }
-    // });
-    // } else {
-    if (spot && (spot <= spotCount)) {
-        res.status(404)
+});
+
+// GET IMAGES OF SPOT BY SPOTID
+router.get('/:spotId/images', requireAuth, async (req, res) => {
+    const { url } = req.body;
+    const { spotId } = req.params;
+
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId
+        },
+        include: [{
+            model: Image,
+            as: 'Image'
+        }]
+    });
+
+
+    res.status(200);
+    res.json({ Image: spot.Image });
+
+})
+
+// ADD IMAGE TO SPOT BASED ON SPOTID
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const { url } = req.body;
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+    const imageCount = await Image.count();
+
+    if (spot) {
+        if (req.user.id === spot.ownerId) {
+            if (spot) {
+                const image = await Image.create({
+                    id: imageCount + 1,
+                    imageableType: 'Spot',
+                    url,
+                    spotId,
+                    reviewId: null
+                });
+
+                if (image.spotId) {
+                    image.dataValues.imageableId = spotId;
+                    delete image.dataValues.spotId;
+                    delete image.dataValues.reviewId;
+                    delete image.dataValues.createdAt;
+                    delete image.dataValues.updatedAt;
+                }
+
+                res.status(200);
+                res.json(image);
+            }
+        }
+    } else {
+        res.status(404);
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
-    } else {
-        if (req.user.id !== spot.id) {
-            const booking = await Booking.create({
-                id: bookingCount + 1,
-                spotId,
-                userId,
-                startDate,
-                endDate
-            })
-            res.status(200);
-            res.json(booking);
-        };
     }
+});
 
-})
 
 // GET ALL SPOTS OF CURRENT USER
 router.get('/me', restoreUser, async (req, res) => {
