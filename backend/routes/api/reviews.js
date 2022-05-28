@@ -18,40 +18,54 @@ const validateReview = [
     handleValidationErrors
 ];
 
-
 // ADD IMAGE TO REVIEW BASED ON REVIEWID
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { url } = req.body;
     const { reviewId } = req.params;
     const review = await Review.findByPk(reviewId);
     const imageCount = await Image.count();
+    const allReviewImagesCount = await Image.count({
+        where: {
+            reviewId
+        },
+        attributes: {
+            url
+        }
+    })
 
     if (review) {
         if (req.user.id === review.userId) {
-            const image = await Image.create({
-                id: imageCount + 1,
-                imageableType: 'Review',
-                url,
-                spotId: null,
-                reviewId
-            });
+            if (allReviewImagesCount >= 10) {
+                res.status(400);
+                res.json({
+                    "message": "Maximum number of images for this resource was reached",
+                    "statusCode": 400
+                })
+            } else {
+                const image = await Image.create({
+                    id: imageCount + 1,
+                    imageableType: 'Review',
+                    url,
+                    spotId: null,
+                    reviewId
+                });
 
-            image.dataValues.imageableId = reviewId;
-            delete image.dataValues.spotId;
-            delete image.dataValues.reviewId;
-            delete image.dataValues.createdAt;
-            delete image.dataValues.updatedAt;
+                image.dataValues.imageableId = reviewId;
+                delete image.dataValues.spotId;
+                delete image.dataValues.reviewId;
+                delete image.dataValues.createdAt;
+                delete image.dataValues.updatedAt;
 
-            res.status(200);
-            res.json(image);
-
-        } else {
-            res.status(404);
-            res.json({
-                "message": "Review couldn't be found",
-                "statusCode": 404
-            })
+                res.status(200);
+                res.json(image);
+            }
         }
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        })
     }
 
 });

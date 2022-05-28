@@ -15,6 +15,7 @@ const { Op } = require("sequelize");
 
 
 
+
 // SPOT VALIDATION ERROR
 //checks the body of new spot post request
 const validateSpot = [
@@ -70,6 +71,21 @@ const validateReview = [
 //     handleValidationErrors
 // ];
 
+
+//HELPER FUNCTION
+const previewImage = (Spots) => {
+    Spots.forEach(spot => {
+        console.log(spot)
+        spot.dataValues.previewImage = spot.dataValues.Images.map(image => {
+            return image.url
+        }); // .map within to return new image.url
+
+        //delete wihtin array
+        delete spot.dataValues.Images;
+        // return;
+
+    })
+}
 
 //ROUTES
 // GET ALL REVIEWS BY SPOT ID
@@ -395,24 +411,145 @@ router.delete('/:spotId', restoreUser, async (req, res) => {
     }
 
 })
+const validatePagination = [
+    check('page')
+        .exists({ checkFalsy: true })
+        .optional()
+        .withMessage("Page must be greater than or equal to 0"),
+    check('size')
+        .exists({ checkFalsy: true })
+        .optional()
+        .withMessage("Size must be greater than or equal to 0"),
+    handleValidationErrors
+];
+const validateLat = [
+    check('minLat')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check('maxLat')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    handleValidationErrors
+];
+const validateLng = [
+    check('minLng')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum longitude is invalid"),
+    check('maxLng')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    handleValidationErrors
+];
 
-router.get('/', async (req, res) => {
+const validatePrice = [
+    check('minPrice')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum price must be greater than 0"),
+    check('maxPrice')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum price must be greater than 0"),
+    handleValidationErrors
+];
+
+
+// GET ALL SPOTS
+router.get('/', validatePagination, validateLat, validateLng, async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+    // const images = await Image.findAll({
+    //     where: {
+    //         spotId
+    //     }
+    // })
+    // PAGINATION
+    if (page < 0 || page > 10 || !page) {
+        page = 0;
+    }
+    if (size < 0 || size > 20 || !size) {
+        size = 20;
+    }
+
+    let limit = parseInt(size);
+    let offset = parseInt(size) * (parseInt(page) - 1);
+
+    // SEARCH QUERY
+    const where = {}
+    //LATTITUDE
+    if (minLat) {
+        where.lat = {
+            [Op.gte]: minLat
+        }
+    }
+
+    if (maxLat) {
+        where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
+    // LONGITUDE
+    if (minLng) {
+        where.lng = {
+            [Op.gte]: minLng
+        }
+    }
+
+    if (maxLng) {
+        where.lng = {
+            [Op.lte]: maxLng
+        }
+    }
+
+    // PRICE
+    if (minPrice) {
+        where.price = {
+            [Op.gte]: minPrice
+        }
+    }
+
+    if (maxPrice) {
+        where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
     const Spots = await Spot.findAll({
+        limit,
+        offset,
+        where: { ...where },
+
         include: [{
-            model: Image, as: 'previewImage',
+            model: Image,
             attributes: ['url']
 
         }]
     });
+
+    previewImage(Spots)
+
     res.status(200);
     return res.json({ Spots });
 })
+
+
+
 // CREATE A NEW SPOT
 router.post('/', restoreUser, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const spotCount = await Spot.count();
-    // console.log(spotCount)
+
     const spot = await Spot.create({
         id: (spotCount + 1),
         ownerId: req.user.id,
