@@ -82,9 +82,9 @@ const previewImage = (Spots) => {
 
         //delete wihtin array
         delete spot.dataValues.Images;
-        // return;
 
     })
+    return Spots;
 }
 
 //ROUTES
@@ -205,10 +205,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const bookingCount = await Booking.count();
     const { id, userId, startDate, endDate } = req.body;
 
-
     const isClearBooking = await Booking.findAll({
         where: {
-
             //[Op.lte]: startDate
             //[Op.gte]: endDate
             [Op.or]: [
@@ -536,10 +534,10 @@ router.get('/', validatePagination, validateLat, validateLng, async (req, res) =
         }]
     });
 
-    previewImage(Spots)
+    const newSpots = previewImage(Spots)
 
     res.status(200);
-    return res.json({ Spots });
+    return res.json({ Spots: newSpots });
 })
 
 
