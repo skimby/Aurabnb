@@ -479,8 +479,14 @@ router.get('/', validatePagination, validateLat, validateLng, async (req, res) =
         size = 20;
     }
 
+    let pag = {};
     let limit = parseInt(size);
     let offset = parseInt(size) * (parseInt(page) - 1);
+
+    pag.limit = limit;
+    if (offset >= 0) {
+        pag.offset = offset;
+    }
 
     // SEARCH QUERY
     const where = {}
@@ -523,10 +529,9 @@ router.get('/', validatePagination, validateLat, validateLng, async (req, res) =
     }
 
     const Spots = await Spot.findAll({
-        limit,
-        offset,
-        where: { ...where },
 
+        where: { ...where },
+        ...pag,
         include: [{
             model: Image,
             attributes: ['url']
