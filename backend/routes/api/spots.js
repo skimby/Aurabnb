@@ -15,6 +15,7 @@ const { Op } = require("sequelize");
 
 
 
+
 // SPOT VALIDATION ERROR
 //checks the body of new spot post request
 const validateSpot = [
@@ -59,6 +60,32 @@ const validateReview = [
     handleValidationErrors
 ];
 
+// const validateBooking = [
+//     check('startDate')
+//         .exists({ checkFalsy: false })
+//         .withMessage("Start date conflicts with an existing booking"),
+//     check('endDate')
+//         .exists({ checkFalsy: false })
+//         .withMessage("End date conflicts with an existing booking"
+//         ),
+//     handleValidationErrors
+// ];
+
+
+//HELPER FUNCTION
+const previewImage = (Spots) => {
+    Spots.forEach(spot => {
+        console.log(spot)
+        spot.dataValues.previewImage = spot.dataValues.Images.map(image => {
+            return image.url
+        }); // .map within to return new image.url
+
+        //delete wihtin array
+        delete spot.dataValues.Images;
+        // return;
+
+    })
+}
 
 //ROUTES
 // GET ALL REVIEWS BY SPOT ID
@@ -177,24 +204,28 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const spotCount = await Spot.count();
     const bookingCount = await Booking.count();
     const { id, userId, startDate, endDate } = req.body;
-    // const newStartDate = new Date(startDate);
-    // const newEndDate = new Date(endDate);
 
 
-    // console.log(newStartDate, endDate)
-    const isClearBooking = await Booking.findOne({
+    const isClearBooking = await Booking.findAll({
         where: {
-            startDate: {
-                [Op.gte]: [endDate]
-            }
-            // endDate: {
-            //     [Op.lte]: [newEndDate]
-            // }
+
+            //[Op.lte]: startDate
+            //[Op.gte]: endDate
+            [Op.or]: [
+                {
+                    startDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+                {
+                    endDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+            ]
         }
     });
 
-
-    // console.log(`OUTPUT: ${isClearBooking}`)
     if (isClearBooking) {
         res.status(403);
         res.json({
@@ -226,7 +257,69 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             };
         }
     }
+
+});
+
+// GET IMAGES OF SPOT BY SPOTID
+router.get('/:spotId/images', requireAuth, async (req, res) => {
+    const { url } = req.body;
+    const { spotId } = req.params;
+
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId
+        },
+        include: [{
+            model: Image,
+            as: 'Image'
+        }]
+    });
+
+
+    res.status(200);
+    res.json({ Image: spot.Image });
+
 })
+
+// ADD IMAGE TO SPOT BASED ON SPOTID
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const { url } = req.body;
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+    const imageCount = await Image.count();
+
+    if (spot) {
+        if (req.user.id === spot.ownerId) {
+            if (spot) {
+                const image = await Image.create({
+                    id: imageCount + 1,
+                    imageableType: 'Spot',
+                    url,
+                    spotId,
+                    reviewId: null
+                });
+
+                if (image.spotId) {
+                    image.dataValues.imageableId = spotId;
+                    delete image.dataValues.spotId;
+                    delete image.dataValues.reviewId;
+                    delete image.dataValues.createdAt;
+                    delete image.dataValues.updatedAt;
+                }
+
+                res.status(200);
+                res.json(image);
+            }
+        }
+    } else {
+        res.status(404);
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+});
+
 
 // GET ALL SPOTS OF CURRENT USER
 router.get('/me', restoreUser, async (req, res) => {
@@ -318,24 +411,144 @@ router.delete('/:spotId', restoreUser, async (req, res) => {
     }
 
 })
+const validatePagination = [
+    check('page')
+        .exists({ checkFalsy: true })
+        .optional()
+        .withMessage("Page must be greater than or equal to 0"),
+    check('size')
+        .exists({ checkFalsy: true })
+        .optional()
+        .withMessage("Size must be greater than or equal to 0"),
+    handleValidationErrors
+];
+const validateLat = [
+    check('minLat')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check('maxLat')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    handleValidationErrors
+];
+const validateLng = [
+    check('minLng')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum longitude is invalid"),
+    check('maxLng')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    handleValidationErrors
+];
 
-router.get('/', async (req, res) => {
+const validatePrice = [
+    check('minPrice')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Maximum price must be greater than 0"),
+    check('maxPrice')
+        .exists({ checkFalsy: true })
+        .optional()
+        .isDecimal()
+        .withMessage("Minimum price must be greater than 0"),
+    handleValidationErrors
+];
+
+
+// GET ALL SPOTS
+router.get('/', validatePagination, validateLat, validateLng, async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+    // const images = await Image.findAll({
+    //     where: {
+    //         spotId
+    //     }
+    // })
+    // PAGINATION
+    if (page < 0 || page > 10 || !page) {
+        page = 0;
+    }
+    if (size < 0 || size > 20 || !size) {
+        size = 20;
+    }
+
+    let limit = parseInt(size);
+    let offset = parseInt(size) * (parseInt(page) - 1);
+
+    // SEARCH QUERY
+    const where = {}
+    //LATTITUDE
+    if (minLat) {
+        where.lat = {
+            [Op.gte]: minLat
+        }
+    }
+
+    if (maxLat) {
+        where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
+    // LONGITUDE
+    if (minLng) {
+        where.lng = {
+            [Op.gte]: minLng
+        }
+    }
+
+    if (maxLng) {
+        where.lng = {
+            [Op.lte]: maxLng
+        }
+    }
+
+    // PRICE
+    if (minPrice) {
+        where.price = {
+            [Op.gte]: minPrice
+        }
+    }
+
+    if (maxPrice) {
+        where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
     const Spots = await Spot.findAll({
+        limit,
+        offset,
+        where: { ...where },
+
         include: [{
-            model: Image, as: 'previewImage',
+            model: Image,
             attributes: ['url']
 
         }]
     });
+
+    previewImage(Spots)
+
     res.status(200);
     return res.json({ Spots });
 })
+
+
+
 // CREATE A NEW SPOT
 router.post('/', restoreUser, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const spotCount = await Spot.count();
-    console.log(spotCount)
     const spot = await Spot.create({
         id: (spotCount + 1),
         ownerId: req.user.id,
