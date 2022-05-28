@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Image.belongsTo(models.Spot,
         { foreignKey: 'spotId' })
 
-      Image.belongsTo(models.Spot,
+      Image.belongsTo(models.Review,
         { foreignKey: 'reviewId' })
 
       // Image.hasMany(models.Booking,
