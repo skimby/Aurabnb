@@ -56,7 +56,7 @@ router.get('/me', requireAuth, (req, res) => {
 const validateLogin = [
     check('email')
         .exists({ checkFalsy: true })
-        .notEmpty()
+        // .notEmpty()
         .withMessage("Email is required"),
     check('password')
         .exists({ checkFalsy: true })
