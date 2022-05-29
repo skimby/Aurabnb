@@ -70,8 +70,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     })
 
     if (booking && (booking.id <= bookingCount)) {
-        console.log('1 hit')
-
         if (booking.endDate >= date) {
             console.log('2 hit')
             res.status(400);
@@ -96,16 +94,17 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
                     booking.endDate = endDate;
                     await booking.save();
 
-
                     res.status(200);
                     res.json(booking);
+                } else {
+                    const err = new Error('Forbidden');
+                    err.message = 'Forbidden';
+                    err.status = 403;
+                    return next(err);
                 }
-
             }
-
         }
     } else {
-        console.log('3 hit')
         res.status(404);
         res.json({
             "message": "Booking couldn't be found",
@@ -140,6 +139,11 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
                     "message": "Successfully deleted",
                     "statusCode": 200
                 })
+            } else {
+                const err = new Error('Forbidden');
+                err.message = 'Forbidden';
+                err.status = 403;
+                return next(err);
             }
         }
     } else {
@@ -149,8 +153,6 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
             "statusCode": 404
         })
     }
-
-
 })
 
 

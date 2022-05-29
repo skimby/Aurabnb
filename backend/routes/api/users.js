@@ -20,7 +20,7 @@ router.get('/set-token-cookie', async (_req, res) => {
     const user = await User.findOne({
         // attributes: { exclude: ['isHost', 'createdAt', 'updatedAt'] },
         where: {
-            email: 'ladygaga@gmail.com'
+            email: 'amytan@gmail.com'
         },
 
     });

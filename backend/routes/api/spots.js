@@ -252,7 +252,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                 })
                 res.status(200);
                 res.json(booking);
-            };
+            } else {
+                const err = new Error('Forbidden');
+                err.message = 'Forbidden';
+                err.status = 403;
+                return next(err);
+            }
         }
     }
 
@@ -308,6 +313,11 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
                 res.status(200);
                 res.json(image);
             }
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
     } else {
         res.status(404);
@@ -353,8 +363,8 @@ router.get('/:spotId', async (req, res) => {
     }
 });
 
-// EDIT A SPOT BY ID
-router.put('/:spotId', restoreUser, validateSpot, async (req, res) => {
+// EDIT A SPOT
+router.put('/:spotId', restoreUser, validateSpot, async (req, res, next) => {
     const { spotId } = req.params;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
@@ -375,6 +385,11 @@ router.put('/:spotId', restoreUser, validateSpot, async (req, res) => {
             await spot.save();
             res.status(200);
             res.json(spot);
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
     } else {
         res.status(404);
@@ -399,6 +414,11 @@ router.delete('/:spotId', restoreUser, async (req, res) => {
                 "message": "Successfully deleted",
                 "statusCode": 200
             });
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
     } else {
         res.status(404);

@@ -59,6 +59,11 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
                 res.status(200);
                 res.json(image);
             }
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
     } else {
         res.status(404);
@@ -93,6 +98,11 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
             await editReview.save();
             res.status(200);
             res.json(editReview);
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
 
     } else {
@@ -118,6 +128,11 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
                 "message": "Successfully deleted",
                 "statusCode": 200
             })
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
 
     } else {

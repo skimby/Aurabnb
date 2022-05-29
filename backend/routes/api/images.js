@@ -25,22 +25,38 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
     })
 
     if (image) {
-        if (req.user.id === spot.ownerId && (spot.id === image.spotId) && (image.imageableType === 'Spot')) {
-            image.destroy();
-            res.status(200);
-            res.json({
-                "message": "Successfully deleted",
-                "statusCode": 200
-            })
+        if (req.user.id === spot.ownerId) {
+            if ((spot.id === image.spotId) && (image.imageableType === 'Spot')) {
+                image.destroy();
+                res.status(200);
+                res.json({
+                    "message": "Successfully deleted",
+                    "statusCode": 200
+                })
+            }
+
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
 
-        if (req.user.id === review.userId && (review.id === image.reviewId) && (image.imageableType === 'Review')) {
-            image.destroy();
-            res.status(200);
-            res.json({
-                "message": "Successfully deleted",
-                "statusCode": 200
-            })
+        if (req.user.id === review.userId) {
+            if ((review.id === image.reviewId) && (image.imageableType === 'Review')) {
+                image.destroy();
+                res.status(200);
+                res.json({
+                    "message": "Successfully deleted",
+                    "statusCode": 200
+                })
+            }
+
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
 
     } else {
