@@ -75,7 +75,7 @@ const validateReview = [
 //HELPER FUNCTION
 const previewImage = (Spots) => {
     Spots.forEach(spot => {
-        console.log(spot)
+        // console.log(spot)
         spot.dataValues.previewImage = spot.dataValues.Images.map(image => {
             return image.url
         }); // .map within to return new image.url
@@ -351,15 +351,47 @@ router.get('/me', requireAuth, async (req, res) => {
 // GET SPOT BY ID
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params;
+    const spots = await Spot.findOne({
+        where: {
+            id: spotId
+        },
+        include: [{
+            model: Image,
+            attributes: ['url']
+        },
+        ]
 
-    const spots = await Spot.findByPk(spotId);
+    });
+    const reviews = await Review.count({
+        where: {
+            spotId
+        }
+    });
+    const stars = await Review.findAll({
+        where: {
+            spotId
+        },
+        attributes: ['stars']
+    })
+
+    let starSum = 0;
+
+    stars.forEach(star => {
+        starSum += star.stars;
+    })
+    let rating = starSum / reviews;
+
+    spots.dataValues.images = spots.dataValues.Images;
+    delete spots.dataValues.Images;
+    spots.dataValues.numReviews = reviews
+    spots.dataValues.avgStarRatings = rating
 
     if (spots) {
         res.status(200);
-        res.json(spots);
+        return res.json(spots);
     } else {
         res.status(404);
-        res.json({
+        return res.json({
             message: "Spot couldn't be found",
             statusCode: 404
         })
