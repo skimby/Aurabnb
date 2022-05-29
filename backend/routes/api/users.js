@@ -7,11 +7,9 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-
-
 const router = express.Router();
 
-// GET CURRENT USER
+
 // GET /api/set-token-cookie
 // const { setTokenCookie } = require('../../utils/auth.js');
 // const { User } = require('../../db/models');
@@ -28,7 +26,7 @@ router.get('/set-token-cookie', async (_req, res) => {
     return res.json({ user });
 });
 
-// GET CURRENT USER
+
 // GET /api/restore-user
 const { restoreUser } = require('../../utils/auth.js');
 router.get('/restore-user', restoreUser, (req, res) => {
@@ -70,15 +68,12 @@ const validateLogin = [
 router.post('/login', validateLogin,
     async (req, res, next) => {
         const { email, password } = req.body;
-
         const user = await User.login({ email, password });
 
         if (!user) {
             const err = new Error("Invalid credentials");
             err.message = "Invalid credentials";
             err.status = 401;
-            // err.errors = ['The provided credentials were invalid.'];
-
             return next(err);
 
         }
@@ -86,6 +81,7 @@ router.post('/login', validateLogin,
         //setting token cookie with the data you get logging in
         await setTokenCookie(res, user);
 
+        res.status(200)
         return res.json({
             id: user.id,
             firstName: user.firstName,
