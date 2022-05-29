@@ -606,8 +606,8 @@ router.get('/', validatePagination, validateLat, validateLng, async (req, res) =
 
 
 
-// CREATE A NEW SPOT
-router.post('/', restoreUser, validateSpot, async (req, res) => {
+// CREATE A SPOT
+router.post('/', requireAuth, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const spotCount = await Spot.count();
@@ -624,13 +624,9 @@ router.post('/', restoreUser, validateSpot, async (req, res) => {
         description,
         price
     });
-    const newSpot = await Spot.findOne({
-        where: {
-            id: spotCount + 1
-        }
-    })
+
     res.status(201);
-    res.json(newSpot);
+    res.json(spot);
 })
 
 
