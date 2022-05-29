@@ -330,19 +330,22 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
 
 // GET ALL SPOTS OF CURRENT USER
-router.get('/me', restoreUser, async (req, res) => {
+router.get('/me', requireAuth, async (req, res) => {
     const Spots = await Spot.findAll({
         include: [{
-            model: Image, as: 'previewImage',
+            model: Image,
             attributes: ['url']
         }],
         where: {
             ownerId: req.user.id
         }
     });
+    // Spots.dataValues.previewImage =
+    const newSpots = previewImage(Spots)
+
 
     res.status(200);
-    res.json({ Spots })
+    return res.json({ Spots: newSpots });
 });
 
 // GET SPOT BY ID
@@ -486,11 +489,6 @@ const validatePrice = [
 router.get('/', validatePagination, validateLat, validateLng, async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-    // const images = await Image.findAll({
-    //     where: {
-    //         spotId
-    //     }
-    // })
     // PAGINATION
     if (page < 0 || page > 10 || !page) {
         page = 0;
