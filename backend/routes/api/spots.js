@@ -373,6 +373,12 @@ router.get('/:spotId', async (req, res) => {
         },
         attributes: ['stars']
     })
+    const owner = await User.findOne({
+        where: {
+            id: spots.ownerId
+        },
+        attributes: { exclude: ['isHost'] }
+    })
 
     let starSum = 0;
 
@@ -385,6 +391,7 @@ router.get('/:spotId', async (req, res) => {
     delete spots.dataValues.Images;
     spots.dataValues.numReviews = reviews
     spots.dataValues.avgStarRatings = rating
+    spots.dataValues.Owner = owner
 
     if (spots) {
         res.status(200);
