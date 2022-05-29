@@ -94,7 +94,7 @@ router.post('/login', validateLogin,
     }
 );
 
-// SIGN UP
+
 //express validator //this only tests the inputs
 const validateSignup = [
     check('firstName')
@@ -114,7 +114,7 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-// SIGN UP
+// SIGN UP A USER
 router.post('/signUp', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
@@ -139,6 +139,7 @@ router.post('/signUp', validateSignup, async (req, res, next) => {
 
         res.status(200);
         return res.json({
+            id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
