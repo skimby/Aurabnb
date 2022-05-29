@@ -351,6 +351,7 @@ router.get('/me', requireAuth, async (req, res) => {
 // GET SPOT BY ID
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params;
+    const spotCount = await Spot.count();
     const spots = await Spot.findOne({
         where: {
             id: spotId
@@ -358,42 +359,43 @@ router.get('/:spotId', async (req, res) => {
         include: [{
             model: Image,
             attributes: ['url']
-        },
-        ]
-
+        }]
     });
-    const reviews = await Review.count({
-        where: {
-            spotId
-        }
-    });
-    const stars = await Review.findAll({
-        where: {
-            spotId
-        },
-        attributes: ['stars']
-    })
-    const owner = await User.findOne({
-        where: {
-            id: spots.ownerId
-        },
-        attributes: { exclude: ['isHost'] }
-    })
+    console.log(spots, spotCount)
+    console.log(1)
+    if (spots && (spots.id <= spotCount)) {
+        console.log(2)
+        const reviews = await Review.count({
+            where: {
+                spotId
+            }
+        });
+        const stars = await Review.findAll({
+            where: {
+                spotId
+            },
+            attributes: ['stars']
+        })
+        const owner = await User.findOne({
+            where: {
+                id: spots.ownerId
+            },
+            attributes: { exclude: ['isHost'] }
+        })
 
-    let starSum = 0;
+        let starSum = 0;
 
-    stars.forEach(star => {
-        starSum += star.stars;
-    })
-    let rating = starSum / reviews;
+        stars.forEach(star => {
+            starSum += star.stars;
+        })
+        let rating = starSum / reviews;
 
-    spots.dataValues.images = spots.dataValues.Images;
-    delete spots.dataValues.Images;
-    spots.dataValues.numReviews = reviews
-    spots.dataValues.avgStarRatings = rating
-    spots.dataValues.Owner = owner
+        spots.dataValues.images = spots.dataValues.Images;
+        delete spots.dataValues.Images;
+        spots.dataValues.numReviews = reviews
+        spots.dataValues.avgStarRatings = rating
+        spots.dataValues.Owner = owner
 
-    if (spots) {
         res.status(200);
         return res.json(spots);
     } else {
