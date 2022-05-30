@@ -134,7 +134,6 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         }
     });
 
-
     if (spot) {
         if (alreadyReviewedByUser) {
             res.status(403);
@@ -151,7 +150,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
                 stars
             });
             res.status(200);
-            res.json(newReview)
+            return res.json(newReview)
         }
     } else {
         res.status(404)
@@ -161,35 +160,6 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         next(err);
     }
 
-
-    // if (spotReviews.userId !== req.user.id) {
-    //     const newReview = await Review.create({
-    //         id: reviewCount + 1,
-    //         userId: req.user.id,
-    //         spotId,
-    //         review,
-    //         stars
-    //     });
-    // } else {
-    //     res.status(403);
-    //     const err = new Error("User already has a review for this spot");
-    //     err.message = "User already has a review for this spot";
-    //     err.status = 403;
-    //     next(err);
-    // }
-
-    // const resReview = await Review.findByPk(reviewCount + 1);
-
-    // if (spotId <= spotCount) {
-    //     res.status(200);
-    //     res.json(resReview);
-    // } else {
-    //     res.status(404)
-    //     const err = new Error("Spot couldn't be found");
-    //     err.message = "Spot couldn't be found";
-    //     err.status = 404;
-    //     next(err);
-    // }
 });
 
 // GET ALL BOOKINGS FROM SPOT BASED ON SPOT ID
