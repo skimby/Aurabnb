@@ -138,50 +138,6 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-
-
-    //     if (isClearBooking) {
-    //         if (booking.endDate >= date) {
-    //             console.log('2 hit')
-    //             res.status(400);
-    //             res.json({
-    //                 "message": "Past bookings can't be modified",
-    //                 "statusCode": 400
-    //             })
-    //         } else {
-    //             if (isBookedBooking) {
-    //                 res.status(403);
-    //                 res.json({
-    //                     "message": "Sorry, this spot is already booked for the specified dates",
-    //                     "statusCode": 403,
-    //                     "errors": {
-    //                         "startDate": "Start date conflicts with an existing booking",
-    //                         "endDate": "End date conflicts with an existing booking"
-    //                     }
-    //                 })
-    //             } else {
-    //                 if (req.user.id === booking.userId) {
-    //                     booking.startDate = startDate;
-    //                     booking.endDate = endDate;
-    //                     await booking.save();
-
-    //                     res.status(200);
-    //                     res.json(booking);
-    //                 } else {
-    //                     const err = new Error('Forbidden');
-    //                     err.message = 'Forbidden';
-    //                     err.status = 403;
-    //                     return next(err);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         res.status(404);
-    //         res.json({
-    //             "message": "Booking couldn't be found",
-    //             "statusCode": 404
-    //         })
-    // }
 });
 
 // DELETE A BOOKING
@@ -198,10 +154,11 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     if (booking) {
         if (date >= booking.startDate) {
             res.status(400);
-            res.json({
-                "message": "Bookings that have been started can't be deleted",
-                "statusCode": 400
-            })
+            const err = new Error("Bookings that have been started can't be deleted");
+            err.message = "Bookings that have been started can't be deleted";
+            err.status = 400;
+            return next(err);
+
         } else {
             if (req.user.id === booking.userId) {
                 booking.destroy();
@@ -219,10 +176,10 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
         }
     } else {
         res.status(404);
-        res.json({
-            "message": "Booking couldn't be found",
-            "statusCode": 404
-        })
+        const err = new Error("Booking couldn't be found");
+        err.message = "Booking couldn't be found";
+        err.status = 404;
+        return next(err);
     }
 })
 
