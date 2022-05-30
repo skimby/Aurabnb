@@ -89,26 +89,35 @@ const previewImage = (Spots) => {
 
 //ROUTES
 // GET ALL REVIEWS BY SPOT ID
-router.get('/:spotId/reviews', async (req, res) => {
+router.get('/:spotId/reviews', requireAuth, async (req, res) => {
     const { spotId } = req.params;
     const reviewCount = await Review.count();
 
-    const reviews = await Review.findAll({
+    const Reviews = await Review.findAll({
         where: {
             spotId
         },
-        include: {
-            model: Image,
+        include: [{
+            model: Image, as: 'images',
             attributes: ['url']
-        }
+        },
+        {
+            model: User,
+            attributes: { exclude: ['isHost', 'email', 'password', 'createdAt', 'updatedAt'] }
+        },
+        {
+            model: Spot,
+            attributes: { exclude: ['description', 'createdAt', 'updatedAt',] }
+        }]
     });
+    // console.log(reviews.dataValues.id)
 
-    if (reviews >= reviewCount) {
+    if (Reviews) {
         res.status(200);
-        res.json(reviews);
+        res.json({ Reviews });
     } else {
         res.status(404);
-        res.json({
+        return res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         });
