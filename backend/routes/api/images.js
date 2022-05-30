@@ -41,7 +41,15 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
             err.status = 403;
             return next(err);
         }
+    } else {
+        res.status(404);
+        const err = new Error("Image couldn't be found");
+        err.message = "Image couldn't be found";
+        err.status = 404;
+        return next(err);
+    }
 
+    if (review) {
         // if (req.user.id === review.userId) {
         if ((review.id === image.reviewId) && (image.imageableType === 'Review')) {
             image.destroy();
