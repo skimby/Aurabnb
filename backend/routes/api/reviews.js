@@ -75,20 +75,29 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
 });
 // GET REVIEWS OF CURRENT USER
-router.get('/me', restoreUser, async (req, res) => {
+router.get('/me', requireAuth, async (req, res) => {
     const Reviews = await Review.findAll({
         where: {
             userId: req.user.id
         },
         include: [
-            { model: Spot },
+            {
+                model: Spot,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'description'] }
+            },
             {
                 model: Image,
+                as: 'images',
                 attributes: ['url']
+            },
+            {
+                model: User,
+                attributes: { exclude: ['isHost', 'email', 'password', 'createdAt', 'updatedAt'] }
             }]
     });
+
     res.status(200);
-    res.json({ Reviews });
+    return res.json({ Reviews });
 });
 
 
