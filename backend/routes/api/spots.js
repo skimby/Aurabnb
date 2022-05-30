@@ -89,7 +89,7 @@ const previewImage = (Spots) => {
 
 //ROUTES
 // GET ALL REVIEWS BY SPOT ID
-router.get('/:spotId/reviews', requireAuth, async (req, res) => {
+router.get('/:spotId/reviews', async (req, res) => {
     const { spotId } = req.params;
     const reviewCount = await Review.count();
 
@@ -104,13 +104,13 @@ router.get('/:spotId/reviews', requireAuth, async (req, res) => {
         {
             model: User,
             attributes: { exclude: ['isHost', 'email', 'password', 'createdAt', 'updatedAt'] }
-        },
-        {
-            model: Spot,
-            attributes: { exclude: ['description', 'createdAt', 'updatedAt',] }
-        }]
+        }
+            // {
+            //     model: Spot,
+            //     attributes: { exclude: ['description', 'createdAt', 'updatedAt',] }
+            // }
+        ]
     });
-    // console.log(reviews.dataValues.id)
 
     if (Reviews) {
         res.status(200);
