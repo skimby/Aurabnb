@@ -81,7 +81,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
         if (req.user.id === booking.userId) {
 
-            if (isClearBooking.length = 2) {
+            if (isClearBooking.length < 2) {
 
                 console.log(curDate, booking.endDate)
                 if (curDate >= booking.endDate) {
