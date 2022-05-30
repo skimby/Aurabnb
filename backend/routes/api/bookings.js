@@ -56,11 +56,7 @@ router.get('/:bookingId', async (req, res) => {
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const { bookingId } = req.params;
     const booking = await Booking.findByPk(bookingId);
-    const allBookingsForSpot = await Booking.findAll({
-        where: {
-            spotId: booking.spotId
-        }
-    });
+
     let { startDate, endDate } = req.body;
     startDate = new Date(startDate);
     endDate = new Date(endDate);
@@ -70,6 +66,12 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
 
     if (booking) {
+
+        const allBookingsForSpot = await Booking.findAll({
+            where: {
+                spotId: booking.spotId
+            }
+        });
 
         allBookingsForSpot.forEach(booking => {
             if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
