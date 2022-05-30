@@ -56,26 +56,33 @@ router.get('/:bookingId', async (req, res) => {
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const { bookingId } = req.params;
     const booking = await Booking.findByPk(bookingId);
+    const allBookingsForSpot = await Booking.findAll({
+        where: {
+            spotId: booking.spotId
+        }
+    });
     let { startDate, endDate } = req.body;
     startDate = new Date(startDate);
     endDate = new Date(endDate);
     const curDate = new Date();
 
-    let isClearBooking;
-
+    let isClearBooking = [];
+    allBookingsForSpot.forEach(booking => {
+        if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
+            isClearBooking = 'true';
+        }
+    })
 
 
     if (booking) {
+
+
         if (req.user.id === booking.userId) {
-            if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
-                isClearBooking = true;
 
-            }
+            if (isClearBooking.length = 2) {
 
-            if (!isClearBooking) {
-
-
-                if (booking.endDate <= curDate) {
+                console.log(curDate, booking.endDate)
+                if (curDate <= booking.endDate) {
                     res.status(400);
                     const err = new Error("Past bookings can't be modified");
                     err.message = "Past bookings can't be modified";
