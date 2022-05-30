@@ -30,7 +30,7 @@ router.get('/me', requireAuth, async (req, res) => {
 
 
     Bookings.forEach(booking => {
-        console.log(booking.Spot.Images)
+        // console.log(booking.Spot.Images)
         booking.dataValues.Spot.dataValues.previewImage = booking.dataValues.Spot.dataValues.Images;
         delete booking.dataValues.Spot.dataValues.Images;
 
@@ -62,28 +62,39 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     endDate = new Date(endDate);
     const curDate = new Date();
 
-    let isClearBooking = [];
+    let isClearBooking;
 
 
     if (booking) {
 
         const allBookingsForSpot = await Booking.findAll({
             where: {
-                spotId: booking.spotId
+                [Op.and]: [
+                    { spotId: booking.spotId },
+                    {
+                        id:
+                        {
+                            [Op.not]: bookingId
+                        }
+                    }
+                ]
+
             }
         });
+        console.log(allBookingsForSpot)
 
         allBookingsForSpot.forEach(booking => {
             if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
-                isClearBooking = 'true';
+                isClearBooking = true;
             }
         })
+        console.log(`isClearBooking: ${isClearBooking}`)
 
         if (req.user.id === booking.userId) {
 
-            if (isClearBooking.length < 2) {
+            if (!isClearBooking) {
 
-                console.log(curDate, booking.endDate)
+                // console.log(curDate, booking.endDate)
                 if (curDate >= booking.endDate) {
                     res.status(400);
                     const err = new Error("Past bookings can't be modified");
