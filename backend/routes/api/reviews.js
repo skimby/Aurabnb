@@ -19,7 +19,7 @@ const validateReview = [
 ];
 
 // ADD IMAGE TO REVIEW BASED ON REVIEWID
-router.post('/:reviewId/images', requireAuth, async (req, res) => {
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const { url } = req.body;
     const { reviewId } = req.params;
     const review = await Review.findByPk(reviewId);
@@ -37,10 +37,10 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         if (req.user.id === review.userId) {
             if (allReviewImagesCount >= 10) {
                 res.status(400);
-                res.json({
-                    "message": "Maximum number of images for this resource was reached",
-                    "statusCode": 400
-                })
+                const err = new Error("Maximum number of images for this resource was reached");
+                err.message = "Maximum number of images for this resource was reached";
+                err.status = 400;
+                return next(err);
             } else {
                 const image = await Image.create({
                     id: imageCount + 1,
@@ -50,7 +50,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
                     reviewId
                 });
 
-                image.dataValues.imageableId = reviewId;
+                image.dataValues.imageableId = parseInt(reviewId);
                 delete image.dataValues.spotId;
                 delete image.dataValues.reviewId;
                 delete image.dataValues.createdAt;
@@ -60,6 +60,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
                 res.json(image);
             }
         } else {
+            res.status(403)
             const err = new Error('Forbidden');
             err.message = 'Forbidden';
             err.status = 403;
@@ -67,10 +68,10 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         }
     } else {
         res.status(404);
-        res.json({
-            "message": "Review couldn't be found",
-            "statusCode": 404
-        })
+        const err = new Error("Review couldn't be found");
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        return next(err);
     }
 
 });

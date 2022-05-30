@@ -141,7 +141,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 });
 
 // DELETE A BOOKING
-router.delete('/:bookingId', requireAuth, async (req, res) => {
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const { bookingId } = req.params;
     const booking = await Booking.findOne({
         where: {
