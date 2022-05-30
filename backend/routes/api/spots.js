@@ -119,7 +119,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     }
 });
 
-// CREATE NEW REVIEW FOR SPOT BY SPOTID
+// CREATE A REVIEW FOR A SPOT BASED ON THE SPOTS ID
 router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) => {
     const { spotId } = req.params;
     const { review, stars } = req.body;
@@ -141,11 +141,10 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
             stars
         });
     } else {
-        res.status(403);
-        res.json({
-            "message": "User already has a review for this spot",
-            "statusCode": 403
-        })
+        const err = new Error("Spot couldn't be found");
+        err.status = 403;
+        err.message = "Spot couldn't be found"
+        next(err);
     }
 
     const resReview = await Review.findByPk(reviewCount + 1);
