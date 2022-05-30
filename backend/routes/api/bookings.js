@@ -72,7 +72,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
             }
 
-            if (isClearBooking) {
+            if (!isClearBooking) {
 
 
                 if (booking.endDate <= curDate) {
