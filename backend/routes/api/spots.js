@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const { Spot, Image, Review, Booking, User } = require('../../db/models');
-const spot = require('../../db/models/spot');
+
 const router = express.Router();
 
 const { Op } = require("sequelize");
@@ -91,7 +91,6 @@ const previewImage = (Spots) => {
 // GET ALL REVIEWS BY SPOT ID
 router.get('/:spotId/reviews', async (req, res) => {
     const { spotId } = req.params;
-    const reviewCount = await Review.count();
 
     const Reviews = await Review.findAll({
         where: {
@@ -268,28 +267,28 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 });
 
 // GET IMAGES OF SPOT BY SPOTID
-router.get('/:spotId/images', requireAuth, async (req, res) => {
-    const { url } = req.body;
-    const { spotId } = req.params;
+// router.get('/:spotId/images', requireAuth, async (req, res) => {
+//     const { url } = req.body;
+//     const { spotId } = req.params;
 
-    const spot = await Spot.findOne({
-        where: {
-            id: spotId
-        },
-        include: [{
-            model: Image,
-            as: 'Image'
-        }]
-    });
+//     const spot = await Spot.findOne({
+//         where: {
+//             id: spotId
+//         },
+//         include: [{
+//             model: Image,
+//             as: 'Image'
+//         }]
+//     });
 
 
-    res.status(200);
-    res.json({ Image: spot.Image });
+//     res.status(200);
+//     res.json({ Image: spot.Image });
 
-})
+// })
 
-// ADD IMAGE TO SPOT BASED ON SPOTID
-router.post('/:spotId/images', requireAuth, async (req, res) => {
+// ADD AN IMAGE TO SPOT BASED ON SPOTID
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const { url } = req.body;
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
@@ -297,26 +296,26 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
     if (spot) {
         if (req.user.id === spot.ownerId) {
-            if (spot) {
-                const image = await Image.create({
-                    id: imageCount + 1,
-                    imageableType: 'Spot',
-                    url,
-                    spotId,
-                    reviewId: null
-                });
 
-                if (image.spotId) {
-                    image.dataValues.imageableId = spotId;
-                    delete image.dataValues.spotId;
-                    delete image.dataValues.reviewId;
-                    delete image.dataValues.createdAt;
-                    delete image.dataValues.updatedAt;
-                }
+            const image = await Image.create({
+                id: imageCount + 1,
+                imageableType: 'Spot',
+                url,
+                spotId,
+                reviewId: null
+            });
 
-                res.status(200);
-                res.json(image);
+            if (image.spotId) {
+                image.dataValues.imageableId = parseInt(spotId);
+                delete image.dataValues.spotId;
+                delete image.dataValues.reviewId;
+                delete image.dataValues.createdAt;
+                delete image.dataValues.updatedAt;
             }
+
+            res.status(200);
+            res.json(image);
+
         } else {
             const err = new Error('Forbidden');
             err.message = 'Forbidden';
@@ -324,11 +323,11 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             return next(err);
         }
     } else {
-        res.status(404);
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
+        res.status(404)
+        const err = new Error("Spot couldn't be found");
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        next(err);
     }
 });
 
