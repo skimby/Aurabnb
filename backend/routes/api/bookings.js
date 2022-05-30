@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 
-// GET CURRENT USER BOOKINGS
+// GET ALL OF THE CURRENT USERS BOOKING
 router.get('/me', requireAuth, async (req, res) => {
     const Bookings = await Booking.findAll({
         where: {
@@ -20,14 +20,24 @@ router.get('/me', requireAuth, async (req, res) => {
         },
         include: {
             model: Spot,
+            attributes: { exclude: ['description', 'createdAt', 'updatedAt'] },
             include: {
-                model: Image, as: 'previewImage',
+                model: Image,
                 attributes: ['url']
             },
         }
     })
+
+
+    Bookings.forEach(booking => {
+        console.log(booking.Spot.Images)
+        booking.dataValues.Spot.dataValues.previewImage = booking.dataValues.Spot.dataValues.Images;
+        delete booking.dataValues.Spot.dataValues.Images;
+
+    })
+
     res.status(200);
-    res.json({ Bookings });
+    return res.json({ Bookings });
 });
 
 // GET A BOOKING BY ID
