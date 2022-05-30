@@ -163,12 +163,12 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
 });
 
 // GET ALL BOOKINGS FROM SPOT BASED ON SPOT ID
-router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
     const spotCount = await Spot.count();
 
-    if (spot && (spot <= spotCount)) {
+    if (spot) {
         if (req.user.id !== spot.ownerId) {
             res.status(200);
             const Bookings = await Booking.findOne({
@@ -193,11 +193,11 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
             res.json({ Bookings })
         }
     } else {
-        res.status(404);
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
+        res.status(404)
+        const err = new Error("Spot couldn't be found");
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        next(err);
     }
 })
 
