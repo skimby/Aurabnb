@@ -104,17 +104,12 @@ router.get('/:spotId/reviews', async (req, res) => {
         {
             model: User,
             attributes: { exclude: ['isHost', 'email', 'password', 'createdAt', 'updatedAt'] }
-        }
-            // {
-            //     model: Spot,
-            //     attributes: { exclude: ['description', 'createdAt', 'updatedAt',] }
-            // }
-        ]
+        }]
     });
-
-    if (Reviews) {
+    console.log(Reviews.length)
+    if (Reviews.length > 0) {
         res.status(200);
-        res.json({ Reviews });
+        return res.json({ Reviews });
     } else {
         res.status(404);
         return res.json({
