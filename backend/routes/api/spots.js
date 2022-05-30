@@ -178,7 +178,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 attributes:
                     ['spotId', 'startDate', 'endDate']
             });
-            res.json({ Bookings })
+            return res.json({ Bookings })
         } else {
             res.status(200);
             const Bookings = await Booking.findOne({
@@ -190,7 +190,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                     spotId: spot.id
                 }
             });
-            res.json({ Bookings })
+            return res.json({ Bookings })
         }
     } else {
         res.status(404)
@@ -202,54 +202,48 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 })
 
 // CREATE A BOOKING FROM A SPOT BASED ON THE SPOT'S ID
-router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
-    const spotCount = await Spot.count();
     const bookingCount = await Booking.count();
-    const { id, userId, startDate, endDate } = req.body;
+    let { startDate, endDate } = req.body;
 
-    const isClearBooking = await Booking.findAll({
+    const userId = req.user.id;
+    const bookingsForSpot = await Booking.findAll({
         where: {
-            //[Op.lte]: startDate
-            //[Op.gte]: endDate
-            [Op.or]: [
-                {
-                    startDate: {
-                        [Op.between]: [startDate, endDate]
-                    }
-                },
-                {
-                    endDate: {
-                        [Op.between]: [startDate, endDate]
-                    }
-                },
-            ]
+            spotId
         }
     });
 
-    if (isClearBooking) {
-        res.status(403);
-        res.json({
-            "message": "Sorry, this spot is already booked for the specified dates",
-            "statusCode": 403,
-            "errors": {
-                "startDate": "Start date conflicts with an existing booking",
-                "endDate": "End date conflicts with an existing booking"
-            }
-        });
-    } else {
-        if (spot && (spot <= spotCount)) {
-            res.status(404)
-            res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
-            })
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+
+    let isClearBooking;
+
+    bookingsForSpot.forEach(booking => {
+        if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
+
+            isClearBooking = true;
+        }
+    })
+
+    if (spot) {
+        if (isClearBooking) {
+            res.status(403);
+            const err = new Error("Sorry, this spot is already booked for the specified dates");
+            err.message = "Sorry, this spot is already booked for the specified dates";
+            err.errors = {
+                startDate: "Start date conflicts with an existing booking",
+                endDate: "End date conflicts with an existing booking"
+            };
+            err.status = 403;
+            next(err);
+
         } else {
-            if (req.user.id !== spot.id) {
+            if (req.user.id !== spot.ownerId) {
                 const booking = await Booking.create({
                     id: bookingCount + 1,
-                    spotId,
+                    spotId: parseInt(spotId),
                     userId,
                     startDate,
                     endDate
@@ -262,9 +256,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                 err.status = 403;
                 return next(err);
             }
-        }
-    }
 
+        }
+    } else {
+        res.status(404)
+        const err = new Error("Spot couldn't be found");
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        next(err);
+    }
 });
 
 // GET IMAGES OF SPOT BY SPOTID
