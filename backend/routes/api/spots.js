@@ -408,7 +408,7 @@ router.get('/:spotId', async (req, res) => {
 });
 
 // EDIT A SPOT
-router.put('/:spotId', restoreUser, validateSpot, async (req, res, next) => {
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const { spotId } = req.params;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
@@ -428,7 +428,7 @@ router.put('/:spotId', restoreUser, validateSpot, async (req, res, next) => {
 
             await spot.save();
             res.status(200);
-            res.json(spot);
+            return res.json(spot);
         } else {
             const err = new Error('Forbidden');
             err.message = 'Forbidden';
@@ -437,7 +437,7 @@ router.put('/:spotId', restoreUser, validateSpot, async (req, res, next) => {
         }
     } else {
         res.status(404);
-        res.json({
+        return res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
@@ -445,7 +445,7 @@ router.put('/:spotId', restoreUser, validateSpot, async (req, res, next) => {
 });
 
 // DELETE SPOT BY ID
-router.delete('/:spotId', restoreUser, async (req, res) => {
+router.delete('/:spotId', requireAuth, async (req, res) => {
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
 
