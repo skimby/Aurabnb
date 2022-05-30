@@ -53,74 +53,115 @@ router.get('/:bookingId', async (req, res) => {
 })
 
 // EDIT A BOOKING
-router.put('/:bookingId', requireAuth, async (req, res) => {
+router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const { bookingId } = req.params;
-    const booking = await Booking.findOne({
-        where: {
-            id: bookingId
-        }
-    });
-    const { startDate, endDate } = req.body;
-    const bookingCount = await Booking.count();
-    const date = new Date();
-    const isBookedBooking = await Booking.findAll({
-        where: {
-            [Op.or]: [{
-                startDate: {
-                    [Op.between]: [startDate, endDate]
-                }
-            },
-            {
-                endDate: {
-                    [Op.between]: [startDate, endDate]
-                }
-            }
-            ]
-        }
-    })
+    const booking = await Booking.findByPk(bookingId);
+    let { startDate, endDate } = req.body;
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+    const curDate = new Date();
 
-    if (booking && (booking.id <= bookingCount)) {
-        if (booking.endDate >= date) {
-            console.log('2 hit')
-            res.status(400);
-            res.json({
-                "message": "Past bookings can't be modified",
-                "statusCode": 400
-            })
-        } else {
-            if (isBookedBooking) {
-                res.status(403);
-                res.json({
-                    "message": "Sorry, this spot is already booked for the specified dates",
-                    "statusCode": 403,
-                    "errors": {
-                        "startDate": "Start date conflicts with an existing booking",
-                        "endDate": "End date conflicts with an existing booking"
-                    }
-                })
-            } else {
-                if (req.user.id === booking.userId) {
+    let isClearBooking;
+
+
+
+    if (booking) {
+        if (req.user.id === booking.userId) {
+            if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
+                isClearBooking = true;
+
+            }
+
+            if (isClearBooking) {
+
+
+                if (booking.endDate <= curDate) {
+                    res.status(400);
+                    const err = new Error("Past bookings can't be modified");
+                    err.message = "Past bookings can't be modified";
+                    err.status = 400;
+                    return next(err);
+
+                } else {
                     booking.startDate = startDate;
                     booking.endDate = endDate;
                     await booking.save();
 
                     res.status(200);
-                    res.json(booking);
-                } else {
-                    const err = new Error('Forbidden');
-                    err.message = 'Forbidden';
-                    err.status = 403;
-                    return next(err);
+                    return res.json(booking);
+
                 }
+            } else {
+                res.status(403);
+                const err = new Error("Sorry, this spot is already booked for the specified dates");
+                err.message = "Sorry, this spot is already booked for the specified dates";
+                err.status = 403;
+                err.errors = {
+                    startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"
+                }
+                return next(err);
             }
+
+        } else {
+            const err = new Error('Forbidden');
+            err.message = 'Forbidden';
+            err.status = 403;
+            return next(err);
         }
+
     } else {
-        res.status(404);
-        res.json({
-            "message": "Booking couldn't be found",
-            "statusCode": 404
-        })
+        res.status(404)
+        const err = new Error("Booking couldn't be found");
+        err.message = "Booking couldn't be found";
+        err.status = 404;
+        return next(err);
     }
+
+
+
+    //     if (isClearBooking) {
+    //         if (booking.endDate >= date) {
+    //             console.log('2 hit')
+    //             res.status(400);
+    //             res.json({
+    //                 "message": "Past bookings can't be modified",
+    //                 "statusCode": 400
+    //             })
+    //         } else {
+    //             if (isBookedBooking) {
+    //                 res.status(403);
+    //                 res.json({
+    //                     "message": "Sorry, this spot is already booked for the specified dates",
+    //                     "statusCode": 403,
+    //                     "errors": {
+    //                         "startDate": "Start date conflicts with an existing booking",
+    //                         "endDate": "End date conflicts with an existing booking"
+    //                     }
+    //                 })
+    //             } else {
+    //                 if (req.user.id === booking.userId) {
+    //                     booking.startDate = startDate;
+    //                     booking.endDate = endDate;
+    //                     await booking.save();
+
+    //                     res.status(200);
+    //                     res.json(booking);
+    //                 } else {
+    //                     const err = new Error('Forbidden');
+    //                     err.message = 'Forbidden';
+    //                     err.status = 403;
+    //                     return next(err);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         res.status(404);
+    //         res.json({
+    //             "message": "Booking couldn't be found",
+    //             "statusCode": 404
+    //         })
+    // }
 });
 
 // DELETE A BOOKING
