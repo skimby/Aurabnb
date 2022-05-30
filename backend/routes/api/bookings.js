@@ -67,15 +67,15 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const curDate = new Date();
 
     let isClearBooking = [];
-    allBookingsForSpot.forEach(booking => {
-        if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
-            isClearBooking = 'true';
-        }
-    })
 
 
     if (booking) {
 
+        allBookingsForSpot.forEach(booking => {
+            if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
+                isClearBooking = 'true';
+            }
+        })
 
         if (req.user.id === booking.userId) {
 
