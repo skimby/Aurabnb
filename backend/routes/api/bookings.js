@@ -82,7 +82,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             if (isClearBooking.length = 2) {
 
                 console.log(curDate, booking.endDate)
-                if (curDate <= booking.endDate) {
+                if (curDate >= booking.endDate) {
                     res.status(400);
                     const err = new Error("Past bookings can't be modified");
                     err.message = "Past bookings can't be modified";
