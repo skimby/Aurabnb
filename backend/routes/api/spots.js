@@ -180,7 +180,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             return res.json({ Bookings })
         } else {
             res.status(200);
-            const Bookings = await Booking.findOne({
+            const Bookings = await Booking.findAll({
                 include: [{
                     model: User,
                     attributes: ['id', 'firstName', 'lastName']
