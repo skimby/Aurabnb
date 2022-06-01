@@ -170,7 +170,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     if (spot) {
         if (req.user.id !== spot.ownerId) {
             res.status(200);
-            const Bookings = await Booking.findOne({
+            const Bookings = await Booking.findAll({
                 where: {
                     spotId: spot.id
                 },
