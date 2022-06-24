@@ -38,6 +38,26 @@ export const loginUser = (payload) => async (dispatch) => {
     }
 }
 
+export const restoreUser = () => async (dispatch) => {
+    const res = await csrfFetch('/session');
+    const parsedRes = await res.json();
+    dispatch(setUser(parsedRes.user));
+    return res;
+}
+
+export const signUp = (user) => async (dispatch) => {
+    const res = await csrfFetch('/users/signUp', {
+        method: 'POST',
+        body: JSON.stringify(user)
+    });
+    if (res.ok) {
+        const parsedRes = await res.json();
+        console.log(parsedRes)
+        dispatch(setUser(parsedRes))
+        return parsedRes;
+    }
+}
+
 // INITIAL STATE
 const initialState = {
     user: null
