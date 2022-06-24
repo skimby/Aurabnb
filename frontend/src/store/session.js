@@ -20,13 +20,8 @@ export const removeUser = () => {
 
 // THUNK ACTIONS
 export const loginUser = (payload) => async (dispatch) => {
-    //where do we use the csrfFetch function ?
-
     const res = await csrfFetch('/users/login', {
         method: 'POST',
-        // headers: {
-        //     'Content-Type': 'application/json'
-        // },
         body: JSON.stringify(payload)
     });
 
@@ -45,18 +40,37 @@ export const restoreUser = () => async (dispatch) => {
     return res;
 }
 
-export const signUp = (user) => async (dispatch) => {
-    const res = await csrfFetch('/users/signUp', {
-        method: 'POST',
-        body: JSON.stringify(user)
+// how to catch backend errors
+export const signup = (user) => async (dispatch) => {
+    const { firstName, lastName, email, password } = user;
+    const response = await csrfFetch("/users/signup", {
+        method: "POST",
+        body: JSON.stringify({ firstName, lastName, email, password }),
     });
-    if (res.ok) {
-        const parsedRes = await res.json();
-        console.log(parsedRes)
-        dispatch(setUser(parsedRes))
-        return parsedRes;
-    }
-}
+    const data = await response.json();
+    dispatch(setUser(data));
+    return response;
+};
+
+// export const signup = ({ firstName, lastName, email, password }) => async (dispatch) => {
+//     // const { email, password } = user;
+
+//     const res = await csrfFetch('/users/signUp', {
+//         method: "POST",
+//         body: JSON.stringify({
+//             firstName,
+//             lastName,
+//             email,
+//             password
+//         })
+//     });
+//     if (res.ok) {
+//         const parsedRes = await res.json();
+//         // console.log(parsedRes)
+//         dispatch(setUser(parsedRes))
+//         return parsedRes;
+//     }
+// }
 
 // INITIAL STATE
 const initialState = {

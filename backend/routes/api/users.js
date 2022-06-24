@@ -123,7 +123,7 @@ const validateSignup = [
 ];
 
 // SIGN UP
-router.post('/signUp', validateSignup, async (req, res, next) => {
+router.post('/signup', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
     const ifDuplicateEmail = await User.findOne(
