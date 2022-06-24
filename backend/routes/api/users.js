@@ -7,6 +7,9 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+//redux imports
+// import { useDispatch } from 'react-redux'
+// import { setSessionUser } from '../../../frontend/src/store/session';
 
 
 const router = express.Router();
@@ -85,6 +88,7 @@ router.post('/login', validateLogin,
 
         //setting token cookie with the data you get logging in
         await setTokenCookie(res, user);
+        // setSessionUser(user);
 
         return res.json({
             id: user.id,

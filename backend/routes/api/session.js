@@ -24,7 +24,7 @@ const router = express.Router();
 
 
 
-// //login attempt, if user with req credentials and password exists, then set the cookie token
+//login attempt, if user with req credentials and password exists, then set the cookie token
 // router.post('/', validateLogin, async (req, res, next) => {
 //     const { credential, password } = req.body;
 
