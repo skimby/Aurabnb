@@ -24,6 +24,7 @@ export const loginUser = (payload) => async (dispatch) => {
         method: 'POST',
         body: JSON.stringify(payload)
     });
+    console.log(res)
 
     if (res.ok) {
         const parsedRes = await res.json();
@@ -35,6 +36,7 @@ export const loginUser = (payload) => async (dispatch) => {
 
 export const restoreUser = () => async (dispatch) => {
     const res = await csrfFetch('/session');
+    console.log(res)
     const parsedRes = await res.json();
     dispatch(setUser(parsedRes.user));
     return res;
@@ -51,26 +53,6 @@ export const signup = (user) => async (dispatch) => {
     dispatch(setUser(data));
     return response;
 };
-
-// export const signup = ({ firstName, lastName, email, password }) => async (dispatch) => {
-//     // const { email, password } = user;
-
-//     const res = await csrfFetch('/users/signUp', {
-//         method: "POST",
-//         body: JSON.stringify({
-//             firstName,
-//             lastName,
-//             email,
-//             password
-//         })
-//     });
-//     if (res.ok) {
-//         const parsedRes = await res.json();
-//         // console.log(parsedRes)
-//         dispatch(setUser(parsedRes))
-//         return parsedRes;
-//     }
-// }
 
 export const logout = () => async (dispatch) => {
     const res = await csrfFetch("/session", {

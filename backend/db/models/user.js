@@ -9,8 +9,9 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
       //this = context will be the User instance
-      const { id, email } = this;
-      return { id, email };
+      //*** i added the firstName and lastName to return for the front end. */
+      const { id, firstName, lastName, email } = this;
+      return { id, firstName, lastName, email };
     }
     validatePassword(password) {
       //compare input password hashed to the user instance hashed password
