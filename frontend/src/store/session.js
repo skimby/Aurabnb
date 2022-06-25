@@ -40,7 +40,7 @@ export const restoreUser = () => async (dispatch) => {
     return res;
 }
 
-// how to catch backend errors
+// how to catch backend errors?
 export const signup = (user) => async (dispatch) => {
     const { firstName, lastName, email, password } = user;
     const response = await csrfFetch("/users/signup", {
@@ -71,6 +71,14 @@ export const signup = (user) => async (dispatch) => {
 //         return parsedRes;
 //     }
 // }
+
+export const logout = () => async (dispatch) => {
+    const res = await csrfFetch("/session", {
+        method: 'DELETE'
+    });
+    dispatch(removeUser());
+    return res;
+}
 
 // INITIAL STATE
 const initialState = {

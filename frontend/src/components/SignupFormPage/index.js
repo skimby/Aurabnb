@@ -15,21 +15,22 @@ const SignupFormPage = () => {
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [firstName, lastName, password, passwordConfirm])
+    // }, [firstName, lastName, password, passwordConfirm])
 
     if (sessionUser) return <Redirect to='/' />
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         if (password === passwordConfirm) {
             setErrors([]);
             return dispatch(sessionActions.signup({ firstName, lastName, email, password }))
                 //this is not catching and stopping errors.. why?
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
+                    // console.log(data)
                     if (data && data.errors) setErrors(data.errors);
                 });
         }
