@@ -7,6 +7,11 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+//redux imports
+// import { useDispatch } from 'react-redux'
+// import { setSessionUser } from '../../../frontend/src/store/session';
+
+
 const router = express.Router();
 
 
@@ -74,12 +79,15 @@ router.post('/login', validateLogin,
             const err = new Error("Invalid credentials");
             err.message = "Invalid credentials";
             err.status = 401;
+            err.errors = ['The provided credentials were invalid.'];
+
             return next(err);
 
         }
 
         //setting token cookie with the data you get logging in
         await setTokenCookie(res, user);
+        // setSessionUser(user);
 
         res.status(200)
         return res.json({
@@ -114,8 +122,8 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-// SIGN UP A USER
-router.post('/signUp', validateSignup, async (req, res, next) => {
+// SIGN UP
+router.post('/signup', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
     const ifDuplicateEmail = await User.findOne(

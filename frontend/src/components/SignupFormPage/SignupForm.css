@@ -1,0 +1,21 @@
+a {
+    color: #ff385c;
+}
+
+form {
+    display: block;
+    margin: 0 auto;
+}
+
+input {
+    display: block;
+}
+
+button {
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    padding: 2%;
+    display: block;
+    border-radius: 5px;
+}

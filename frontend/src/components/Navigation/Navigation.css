@@ -1,0 +1,21 @@
+.nav-bar {
+    border: 1px solid #dfdfdf;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    padding: 2%;
+}
+
+li {
+    padding: 0 2%;
+}
+
+.user-button {
+    background-color: #ff385c;
+}
