@@ -27,13 +27,15 @@ const Navigation = ({ isLoaded }) => {
 
     return (
         //always return a navlink to the home page
-        <ul>
-            <li>
-                <NavLink exact to="/">Home</NavLink>
-                {/* what is this doing?  */}
-                {isLoaded && sessionLinks}
-            </li>
-        </ul>
+        <div className="nav-bar">
+            <ul>
+                <li>
+                    <NavLink exact to="/">Home</NavLink>
+                    {/* *** what is this doing?  */}
+                    {isLoaded && sessionLinks}
+                </li>
+            </ul>
+        </div>
     );
 }
 

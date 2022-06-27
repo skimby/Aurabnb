@@ -1,14 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../../store/session";
 import { Redirect } from "react-router-dom";
 import './LoginForm.css';
+import * as sessionActions from '../../store/session';
+
 
 const LoginFormPage = () => {
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
+    const [errors, setErrors] = useState([]);
 
 
     if (sessionUser) return (
@@ -17,20 +19,31 @@ const LoginFormPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const user = { email, password }
-        dispatch(setUser(user));
+        setErrors([]);
 
+
+        //*** i think the problem is here: never throws an error
+        return dispatch(sessionActions.login({ email, password }))
+            .catch(async (res) => {
+                // console.log('catching error')
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
     }
 
+    // console.log('errors' + errors)
     return (
         <>
             <h1>Welcome to Airbnb</h1>
             <form onSubmit={handleSubmit} >
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
                 <label>
 
                     <input
                         type='text'
-                        placeholder="country/region"
+                        placeholder="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required />

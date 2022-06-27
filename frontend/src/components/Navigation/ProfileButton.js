@@ -25,13 +25,15 @@ function ProfileButton({ user }) {
             setShowMenu(false);
         };
 
-        //if the document is cloicked, call closeMenu function
+        //if the document is clicked, call closeMenu function
         document.addEventListener('click', closeMenu);
 
         //return cb function that removes event listener ???
+        //just want the event listened to take effect once and then stop
         return () => document.removeEventListener("click", closeMenu);
     }, [showMenu]);
 
+    //logout function, executed with 'logout' button is clicked
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout());
@@ -39,9 +41,12 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <button onClick={openMenu}>
-                <i className="fa-solid fa-user">Open Menu</i>
-            </button>
+            <div>
+                <button className='user-button' onClick={openMenu}>
+                    <i className="fa-solid fa-user">Open Menu</i>
+                </button>
+            </div>
+            {/* *** */}
             {showMenu && (
                 <ul className="profile-dropdown">
                     <li>{user.firstName}</li>

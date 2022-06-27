@@ -19,24 +19,38 @@ export const removeUser = () => {
 }
 
 // THUNK ACTIONS
-export const loginUser = (payload) => async (dispatch) => {
-    const res = await csrfFetch('/users/login', {
+export const login = (user) => async (dispatch) => {
+    const { email, password } = user;
+    const response = await csrfFetch('/users/login', {
         method: 'POST',
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+            email,
+            password,
+        }),
     });
-    console.log(res)
 
-    if (res.ok) {
-        const parsedRes = await res.json();
-        console.log(parsedRes)
-        dispatch(setUser(parsedRes))
-        return parsedRes;
-    }
-}
+    // if (response.statusCode === 401) {
+    //     const data = await response.json();
+    //     console.log(data)
+    //     dispatch(setUser(data));
+    //     return response;
+    // } else {
+    //     throw new Error();
+    // }
+
+    const data = await response.json();
+    dispatch(setUser(data));
+    //errors give me a payload of undefined ***
+    console.log(data)
+    return response;
+
+
+};
+
 
 export const restoreUser = () => async (dispatch) => {
     const res = await csrfFetch('/session');
-    console.log(res)
+    // console.log(res)
     const parsedRes = await res.json();
     dispatch(setUser(parsedRes.user));
     return res;
@@ -74,6 +88,7 @@ const sessionReducer = (state = initialState, action) => {
             const setUserState = { ...state };
             setUserState.user = action.payload;
             return setUserState;
+
         case REMOVE_USER:
             return initialState;
         default:
