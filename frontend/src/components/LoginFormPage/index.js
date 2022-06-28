@@ -12,7 +12,6 @@ const LoginFormPage = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
-
     if (sessionUser) return (
         <Redirect to='/' />
     )
@@ -20,18 +19,16 @@ const LoginFormPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-
-
         //*** i think the problem is here: never throws an error
         return dispatch(sessionActions.login({ email, password }))
             .catch(async (res) => {
                 // console.log('catching error')
                 const data = await res.json();
+                console.log('hello world');
                 if (data && data.errors) setErrors(data.errors);
             });
     }
 
-    // console.log('errors' + errors)
     return (
         <>
             <h1>Welcome to Airbnb</h1>

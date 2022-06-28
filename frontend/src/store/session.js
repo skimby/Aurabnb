@@ -39,10 +39,12 @@ export const login = (user) => async (dispatch) => {
     // }
 
     const data = await response.json();
-    dispatch(setUser(data));
+    if (data.id) {
+        dispatch(setUser(data));
+    }
     //errors give me a payload of undefined ***
-    // console.log(data)
-    return response;
+    console.log(data)
+    return data;
 
 
 };

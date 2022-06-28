@@ -14,7 +14,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// GET CURRENT USER
+
 // GET /api/set-token-cookie
 // const { setTokenCookie } = require('../../utils/auth.js');
 // const { User } = require('../../db/models');
@@ -23,7 +23,7 @@ router.get('/set-token-cookie', async (_req, res) => {
     const user = await User.findOne({
         // attributes: { exclude: ['isHost', 'createdAt', 'updatedAt'] },
         where: {
-            email: 'ladygaga@gmail.com'
+            email: 'amytan@gmail.com'
         },
 
     });
@@ -31,7 +31,7 @@ router.get('/set-token-cookie', async (_req, res) => {
     return res.json({ user });
 });
 
-// GET CURRENT USER
+
 // GET /api/restore-user
 const { restoreUser } = require('../../utils/auth.js');
 router.get('/restore-user', restoreUser, (req, res) => {
@@ -61,7 +61,7 @@ router.get('/me', requireAuth, (req, res) => {
 const validateLogin = [
     check('email')
         .exists({ checkFalsy: true })
-        .notEmpty()
+        // .notEmpty()
         .withMessage("Email is required"),
     check('password')
         .exists({ checkFalsy: true })
@@ -73,7 +73,6 @@ const validateLogin = [
 router.post('/login', validateLogin,
     async (req, res, next) => {
         const { email, password } = req.body;
-
         const user = await User.login({ email, password });
 
         if (!user) {
@@ -90,6 +89,7 @@ router.post('/login', validateLogin,
         await setTokenCookie(res, user);
         // setSessionUser(user);
 
+        res.status(200)
         return res.json({
             id: user.id,
             firstName: user.firstName,
@@ -102,7 +102,7 @@ router.post('/login', validateLogin,
     }
 );
 
-// SIGN UP
+
 //express validator //this only tests the inputs
 const validateSignup = [
     check('firstName')
@@ -136,7 +136,7 @@ router.post('/signup', validateSignup, async (req, res, next) => {
     //otherwise ...
     if (ifDuplicateEmail) {
         const err = new Error('User already exists');
-        err.message = 'User already exists';
+        // err.message = 'User already exists';
         err.status = 403;
         err.errors = { email: "User with that email already exists" };
         next(err);
@@ -147,6 +147,7 @@ router.post('/signup', validateSignup, async (req, res, next) => {
 
         res.status(200);
         return res.json({
+            id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -156,14 +157,14 @@ router.post('/signup', validateSignup, async (req, res, next) => {
 }
 );
 
-// ERROR MIDDLEWARE
-router.use((err, _req, res, _next) => {
-    res.json({
-        message: err.message,
-        statusCode: err.status,
-        errors: err.errors,
-    });
-});
+// // ERROR MIDDLEWARE
+// router.use((err, _req, res, _next) => {
+//     res.json({
+//         message: err.message,
+//         statusCode: err.status,
+//         errors: err.errors,
+//     });
+// });
 
 
 
