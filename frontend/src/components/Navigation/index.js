@@ -3,6 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react-redux";
 import * as sessionActions from '../../store/session';
+import logo from '../../images/airbnb.png';
 import './Navigation.css'
 
 
@@ -10,6 +11,7 @@ import './Navigation.css'
 const Navigation = ({ isLoaded }) => {
     //setting the current session of user (logged in or not)
     const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
 
     //set sessionLinks variable
     let sessionLinks;
@@ -28,8 +30,9 @@ const Navigation = ({ isLoaded }) => {
         );
     }
     const handleClick = () => {
-        // sessionActions.restoreUser();
-        <Redirect to='/' />
+        dispatch(sessionActions.demoUser());
+        console.log('clicked?')
+        // <Redirect to='/' />
     }
 
     return (
@@ -37,9 +40,12 @@ const Navigation = ({ isLoaded }) => {
         <div className="nav-bar">
             <ul>
                 <li>
-                    <NavLink exact to="/">Home</NavLink>
-                    {/* *** what is this doing?  */}
-                    {isLoaded && sessionLinks}
+                    <div className='logo-box'>
+                        <img src={logo} alt='airbnb logo' />
+                        <NavLink exact to="/">Home</NavLink>
+                        {/* *** what is this doing?  */}
+                        {isLoaded && sessionLinks}
+                    </div>
                 </li>
 
                 <NavLink to="/">

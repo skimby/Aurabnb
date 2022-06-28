@@ -152,13 +152,19 @@ router.post('/signup', validateSignup, async (req, res, next) => {
 }
 );
 
-router.get('/demoUser', (req, res) => {
-    const user = User.login({ email: 'amytan@gmail.com', password: 'password1' });
+router.get('/demoUser', async (req, res) => {
+    const user = await User.login({ email: 'amytan@gmail.com', password: 'password1' });
 
+    // console.log(user)
     setTokenCookie(res, user);
     res.status(200);
-    console.log(user)
-    return res.json(user);
+    return res.json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        token: req.cookies.token
+    });
 })
 
 // // ERROR MIDDLEWARE

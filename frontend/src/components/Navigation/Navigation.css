@@ -1,6 +1,9 @@
 .nav-bar {
+    display: flex;
+    align-items: flex-start;
     border: 1px solid #dfdfdf;
     margin: 0;
+
 }
 
 body {
@@ -18,4 +21,8 @@ li {
 
 .user-button {
     background-color: #ff385c;
+}
+
+.logo-box {
+    /* width: 50px; */
 }
