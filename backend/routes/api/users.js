@@ -157,14 +157,14 @@ router.post('/signup', validateSignup, async (req, res, next) => {
 }
 );
 
-// ERROR MIDDLEWARE
-router.use((err, _req, res, _next) => {
-    res.json({
-        message: err.message,
-        statusCode: err.status,
-        errors: err.errors,
-    });
-});
+// // ERROR MIDDLEWARE
+// router.use((err, _req, res, _next) => {
+//     res.json({
+//         message: err.message,
+//         statusCode: err.status,
+//         errors: err.errors,
+//     });
+// });
 
 
 

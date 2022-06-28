@@ -5,15 +5,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import './index.css';
 import App from './App';
 import configureStore from './store';
-<<<<<<< HEAD
-
-const store = configureStore();
-
-if (process.env.NODE_ENV !== "production") {
-  window.store = store;
-}
-
-=======
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 
@@ -31,7 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
 //   window.store = store;
 // }
 
->>>>>>> dev
 function Root() {
   return (
     <ReduxProvider store={store}>
