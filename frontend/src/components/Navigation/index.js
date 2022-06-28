@@ -1,7 +1,10 @@
 import ProfileButton from "./ProfileButton";
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react-redux";
+import * as sessionActions from '../../store/session';
 import './Navigation.css'
+
 
 //passing in the isLoaded state which should be true
 const Navigation = ({ isLoaded }) => {
@@ -24,6 +27,10 @@ const Navigation = ({ isLoaded }) => {
             </>
         );
     }
+    const handleClick = () => {
+        // sessionActions.restoreUser();
+        <Redirect to='/' />
+    }
 
     return (
         //always return a navlink to the home page
@@ -34,6 +41,10 @@ const Navigation = ({ isLoaded }) => {
                     {/* *** what is this doing?  */}
                     {isLoaded && sessionLinks}
                 </li>
+
+                <NavLink to="/">
+                    <button onClick={handleClick}>Demo User</button>
+                </NavLink>
             </ul>
         </div>
     );

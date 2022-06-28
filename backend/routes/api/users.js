@@ -7,11 +7,6 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-//redux imports
-// import { useDispatch } from 'react-redux'
-// import { setSessionUser } from '../../../frontend/src/store/session';
-
-
 const router = express.Router();
 
 
@@ -156,6 +151,15 @@ router.post('/signup', validateSignup, async (req, res, next) => {
     }
 }
 );
+
+router.get('/demoUser', (req, res) => {
+    const user = User.login({ email: 'amytan@gmail.com', password: 'password1' });
+
+    setTokenCookie(res, user);
+    res.status(200);
+    console.log(user)
+    return res.json(user);
+})
 
 // // ERROR MIDDLEWARE
 // router.use((err, _req, res, _next) => {

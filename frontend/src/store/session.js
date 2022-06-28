@@ -78,6 +78,15 @@ export const logout = () => async (dispatch) => {
     return res;
 }
 
+// DEMO USER
+export const demoUser = () => async (dispatch) => {
+    const res = await csrfFetch('/users/demoUser');
+    const parsedRes = res.json();
+    console.log(parsedRes)
+    dispatch(setUser(parsedRes));
+    return parsedRes;
+}
+
 // INITIAL STATE
 const initialState = {
     user: null
