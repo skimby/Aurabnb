@@ -1,9 +1,8 @@
 .nav-bar {
-    display: flex;
-    align-items: flex-start;
     border: 1px solid #dfdfdf;
     margin: 0;
-
+    width: 100%;
+    padding: 2%;
 }
 
 body {
@@ -12,11 +11,20 @@ body {
 }
 
 ul {
-    padding: 2%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 li {
     padding: 0 2%;
+    list-style-type: none;
+    justify-content: flex-start;
+    align-items: center;
+
 }
 
 .user-button {
@@ -24,5 +32,10 @@ li {
 }
 
 .logo-box {
-    /* width: 50px; */
+    width: 110px;
+    align-items: center;
+}
+
+.demo-user-box {
+    align-items: center;
 }

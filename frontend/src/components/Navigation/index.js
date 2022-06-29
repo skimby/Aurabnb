@@ -3,7 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react-redux";
 import * as sessionActions from '../../store/session';
-import logo from '../../images/airbnb.png';
+import logo from '../../images/airbnb-logo.png';
 import './Navigation.css'
 
 
@@ -40,17 +40,26 @@ const Navigation = ({ isLoaded }) => {
         <div className="nav-bar">
             <ul>
                 <li>
-                    <div className='logo-box'>
-                        <img src={logo} alt='airbnb logo' />
-                        <NavLink exact to="/">Home</NavLink>
-                        {/* *** what is this doing?  */}
-                        {isLoaded && sessionLinks}
-                    </div>
+                    <NavLink exact to="/">
+                        <div className='logo-box'>
+                            <img src={logo} alt='airbnb logo' width='100%' />
+                        </div>
+                    </NavLink>
+                    {isLoaded && sessionLinks}
                 </li>
 
-                <NavLink to="/">
-                    <button onClick={handleClick}>Demo User</button>
-                </NavLink>
+                {/* <li> */}
+                {/* <NavLink exact to="/">Home</NavLink> */}
+                {/* *** what is this doing?  */}
+                {/* {isLoaded && sessionLinks} */}
+                {/* </li> */}
+                <li>
+                    <NavLink to="/">
+                        <div className='demo-user-box'>
+                            <button onClick={handleClick}>Demo User</button>
+                        </div>
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );
