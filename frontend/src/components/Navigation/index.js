@@ -9,7 +9,7 @@ import './Navigation.css'
 
 //passing in the isLoaded state which should be true
 const Navigation = ({ isLoaded }) => {
-    //setting the current session of user (logged in or not)
+
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
 
@@ -31,23 +31,28 @@ const Navigation = ({ isLoaded }) => {
     }
     const handleClick = () => {
         dispatch(sessionActions.demoUser());
-        console.log('clicked?')
-        // <Redirect to='/' />
+
+        <Redirect to='/' />
     }
 
     return (
         //always return a navlink to the home page
         <div className="nav-bar">
-            <ul>
+
+            <ul className='nav-left'>
                 <li>
                     <NavLink exact to="/">
                         <div className='logo-box'>
                             <img src={logo} alt='airbnb logo' width='100%' />
                         </div>
                     </NavLink>
+                </li>
+            </ul>
+
+            <ul className='nav-right'>
+                <li>
                     {isLoaded && sessionLinks}
                 </li>
-
                 {/* <li> */}
                 {/* <NavLink exact to="/">Home</NavLink> */}
                 {/* *** what is this doing?  */}

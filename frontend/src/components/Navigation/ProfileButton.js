@@ -41,9 +41,9 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <div>
+            <div className="user-button-box">
                 <button className='user-button' onClick={openMenu}>
-                    <i className="fa-solid fa-user">Open Menu</i>
+                    <i className="fa-solid fa-user" fa-2xl></i>
                 </button>
             </div>
             {/* *** */}

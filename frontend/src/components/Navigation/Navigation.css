@@ -10,13 +10,19 @@ body {
     margin: 0;
 }
 
-ul {
+ul .nav-left {
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+}
+
+ul .nav-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 li {
@@ -27,15 +33,52 @@ li {
 
 }
 
-.user-button {
+button {
     background-color: #ff385c;
+    align-items: center;
+    display: flex;
+
 }
+
+/* .user-button {
+    background-color: #ff385c;
+} */
 
 .logo-box {
     width: 110px;
     align-items: center;
 }
 
-.demo-user-box {
+/* .demo-user-box {
     align-items: center;
+} */
+
+/* .profile-dropdown ul {
+    display: block;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+} */
+
+li .profile-dropdown {
+    display: block;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.user-button-box {
+    padding: 5%;
+    background-color: #ff385c;
+    width: 50px;
+
+}
+
+.user-button {
+    align-items: center;
+}
+
+.fa-user {
+    align-items: center;
+
 }

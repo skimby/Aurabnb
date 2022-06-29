@@ -4,3 +4,9 @@ body {
     padding: 0;
     margin: 0;
 }
+
+button {
+    background-color: #ff385c;
+    align-items: center;
+    display: flex;
+}
