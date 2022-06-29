@@ -4,17 +4,16 @@ import { Redirect } from "react-router-dom";
 import './LoginForm.css';
 import * as sessionActions from '../../store/session';
 
-
-const LoginFormPage = () => {
+const LoginForm = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
-    if (sessionUser) return (
-        <Redirect to='/' />
-    )
+    // if (sessionUser) return (
+    //     <Redirect to='/' />
+    // )
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +23,7 @@ const LoginFormPage = () => {
             .catch(async (res) => {
                 // console.log('catching error')
                 const data = await res.json();
-                console.log('hello world');
+                // console.log('hello world');
                 if (data && data.errors) setErrors(data.errors);
             });
     }
@@ -62,4 +61,4 @@ const LoginFormPage = () => {
     )
 }
 
-export default LoginFormPage;
+export default LoginForm;

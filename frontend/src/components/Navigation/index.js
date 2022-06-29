@@ -1,13 +1,12 @@
 import ProfileButton from "./ProfileButton";
 import { NavLink, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from "react-redux";
 import * as sessionActions from '../../store/session';
 import logo from '../../images/airbnb-logo.png';
 import './Navigation.css'
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 
-
-//passing in the isLoaded state which should be true
 const Navigation = ({ isLoaded }) => {
 
     const sessionUser = useSelector(state => state.session.user);
@@ -24,8 +23,8 @@ const Navigation = ({ isLoaded }) => {
     } else {
         sessionLinks = (
             <>
-                <NavLink to="/login">Log In</NavLink>
-                <NavLink to="/signup">Sign Up</NavLink>
+                <LoginFormModal />
+                <SignupFormModal />
             </>
         );
     }
@@ -50,6 +49,7 @@ const Navigation = ({ isLoaded }) => {
             </ul>
 
             <ul className='nav-right'>
+                {/* conditionally rendering if isLoaded is truthy */}
                 <li>
                     {isLoaded && sessionLinks}
                 </li>

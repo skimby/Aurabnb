@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
 
 
-const SignupFormPage = () => {
+const SignupForm = () => {
     const sessionUser = useSelector(state => state.session.user)
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -19,7 +19,7 @@ const SignupFormPage = () => {
 
     // }, [firstName, lastName, password, passwordConfirm])
 
-    if (sessionUser) return <Redirect to='/' />
+    // if (sessionUser) return <Redirect to='/' />
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,10 +27,8 @@ const SignupFormPage = () => {
         if (password === passwordConfirm) {
             setErrors([]);
             return dispatch(sessionActions.signup({ firstName, lastName, email, password }))
-                //this is not catching and stopping errors.. why?
                 .catch(async (res) => {
                     const data = await res.json();
-                    // console.log(data)
                     if (data && data.errors) setErrors(data.errors);
                 });
         }
@@ -89,4 +87,4 @@ const SignupFormPage = () => {
     )
 }
 
-export default SignupFormPage;
+export default SignupForm;

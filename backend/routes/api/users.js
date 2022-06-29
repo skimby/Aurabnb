@@ -153,7 +153,7 @@ router.post('/signup', validateSignup, async (req, res, next) => {
 );
 
 router.get('/demoUser', async (req, res) => {
-    const user = await User.login({ email: 'amytan@gmail.com', password: 'password1' });
+    const user = await User.login({ email: 'demouser@gmail.com', password: 'password' });
 
     // console.log(user)
     setTokenCookie(res, user);
