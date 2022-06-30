@@ -1,18 +1,26 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import SignupFormPage from "./components/SignupFormModal/SignupFormModal";
 import Navigation from './components/Navigation';
 import CreateSpotPage from "./components/CreateSpotPage";
-// import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import HomePage from "./components/HomePage";
+
+
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector(state => state.session.user);
 
+  console.log(user)
+  if (!user) {
+    console.log('test');
 
-  // const user = useSelector(state => state.session.user);
+    < Redirect to='/' />
+  }
 
   useEffect(() => {
     //use .then to make sure restoreUser runs first
@@ -22,23 +30,26 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <HomePage />
       {/* <p>{user?.firstName}</p> */}
       {/* *** explanataion on boolean short circuting above using user.  */}
+
       {isLoaded && (
         <Switch>
           <Route path='/' exact >
           </Route>
-
-          <Route path='/createSpot' >
-            <CreateSpotPage isLoaded={isLoaded} />
-          </Route>
-          {/* <Route path="/login">
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route> */}
         </Switch>
       )}
+
+
+      {/* for paths that require user Auth */}
+      {isLoaded && user && (
+        <Route path='/createSpot' >
+          <CreateSpotPage isLoaded={isLoaded} />
+        </Route>
+
+      )}
+
     </>
   )
 }
