@@ -30,7 +30,6 @@ const Navigation = ({ isLoaded }) => {
     }
     const handleClick = () => {
         dispatch(sessionActions.demoUser());
-
         <Redirect to='/' />
     }
 

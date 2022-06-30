@@ -7,20 +7,23 @@ import Navigation from './components/Navigation';
 import CreateSpotPage from "./components/CreateSpotPage";
 import { useSelector } from "react-redux";
 import HomePage from "./components/HomePage";
-
-
+import { useHistory } from 'react-router-dom';
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useSelector(state => state.session.user);
+  const history = useHistory();
 
+  // console.log(typeof (user))
   console.log(user)
   if (!user) {
-    console.log('test');
-
-    < Redirect to='/' />
+    // console.log('falsey')
+    history.push('/')
   }
+  // else {
+  //   console.log('truthy')
+  // }
 
   useEffect(() => {
     //use .then to make sure restoreUser runs first
@@ -29,14 +32,14 @@ function App() {
 
   return (
     <>
+      {/* Nav should always render */}
       <Navigation isLoaded={isLoaded} />
-      <HomePage />
-      {/* <p>{user?.firstName}</p> */}
-      {/* *** explanataion on boolean short circuting above using user.  */}
 
+      {/* Home page should render after restoreUser is run */}
       {isLoaded && (
         <Switch>
           <Route path='/' exact >
+            <HomePage />
           </Route>
         </Switch>
       )}
@@ -47,8 +50,8 @@ function App() {
         <Route path='/createSpot' >
           <CreateSpotPage isLoaded={isLoaded} />
         </Route>
-
       )}
+
 
     </>
   )
