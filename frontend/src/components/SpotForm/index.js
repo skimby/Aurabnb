@@ -20,11 +20,14 @@ const SpotForm = ({ isLoaded }) => {
     const dispatch = useDispatch();
     // i dont think we need any further validations.. only to require all inputs. if so, add useEffect and create errors state
 
-    console.log(spots)
-    const handleSubmit = () => {
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         const spotFormInput = {
             ///id: user.id, id will be auto generated
-            ownerId: user.id,
+            // ownerId: user.id,
             address,
             city,
             state,
@@ -38,7 +41,7 @@ const SpotForm = ({ isLoaded }) => {
 
         //pass into thunk
         dispatch(CreateSpot(spotFormInput))
-        // console.log(spots)
+        console.log(spots)
     }
     return (
         <>

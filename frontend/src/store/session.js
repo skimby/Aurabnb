@@ -29,24 +29,11 @@ export const login = (user) => async (dispatch) => {
         }),
     });
 
-    // if (response.statusCode === 401) {
-    //     const data = await response.json();
-    //     console.log(data)
-    //     dispatch(setUser(data));
-    //     return response;
-    // } else {
-    //     throw new Error();
-    // }
-
     const data = await response.json();
     if (data.id) {
         dispatch(setUser(data));
     }
-    //errors give me a payload of undefined ***
-    console.log(data)
     return data;
-
-
 };
 
 
