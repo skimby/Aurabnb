@@ -1,31 +1,44 @@
 import { csrfFetch } from './csrf';
 
 // TYPES
-const CREATE_SPOT = '/create'
+const ADD_SPOT = 'spots/createSpot'
+const EDIT_SPOT = 'spots/editSpot'
 
 // ACTION
-export const create = (spotFormInput) => {
+export const addSpot = (spotFormInput) => {
     return {
-        type: CREATE_SPOT,
+        type: ADD_SPOT,
         payload: spotFormInput
     }
 }
 
 // THUNKS
-export const CreateSpot = (spotFormInput) => async (dispatch) => {
-    console.log(spotFormInput)
+export const createSpot = (spotFormInput) => async (dispatch) => {
 
     const response = await csrfFetch("/spots", {
         method: "POST",
         body: JSON.stringify(spotFormInput)
     });
 
-    // trying to find the bug here *** by console logging each step. 2 is not logging so bug happens before
-    console.log('2')
 
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(create(parsedRes));
+        dispatch(addSpot(parsedRes));
+        return parsedRes;
+    }
+};
+
+export const editSpot = (spotFormInput) => async (dispatch) => {
+
+    const response = await csrfFetch("/spots/:spotId", {
+        method: "PUT",
+        body: JSON.stringify(spotFormInput)
+    });
+
+
+    if (response.ok) {
+        const parsedRes = await response.json();
+        dispatch(addSpot(parsedRes));
         return parsedRes;
     }
 };
@@ -33,14 +46,16 @@ export const CreateSpot = (spotFormInput) => async (dispatch) => {
 // INITIAL STATE
 const initialState = {}
 
-// REDUCERSs
+// REDUCERS
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_SPOT:
+        case ADD_SPOT:
             const setSpotState = { ...state };
-            setSpotState.spot = action.payload;
-            console.log(setSpotState)
+            setSpotState[action.payload.id] = action.payload;
             return setSpotState;
+        case EDIT_SPOT:
+            const editSpotState = { ...state };
+
         default:
             return state;
     }

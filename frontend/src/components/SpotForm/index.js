@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CreateSpot } from "../../store/spot";
+import { createSpot } from "../../store/spot";
 
 const SpotForm = ({ isLoaded }) => {
     //not including id or owner id but we will need to manually assign this information.. later
@@ -13,6 +13,7 @@ const SpotForm = ({ isLoaded }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [isEdited, setIsEdited] = useState(false);
 
     const user = useSelector(state => state.session.user);
     const spots = useSelector(state => state.session.spot);
@@ -20,14 +21,20 @@ const SpotForm = ({ isLoaded }) => {
     const dispatch = useDispatch();
     // i dont think we need any further validations.. only to require all inputs. if so, add useEffect and create errors state
 
+    //Set form header (create vs edit)
+    const header = () => {
+        if (isEdited) {
+            return (<h2>Edit your Spot</h2>)
+        } else if (!isEdited) {
+            return (<h2>Create a Spot</h2>)
+        }
+    }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const spotFormInput = {
-            ///id: user.id, id will be auto generated
-            // ownerId: user.id,
             address,
             city,
             state,
@@ -40,12 +47,17 @@ const SpotForm = ({ isLoaded }) => {
         }
 
         //pass into thunk
-        dispatch(CreateSpot(spotFormInput))
-        console.log(spots)
+        dispatch(createSpot(spotFormInput))
+
+        // redirect to the getSpot page.
+
+
+        //need to useEffect ?  come back to this later
+        setIsEdited(true);
     }
     return (
         <>
-            <h2>Create a Spot</h2>
+            {header()}
             <form onSubmit={handleSubmit}>
                 <input
                     placeholder="Address"
