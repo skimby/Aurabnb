@@ -15,15 +15,13 @@ function App() {
   const user = useSelector(state => state.session.user);
   const history = useHistory();
 
-  // console.log(typeof (user))
-  console.log(user)
-  if (!user) {
-    // console.log('falsey')
-    history.push('/')
-  }
-  // else {
-  //   console.log('truthy')
+  // // console.log(typeof (user))
+  // console.log(user)
+  // if (!user) {
+  //   // console.log('falsey')
+  //   history.push('/')
   // }
+
 
   useEffect(() => {
     //use .then to make sure restoreUser runs first
@@ -41,16 +39,22 @@ function App() {
           <Route path='/' exact >
             <HomePage />
           </Route>
+
+          <Route path='/createSpot' >
+            <CreateSpotPage />
+          </Route>
+
         </Switch>
       )}
 
 
-      {/* for paths that require user Auth */}
+      {/* for paths that require user Auth
       {isLoaded && user && (
         <Route path='/createSpot' >
           <CreateSpotPage isLoaded={isLoaded} />
         </Route>
-      )}
+      )} */}
+
 
 
     </>

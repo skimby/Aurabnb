@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { CreateSpot } from "../../store/spot";
 
 const SpotForm = ({ isLoaded }) => {
     //not including id or owner id but we will need to manually assign this information.. later
@@ -15,17 +15,35 @@ const SpotForm = ({ isLoaded }) => {
     const [price, setPrice] = useState('');
 
     const user = useSelector(state => state.session.user);
+    const spots = useSelector(state => state.session.spot);
 
+    const dispatch = useDispatch();
     // i dont think we need any further validations.. only to require all inputs. if so, add useEffect and create errors state
 
-    if (user) {
+    console.log(spots)
+    const handleSubmit = () => {
+        const spotFormInput = {
+            ///id: user.id, id will be auto generated
+            ownerId: user.id,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        }
 
+        //pass into thunk
+        dispatch(CreateSpot(spotFormInput))
+        // console.log(spots)
     }
-
     return (
         <>
             <h2>Create a Spot</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input
                     placeholder="Address"
                     type='text'
@@ -73,6 +91,28 @@ const SpotForm = ({ isLoaded }) => {
 
                 >
                 </input>
+                <input
+                    placeholder="Name"
+                    type='text'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                >
+                </input>
+                <input
+                    placeholder="Description"
+                    type='text'
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                >
+                </input>
+                <input
+                    placeholder="Price"
+                    type='text'
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                >
+                </input>
+                <button type='submit'>Submit</button>
             </form >
         </>
     )
