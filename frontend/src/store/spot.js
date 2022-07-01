@@ -1,5 +1,7 @@
 import { csrfFetch } from './csrf';
 
+
+
 // TYPES
 const ADD_SPOT = 'spot/createSpot'
 const EDIT_SPOT = 'spot/editSpot'
@@ -23,7 +25,7 @@ export const getSpot = (spot) => {
 
 export const loadSpots = (spots) => {
     return {
-        type: GET_SPOT,
+        type: LOAD_SPOTS,
         payload: spots
     }
 }
@@ -50,33 +52,36 @@ export const editSpot = (spotFormInput) => async (dispatch) => {
 
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(addSpot(parsedRes));
+        dispatch(addSpot(parsedRes.id));
         return parsedRes;
     }
 };
 
+//the thunk is what is called on th front end so it needs to take in the spotID, not spot. It uses the spotId to then fetch the backend info
 export const getOneSpot = (spotId) => async (dispatch) => {
-    const response = await csrfFetch("/spots");
-    const parsedRes = await response.json();
-    dispatch(getSpot(parsedRes));
-    return parsedRes;
-};
-
-export const loadAllSpots = (spots) => async (dispatch) => {
-    const response = await csrfFetch("/spots", {
-        method: "POST",
-        body: JSON.stringify(spots)
-    });
-
+    const response = await csrfFetch(`/spots/${spotId}`);
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(loadSpots(parsedRes));
-        return parsedRes;
+        //then we get the full spot obj and then pass it into getSpot
+        dispatch(getSpot(parsedRes));
     }
+    // return parsedRes;
 };
 
-// INITIAL STATE
-const initialState = {}
+
+// SET INITIAL STATE BY LOADING SEED DATA
+const initialState = { currentSpot: null }
+
+const loadAllSpots = async () => {
+    const response = await csrfFetch("/spots");
+    const parsedRes = await response.json();
+    const spotsArr = await parsedRes.Spots;
+
+    spotsArr.forEach(spot => {
+        initialState[spot.id] = spot;
+    })
+}
+loadAllSpots();
 
 
 // REDUCERS
@@ -85,15 +90,16 @@ const spotReducer = (state = initialState, action) => {
         case ADD_SPOT:
             const setSpotState = { ...state };
             setSpotState[action.payload.id] = action.payload;
+            setSpotState.currentSpot = action.payload;
             return setSpotState;
         // case EDIT_SPOT:
         //     const editSpotState = { ...state };
+
+
         case GET_SPOT:
             const getSpotState = { ...state };
-            return getSpotState[action.payload.id];
-        case LOAD_SPOTS:
-            const loadSpotsState = { ...state };
-            console.log(action.payload.spots)
+            getSpotState.currentSpot = action.payload;
+            return getSpotState
         default:
             return state;
     }

@@ -364,10 +364,10 @@ router.get('/:spotId', async (req, res) => {
             attributes: ['url']
         }]
     });
-    console.log(spots, spotCount)
-    console.log(1)
+    // console.log(spots, spotCount)
+    // console.log(1)
     if (spots && (spots.id <= spotCount)) {
-        console.log(2)
+        // console.log(2)
         const reviews = await Review.count({
             where: {
                 spotId

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import HomePage from "./components/HomePage";
 import { useHistory } from 'react-router-dom';
 import GetSpot from "./components/GetSpot";
+import GetAllSpots from "./components/GetSpot/GetAllSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,7 +40,11 @@ function App() {
             <CreateSpotPage />
           </Route>
 
-          <Route path='/getSpot/:spotId' >
+          {/* <Route path='/spots' exact >
+            <GetAllSpots />
+          </Route> */}
+
+          <Route path='/spots/:spotId' >
             <GetSpot />
           </Route>
 
