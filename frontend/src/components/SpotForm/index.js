@@ -21,7 +21,7 @@ const SpotForm = ({ isLoaded }) => {
 
     const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
-
+    console.log(spot)
     const history = useHistory();
     const dispatch = useDispatch();
     // i dont think we need any further validations.. only to require all inputs. if so, add useEffect and create errors state
@@ -51,22 +51,18 @@ const SpotForm = ({ isLoaded }) => {
         //pass into thunk
         dispatch(createSpot(spotFormInput))
 
-        // setIsSubmitted(true);
-        history.push(`/spots/${spot.id}`)
-
-        // redirect to the getSpot page.
-        // < Redirect to = 'spots/:spotId' />
+        setIsSubmitted(true);
 
         //come back to this later
         // setIsEdited(true);
     }
 
-    // useEffect(() => {
-    //     console.log('true')
-    //     if (isSubmitted) {
-    //         history.push(`/spots/${spot.id}`)
-    //     }
-    // }, [isSubmitted])
+    useEffect(() => {
+        console.log('true')
+        if (isSubmitted) {
+            history.push(`/spots/${spot.id}`)
+        }
+    }, [isSubmitted, address])
 
     return (
         <>
