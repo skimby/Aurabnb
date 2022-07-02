@@ -7,7 +7,7 @@ const GetAllSpots = () => {
     const dispatch = useDispatch();
     const spots = Object.values(useSelector(state => state.spot));
 
-    console.log(spots)
+    // console.log(spots)
     useEffect(() => {
         // dispatch(loadAllSpots(spots));
     }, [dispatch])
@@ -15,9 +15,9 @@ const GetAllSpots = () => {
     return (
         <>
             <h1>Get all spots loading page</h1>
-            {spots.map(spot => {
+            {spots?.map(spot => {
                 return (
-                    <h3 key={spot.id}>{spot.name}</h3>
+                    <h3 key={spot?.id}>{spot?.name}</h3>
                 )
             })}
         </>

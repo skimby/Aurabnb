@@ -35,7 +35,6 @@ function App() {
             <HomePage />
           </Route>
 
-
           <Route path='/createSpot' >
             <CreateSpotPage />
           </Route>
@@ -43,10 +42,6 @@ function App() {
             <CreateSpotPage />
           </Route>
 
-
-          {/* <Route path='/spots' exact >
-            <GetAllSpots />
-          </Route> */}
 
           <Route path='/spots/:spotId' >
             <GetSpot />

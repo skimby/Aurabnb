@@ -48,6 +48,20 @@ const Navigation = ({ isLoaded }) => {
             </ul>
 
             <ul className='nav-right'>
+                <li>
+                    <NavLink to="/">
+                        <div className='demo-user-box'>
+                            <button onClick={handleClick}>Demo User</button>
+                        </div>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/createSpot">
+                        <div className='nav-link'>
+                            <h4>Become a Host</h4>
+                        </div>
+                    </NavLink>
+                </li>
                 {/* conditionally rendering if isLoaded is truthy */}
                 <li>
                     {isLoaded && sessionLinks}
@@ -57,13 +71,7 @@ const Navigation = ({ isLoaded }) => {
                 {/* *** what is this doing?  */}
                 {/* {isLoaded && sessionLinks} */}
                 {/* </li> */}
-                <li>
-                    <NavLink to="/">
-                        <div className='demo-user-box'>
-                            <button onClick={handleClick}>Demo User</button>
-                        </div>
-                    </NavLink>
-                </li>
+
             </ul>
         </div>
     );
