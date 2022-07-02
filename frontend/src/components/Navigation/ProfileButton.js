@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
-
+import './Navigation.css'
 
 //accept the user session object (login in data)
 function ProfileButton({ user }) {
@@ -43,7 +43,12 @@ function ProfileButton({ user }) {
         <>
             <div className="user-button-box">
                 <button className='user-button' onClick={openMenu}>
-                    <i className="fa-solid fa-user fa-xl"></i>
+                    <div className="icon">
+                        <i class="fa-solid fa-bars fa-xl"></i>
+                    </div>
+                    <div className="icon">
+                        <i class="fa-solid fa-circle-user fa-2xl"></i>
+                    </div>
                 </button>
             </div>
             {/* *** */}
@@ -60,15 +65,5 @@ function ProfileButton({ user }) {
         </>
     );
 }
-
-// if (sessionUser) return (
-//     <button value={showMenu}
-//         onClick={handleClick}  >
-//         <i className="fa-solid fa-user"></i>
-//         Profile Button
-//     </button >
-
-// )
-// }
 
 export default ProfileButton;

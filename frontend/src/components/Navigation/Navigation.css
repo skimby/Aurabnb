@@ -7,7 +7,6 @@ body {
     border: 1px solid #dfdfdf;
     margin: 0;
     width: 100%;
-    padding: 2%;
     display: flex;
 
 }
@@ -16,16 +15,16 @@ body {
     width: 50%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     justify-items: flex-start;
     align-items: center;
+    padding-left: 8%;
 }
 
 .nav-right {
     display: flex;
     flex-direction: row;
     justify-content: center;
-
     justify-items: flex-end;
 }
 
@@ -48,9 +47,16 @@ button {
 } */
 
 .logo-box {
-    width: 110px;
+    width: 13%;
     align-items: center;
 }
+
+.fa-solid {
+    color: #717171;
+    padding: 1%;
+    display: inline-flex;
+}
+
 
 /* .demo-user-box {
     align-items: center;
@@ -71,17 +77,27 @@ li .profile-dropdown {
 }
 
 .user-button-box {
-    padding: 5%;
-    background-color: #ff385c;
-    width: 50px;
-
+    padding: 10%;
+    width: 70px;
+    height: 25px;
+    border: 1px solid #dfdfdf;
+    border-radius: 25px;
+    display: inline-flex;
 }
 
 .user-button {
+    background-color: white;
     align-items: center;
+    width: 75px;
 }
 
-.fa-user {
+.icon {
+    justify-items: stretch;
     align-items: center;
-
+    padding: 5%;
+    width: 20px;
+    height: auto;
+    display: inline-flex;
 }
+
+/* .fa-solid {} */
