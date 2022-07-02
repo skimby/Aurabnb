@@ -14,7 +14,6 @@ const SpotForm = ({ isLoaded }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
     const [isEdited, setIsEdited] = useState(false);
 
     const spot = useSelector(state => state.spot.currentSpot);
@@ -25,11 +24,18 @@ const SpotForm = ({ isLoaded }) => {
 
     //Set form header (create vs edit)
     const header = () => {
-        if (isEdited) {
+        console.log('header')
+        console.log(spot)
+        if (spot) {
             return (<h2>Edit your Spot</h2>)
-        } else if (!isEdited) {
+        } else if (spot === null) {
             return (<h2>Create a Spot</h2>)
         }
+        // if (isEdited) {
+        //     return ()
+        // } else if (!isEdited) {
+        //     return (<h2>Create a Spot</h2>)
+        // }
     }
 
     const handleSubmit = async (e) => {
@@ -48,26 +54,12 @@ const SpotForm = ({ isLoaded }) => {
         //pass into thunk
         //await the dispatch and use the value
         const newSpot = await dispatch(createSpot(spotFormInput))
-
         history.push(`/spots/${newSpot.id}`)
 
-        // setIsSubmitted(true);
-
-
-        console.log(spot)
         //come back to this later
         // setIsEdited(true);
     }
 
-    // useEffect(() => {
-    //     // console.log(spot?.id)
-    //     console.log(isSubmitted)
-    //     // let spotId = parseInt(spot?.id) + 1;
-    //     if (isSubmitted) {
-    //         // history.push(`/spots/${spotId}`)
-    //         history.push(`/spots/${spot?.id}`)
-    //     }
-    // }, [isSubmitted, address])
 
     return (
         <>
@@ -76,21 +68,21 @@ const SpotForm = ({ isLoaded }) => {
                 <input
                     placeholder="Address"
                     type='text'
-                    value={address}
+                    value={spot?.address}
                     onChange={(e) => setAddress(e.target.value)}
                 >
                 </input>
                 <input
                     placeholder="City"
                     type="text"
-                    value={city}
+                    value={spot?.city}
                     onChange={(e) => setCity(e.target.value)}
 
                 ></input>
                 <input
                     placeholder="State"
                     type='text'
-                    value={state}
+                    value={spot?.state}
                     onChange={(e) => setState(e.target.value)}
 
                 >
@@ -98,7 +90,7 @@ const SpotForm = ({ isLoaded }) => {
                 <input
                     placeholder="Country"
                     type='text'
-                    value={country}
+                    value={spot?.country}
                     onChange={(e) => setCountry(e.target.value)}
 
                 >
@@ -106,7 +98,7 @@ const SpotForm = ({ isLoaded }) => {
                 <input
                     placeholder="Latitude"
                     type='text'
-                    value={lat}
+                    value={spot?.lat}
                     onChange={(e) => setLat(e.target.value)}
 
 
@@ -115,7 +107,7 @@ const SpotForm = ({ isLoaded }) => {
                 <input
                     placeholder="Longitude"
                     type='text'
-                    value={lng}
+                    value={spot?.lng}
                     onChange={(e) => setLng(e.target.value)}
 
                 >
@@ -123,21 +115,21 @@ const SpotForm = ({ isLoaded }) => {
                 <input
                     placeholder="Name"
                     type='text'
-                    value={name}
+                    value={spot?.name}
                     onChange={(e) => setName(e.target.value)}
                 >
                 </input>
                 <input
                     placeholder="Description"
                     type='text'
-                    value={description}
+                    value={spot?.description}
                     onChange={(e) => setDescription(e.target.value)}
                 >
                 </input>
                 <input
                     placeholder="Price"
                     type='text'
-                    value={price}
+                    value={spot?.price}
                     onChange={(e) => setPrice(e.target.value)}
                 >
                 </input>

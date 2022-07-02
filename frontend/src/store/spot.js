@@ -7,6 +7,7 @@ const ADD_SPOT = 'spot/createSpot'
 const EDIT_SPOT = 'spot/editSpot'
 const GET_SPOT = 'spot/getSpot'
 const LOAD_SPOTS = 'spot/loadSpots'
+const DELETE_SPOT = 'spot/deleteSpot'
 
 // ACTION
 export const addSpot = (spotFormInput) => {
@@ -29,6 +30,17 @@ export const loadSpots = (spots) => {
         payload: spots
     }
 }
+export const editSpot = (spot) => {
+    return {
+        type: EDIT_SPOT,
+        payload: spot
+    }
+}
+export const deleteSpot = () => {
+    return {
+        type: DELETE_SPOT
+    }
+}
 
 // THUNKS
 export const createSpot = (spotFormInput) => async (dispatch) => {
@@ -44,15 +56,15 @@ export const createSpot = (spotFormInput) => async (dispatch) => {
     }
 };
 
-export const editSpot = (spotFormInput) => async (dispatch) => {
-    const response = await csrfFetch("/spots/:spotId", {
+export const updateSpot = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/spots/${spotId}`, {
         method: "PUT",
-        body: JSON.stringify(spotFormInput)
+        body: JSON.stringify(spotId)
     });
 
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(addSpot(parsedRes.id));
+        dispatch(editSpot(parsedRes));
         return parsedRes;
     }
 };
@@ -91,19 +103,23 @@ const spotReducer = (state = initialState, action) => {
             const setSpotState = { ...state };
             setSpotState[action.payload.id] = action.payload;
             setSpotState.currentSpot = action.payload;
-            console.log(action.payload)
 
-            console.log(setSpotState.currentSpot)
             return setSpotState;
-        // case EDIT_SPOT:
-        //     const editSpotState = { ...state };
-
+        case EDIT_SPOT:
+            const editSpotState = { ...state };
+            editSpotState[action.payload.id] = action.payload;
+            editSpotState.currentSpot = action.payload;
+            return editSpotState
 
         case GET_SPOT:
             const getSpotState = { ...state };
-            console.log(action.payload.id)
             getSpotState.currentSpot = action.payload;
             return getSpotState
+        case DELETE_SPOT:
+            const deleteSpotState = { ...state };
+            delete deleteSpotState[deleteSpotState.currentSpot.id];
+            deleteSpotState.currentSpot = null;
+            return deleteSpotState;
         default:
             return state;
     }

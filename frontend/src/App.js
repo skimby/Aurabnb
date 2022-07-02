@@ -39,6 +39,10 @@ function App() {
           <Route path='/createSpot' >
             <CreateSpotPage />
           </Route>
+          <Route path='/editSpot' >
+            <CreateSpotPage />
+          </Route>
+
 
           {/* <Route path='/spots' exact >
             <GetAllSpots />
