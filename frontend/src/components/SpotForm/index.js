@@ -5,7 +5,6 @@ import { createSpot, getOneSpot } from "../../store/spot";
 import GetSpot from "../GetSpot";
 
 const SpotForm = ({ isLoaded }) => {
-    //not including id or owner id but we will need to manually assign this information.. later
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
@@ -16,15 +15,13 @@ const SpotForm = ({ isLoaded }) => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
-
     const [isEdited, setIsEdited] = useState(false);
 
-    const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
-    console.log(spot)
+
     const history = useHistory();
     const dispatch = useDispatch();
-    // i dont think we need any further validations.. only to require all inputs. if so, add useEffect and create errors state
+    // add validations here later
 
     //Set form header (create vs edit)
     const header = () => {
@@ -49,20 +46,28 @@ const SpotForm = ({ isLoaded }) => {
             price
         }
         //pass into thunk
-        dispatch(createSpot(spotFormInput))
+        //await the dispatch and use the value
+        const newSpot = await dispatch(createSpot(spotFormInput))
 
-        setIsSubmitted(true);
+        history.push(`/spots/${newSpot.id}`)
 
+        // setIsSubmitted(true);
+
+
+        console.log(spot)
         //come back to this later
         // setIsEdited(true);
     }
 
-    useEffect(() => {
-        console.log('true')
-        if (isSubmitted) {
-            history.push(`/spots/${spot.id}`)
-        }
-    }, [isSubmitted, address])
+    // useEffect(() => {
+    //     // console.log(spot?.id)
+    //     console.log(isSubmitted)
+    //     // let spotId = parseInt(spot?.id) + 1;
+    //     if (isSubmitted) {
+    //         // history.push(`/spots/${spotId}`)
+    //         history.push(`/spots/${spot?.id}`)
+    //     }
+    // }, [isSubmitted, address])
 
     return (
         <>
@@ -138,12 +143,12 @@ const SpotForm = ({ isLoaded }) => {
                 </input>
                 <button type='submit'>Submit</button>
             </form >
-            {isEdited && (
-                < Route path='spots/:spotId' >
-                    {/* < Redirect to='spots/:spotId' /> */}
-                </Route >
 
-            )}
+            < Route path='spots/:spotId' >
+                <GetSpot />
+            </Route >
+
+
         </>
     )
 }

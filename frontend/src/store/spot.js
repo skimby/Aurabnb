@@ -91,6 +91,9 @@ const spotReducer = (state = initialState, action) => {
             const setSpotState = { ...state };
             setSpotState[action.payload.id] = action.payload;
             setSpotState.currentSpot = action.payload;
+            console.log(action.payload)
+
+            console.log(setSpotState.currentSpot)
             return setSpotState;
         // case EDIT_SPOT:
         //     const editSpotState = { ...state };
@@ -98,6 +101,7 @@ const spotReducer = (state = initialState, action) => {
 
         case GET_SPOT:
             const getSpotState = { ...state };
+            console.log(action.payload.id)
             getSpotState.currentSpot = action.payload;
             return getSpotState
         default:

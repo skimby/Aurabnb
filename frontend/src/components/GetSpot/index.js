@@ -16,10 +16,11 @@ const GetSpot = () => {
     return (
         <>
             <h1>{spot?.name}</h1>
+            <p>{spot?.id}</p>
             <p>{spot?.description}</p>
             <p>Price: {spot?.price}</p>
             <p>Ratings: {spot?.avgStarRatings}</p>
-            <img src={spot?.images[0].url} alt={spot?.name} />
+            {/* <img src={spot?.images[0].url} alt={spot?.name} /> */}
         </>
     )
 }
