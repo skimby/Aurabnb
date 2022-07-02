@@ -1,0 +1,14 @@
+/* body {
+    background-color: red;
+} */
+
+.spots-grid {
+    padding: 0 8%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 400px;
+    column-gap: 2em;
+    row-gap: 2em;
+}
+
+.spot-card {}
