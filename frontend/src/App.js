@@ -35,6 +35,7 @@ function App() {
             <HomePage />
           </Route>
 
+
           <Route path='/createSpot' >
             <CreateSpotPage />
           </Route>
