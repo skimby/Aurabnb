@@ -1,25 +1,19 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getImages } from "../../store/images";
 // heres where i am:
 // trying to have each button be a separate function. i think problem now is the , SlideIndex, setSlideIndext state is associated with all galleries not just one. TRY MAKING THE GALLERY CARD A SEPARATE COMPONENTS WITH SEPARATE STATE FOR THE GALLERY AND BUTTON SO EACH THING IS SEPARATE
 
-const ButtonSlider = ({ direction, moveSlide, spotIndex }) => {
+const ButtonSlider = ({ direction, spotIndex, spot }) => {
 
     const [slideIndex, setSlideIndex] = useState(1);
-
-    // console.log(spotIndex)
-
-    // const allSlides = document.getElementsByClassName('slide');
-    // console.log(allSlides)
-    // console.log(parseInt(spotIndex))
+    const dispatch = useDispatch();
 
     const nextSlide = () => {
         let index = parseInt(spotIndex)
         let allSlides = document.getElementsByClassName(`slide ${index}`)
-        // console.log(allSlides);
+        console.log(allSlides);
 
-        // if (spotIndex)
-        //     console.log('next slide')
         if (slideIndex !== allSlides.length) {
             setSlideIndex(slideIndex + 1);
         } else if (slideIndex === allSlides.length) {
@@ -29,12 +23,8 @@ const ButtonSlider = ({ direction, moveSlide, spotIndex }) => {
     const prevSlide = () => {
         let index = parseInt(spotIndex)
         let allSlides = document.getElementsByClassName(`slide ${index}`)
-        // let test = document.getElementsByClassName('slide')
-        // console.log(allSlides);
-        // // console.log(typeof spotIndex)
+        console.log(allSlides);
 
-
-        console.log('prev slide')
         if (slideIndex !== allSlides.length) {
             setSlideIndex(slideIndex + 1);
         } else if (slideIndex === allSlides.length) {
@@ -42,7 +32,9 @@ const ButtonSlider = ({ direction, moveSlide, spotIndex }) => {
         }
 
     }
-
+    useEffect(() => {
+        dispatch(getImages(spot.id));
+    }, [dispatch])
 
     return (
         <>
@@ -55,10 +47,6 @@ const ButtonSlider = ({ direction, moveSlide, spotIndex }) => {
                 <i className={direction === 'next' ? "fa-solid fa-circle-chevron-left" : "fa-solid fa-circle-chevron-right"}></i>
             </button>
 
-            {/* <button className={direction === 'next' ? 'btn-slide next' : 'btn-slide prev'} onClick={moveSlide}><i className={direction === 'next' ? "fa-solid fa-circle-chevron-left" : "fa-solid fa-circle-chevron-right"}></i>
-            </button> */}
-
-            {/* <button className='next' onClick={moveSlide} ><i className="fa-solid fa-circle-chevron-right"></i></button> */}
         </>
     )
 }
