@@ -27,9 +27,9 @@ const GetSpot = () => {
     }, [dispatch])
 
     return (
-        <>
+        <div className="spots-body">
 
-            <h1>{spot?.name}</h1>
+            <h2>{spot?.name}</h2>
             <p>{spot?.id}</p>
             <p>{spot?.description}</p>
             <p>Price: {spot?.price}</p>
@@ -43,7 +43,7 @@ const GetSpot = () => {
             <button onClick={handleClick}>Edit Spot</button>
             <button onClick={handleDelete}>Delete Spot</button>
 
-        </>
+        </div>
     )
 }
 

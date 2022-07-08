@@ -38,7 +38,7 @@ const Navigation = ({ isLoaded }) => {
         <div className="nav-bar">
 
             <ul className='nav-left'>
-                <li>
+                <li >
                     <NavLink exact to="/">
                         <div className='logo-box'>
                             <img src={logo} alt='airbnb logo' width='100%' />
@@ -48,14 +48,14 @@ const Navigation = ({ isLoaded }) => {
             </ul>
 
             <ul className='nav-right'>
-                <li>
+                <li >
                     <NavLink to="/">
                         <div className='demo-user-box'>
                             <button onClick={handleClick}>Demo User</button>
                         </div>
                     </NavLink>
                 </li>
-                <li>
+                <li >
                     <NavLink to="/createSpot">
                         <div className='nav-link'>
                             <h4>Become a Host</h4>
@@ -63,7 +63,7 @@ const Navigation = ({ isLoaded }) => {
                     </NavLink>
                 </li>
                 {/* conditionally rendering if isLoaded is truthy */}
-                <li>
+                <li >
                     {isLoaded && sessionLinks}
                 </li>
                 {/* <li> */}
@@ -73,7 +73,7 @@ const Navigation = ({ isLoaded }) => {
                 {/* </li> */}
 
             </ul>
-        </div>
+        </div >
     );
 }
 

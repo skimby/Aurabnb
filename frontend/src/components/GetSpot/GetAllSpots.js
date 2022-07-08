@@ -8,39 +8,41 @@ const GetAllSpots = () => {
     const dispatch = useDispatch();
     const spots = Object.values(useSelector(state => state.spot));
 
-    // console.log(spots)
     useEffect(() => {
         // dispatch(loadAllSpots(spots));
     }, [dispatch])
 
     return (
         <div className="spots-grid">
-
             {spots?.map(spot => {
-                console.log(spot)
                 return (
                     <div className="spot-card" key={spot?.id}>
-                        <img className='img-styling' src={spot?.previewImage[0]} alt={spot?.name} />
+
+                        <img className='img-styling' src={spot?.previewImage[0]} alt={spot?.name} key={spot?.id + 'image'} />
 
 
-                        <div className='spot-card-header'>
-                            <div>
-                                <h3>{`${spot?.city}, ${spot?.state}`}</h3>
-                            </div>
-                            <div className='header'>
-                                <h3>{spot?.avgStarRating}test</h3>
-                                <i class="fa-solid fa-star fa-sm" ></i>
-                            </div>
+                        <div className='spot-card-header' key={spot?.id + 'card'}>
+
+                            <h3 key={spot?.id + 'location'}>
+                                {`${spot?.city}, ${spot?.state}`}</h3>
                         </div>
-                        <h4></h4>
 
-                        <h3>{`$${spot?.price} night`}</h3>
+                        <div className='header' key={spot?.id + 'rating'}>
+                            <h3 key={spot?.id + 'test'}>{spot?.avgStarRating}test</h3>
+                            <i className="fa-solid fa-star fa-sm" key={spot?.id + 'star'}></i>
+                        </div>
+
+
+                        <h3 key={spot?.id + 'price'}>
+                            {`$${spot?.price} night`}
+                        </h3>
                     </div>
+
                 )
             })
             }
 
-        </div>
+        </div >
 
     )
 
