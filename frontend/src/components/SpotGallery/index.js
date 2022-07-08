@@ -54,7 +54,7 @@ const SpotGallery = () => {
                                 })}
                                 <ButtonSlider className={index} slideIndex={slideIndex} setSlideIndex={setSlideIndex} direction={'next'} spotIndex={index} />
 
-                                <ButtonSlider className={index} slideIndex={slideIndex} setSlideIndex={setSlideIndex} direction={'prev'} spotIndex={index} />
+                                <ButtonSlider className={index} slideIndex={slideIndex} setSlideIndex={setSlideIndex} direction={'prev'} spots={spots} />
                             </div>
                         </>
                     )

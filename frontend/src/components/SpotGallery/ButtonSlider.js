@@ -1,7 +1,12 @@
+import { useState } from "react";
 
+// heres where i am:
+// trying to have each button be a separate function. i think problem now is the , SlideIndex, setSlideIndext state is associated with all galleries not just one. TRY MAKING THE GALLERY CARD A SEPARATE COMPONENTS WITH SEPARATE STATE FOR THE GALLERY AND BUTTON SO EACH THING IS SEPARATE
 
+const ButtonSlider = ({ direction, moveSlide, spotIndex }) => {
 
-const ButtonSlider = ({ direction, moveSlide, slideIndex, setSlideIndex, spotIndex }) => {
+    const [slideIndex, setSlideIndex] = useState(1);
+
     // console.log(spotIndex)
 
     // const allSlides = document.getElementsByClassName('slide');
@@ -9,8 +14,9 @@ const ButtonSlider = ({ direction, moveSlide, slideIndex, setSlideIndex, spotInd
     // console.log(parseInt(spotIndex))
 
     const nextSlide = () => {
-        let allSlides = document.getElementsByClassName(`slide ${spotIndex}`)
-        console.log(allSlides);
+        let index = parseInt(spotIndex)
+        let allSlides = document.getElementsByClassName(`slide ${index}`)
+        // console.log(allSlides);
 
         // if (spotIndex)
         //     console.log('next slide')
@@ -24,8 +30,8 @@ const ButtonSlider = ({ direction, moveSlide, slideIndex, setSlideIndex, spotInd
         let index = parseInt(spotIndex)
         let allSlides = document.getElementsByClassName(`slide ${index}`)
         // let test = document.getElementsByClassName('slide')
-        console.log(allSlides);
-        // console.log(typeof spotIndex)
+        // console.log(allSlides);
+        // // console.log(typeof spotIndex)
 
 
         console.log('prev slide')
