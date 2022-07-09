@@ -1,11 +1,11 @@
 import Navigation from "../Navigation"
 import GetAllSpots from "../GetSpot/GetAllSpots";
-import SpotGallery from "../SpotGallery";
+import Carousel from "../Carousel";
 
 const HomePage = () => {
     return (
         <>
-            <SpotGallery />
+            <Carousel />
             {/* <GetAllSpots /> */}
             <h1>test</h1>
         </>

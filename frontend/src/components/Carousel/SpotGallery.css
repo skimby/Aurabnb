@@ -1,0 +1,84 @@
+.spot-carousel {
+    position: relative;
+    padding: 0 8%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 285px;
+    grid-auto-columns: 300px;
+    column-gap: 2em;
+    row-gap: 2em;
+}
+
+
+
+.image-styling {
+    width: 18.75rem;
+    height: 17.8rem;
+    /* height: auto; */
+
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.slide {
+
+    position: absolute;
+    opacity: 0;
+}
+
+.active {
+    opacity: 1;
+}
+
+
+.button-div {
+    position: relative;
+    top: 45%;
+    z-index: 2;
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+.prev,
+.next {
+    /* position: relative; */
+    z-index: 2;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    display: inline-block;
+    padding: 0;
+
+}
+
+.fa-circle-chevron-right,
+.fa-circle-chevron-left {
+    color: white;
+}
+
+.prev {
+
+    /* align-items: flex-start;
+    right: 300px; */
+    /* justify-content: flex-start; */
+    /* /* top: 40%; */
+    right: 0;
+
+}
+
+.next {
+    /* justify-content: flex-end; */
+
+    left: 0;
+    /* right: 70px; */
+    /* top: 40%; */
+}
+
+button {}
+
+.btn-slide {
+    /* background-color: red; */
+    /* width: 100px; */
+}
