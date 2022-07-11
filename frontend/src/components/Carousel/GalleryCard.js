@@ -6,6 +6,7 @@ import { getImages } from "../../store/images";
 import Gallery from "./Gallery";
 import ButtonSlider from "./ButtonSlider";
 import SpotInfo from "./SpotInfo";
+import Dots from "./Dots";
 
 const GalleryCard = ({ spot, index }) => {
     // const spots = Object.values(useSelector(state => state.spot));
@@ -18,6 +19,10 @@ const GalleryCard = ({ spot, index }) => {
 
                 <Gallery spot={spot} index={index} slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
 
+                <div className='container-dots'>
+                    <Dots slideIndex={slideIndex} spot={spot} />
+
+                </div>
 
 
                 <div className='button-div'>

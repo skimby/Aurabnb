@@ -25,6 +25,7 @@ h4 {
     top: 0;
     background-color: white;
     /* height: 80%; */
+    z-index: 3;
 
 }
 

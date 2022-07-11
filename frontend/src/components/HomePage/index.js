@@ -6,8 +6,6 @@ const HomePage = () => {
     return (
         <>
             <Carousel />
-            {/* <GetAllSpots /> */}
-            <h1>test</h1>
         </>
     )
 }
