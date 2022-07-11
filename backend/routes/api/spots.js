@@ -267,24 +267,24 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 });
 
 // // GET IMAGES OF SPOT BY SPOTID
-router.get('/:spotId/images', requireAuth, async (req, res) => {
-    const { url } = req.body;
-    const { spotId } = req.params;
-    const spot = await Spot.findOne({
-        where: { id: spotId }
-        ,
-        include: [{
-            model: Image, as: 'Images',
-            attributes: ['url']
-        }]
-    }
-    );
+// router.get('/:spotId/images', requireAuth, async (req, res) => {
+//     const { url } = req.body;
+//     const { spotId } = req.params;
+//     const spot = await Spot.findOne({
+//         where: { id: spotId }
+//         ,
+//         include: [{
+//             model: Image, as: 'Images',
+//             attributes: ['url']
+//         }]
+//     }
+//     );
 
 
-    res.status(200);
-    res.json(spot);
+//     res.status(200);
+//     res.json(spot);
 
-})
+// })
 
 // ADD AN IMAGE TO SPOT BASED ON SPOTID
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {

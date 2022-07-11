@@ -1,48 +1,38 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getImages } from "../../store/images";
-// heres where i am:
-// trying to have each button be a separate function. i think problem now is the , SlideIndex, setSlideIndext state is associated with all galleries not just one. TRY MAKING THE GALLERY CARD A SEPARATE COMPONENTS WITH SEPARATE STATE FOR THE GALLERY AND BUTTON SO EACH THING IS SEPARATE
 
 const ButtonSlider = ({ direction, spotIndex, spot, slideIndex, setSlideIndex }) => {
-
-    // const [slideIndex, setSlideIndex] = useState(1);
     const dispatch = useDispatch();
 
     const nextSlide = () => {
+        console.log('next slide button')
+
         let index = parseInt(spotIndex)
-
         let allSlides = document.getElementsByClassName(`slide ${index}`)
-        console.log(allSlides);
 
-        console.log(slideIndex)
 
         if (slideIndex !== allSlides.length) {
             setSlideIndex(slideIndex + 1);
+
+
         } else if (slideIndex === allSlides.length) {
             setSlideIndex(1);
+            console.log(slideIndex)
+
         }
     }
 
     const prevSlide = () => {
+        console.log('prev slide button')
         let index = parseInt(spotIndex)
         let allSlides = document.getElementsByClassName(`slide ${index}`)
-        console.log(allSlides);
-        console.log(slideIndex)
 
-
-
-        if (slideIndex !== allSlides.length) {
-            setSlideIndex(slideIndex + 1);
-        } else if (slideIndex === allSlides.length) {
+        if (slideIndex > 1) {
+            setSlideIndex(slideIndex - 1);
+        } else if (slideIndex === 1) {
             setSlideIndex(1);
         }
     }
-
-    useEffect(() => {
-        dispatch(getImages(spot.id));
-    }, [dispatch])
-
 
     return (
         <>

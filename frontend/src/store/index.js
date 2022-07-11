@@ -3,12 +3,12 @@ import thunk from "redux-thunk";
 import images from "./images";
 import sessionReducer from "./session";
 import spotReducer from "./spot";
-import imageReducer from "./images";
+
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  spot: spotReducer,
-  images: imageReducer
+  spot: spotReducer
+
 });
 
 let enhancer;
