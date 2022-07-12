@@ -5,6 +5,7 @@ body {
 h3 {
     font-size: 16px;
     font-weight: 600;
+
 }
 
 .spots-grid {
@@ -48,7 +49,6 @@ h3 {
 
 .spot-card-header h3 {
     display: flex;
-    /* width: 50%; */
     margin: 10px 0 0 0;
 
 }

@@ -8,6 +8,18 @@ h3 {
     margin: 0;
 }
 
+h4 {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+    color: #222222;
+
+}
+
+.bolded-price {
+    font-weight: 500;
+}
+
 .spots-body {
     padding: 0;
     display: grid;
@@ -28,7 +40,7 @@ h3 {
 
 .spot-card-header h3 {
     display: inline-flex;
-    width: 100%;
+    width: 150px;
     margin: 0;
 
 }

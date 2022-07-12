@@ -11,11 +11,7 @@ const SpotInfo = ({ spot, index }) => {
 
         <div className="spots-body" key={spot?.id}>
 
-            {/* <img className='img-styling' src={spot?.previewImage[0]} alt={spot?.name} key={spot?.id + 'image'} /> */}
-
-
             <div className='spot-card-header' key={spot?.id + 'card'}>
-
                 <h3 key={spot?.id + 'location'}>
                     {`${spot?.city}, ${spot?.state}`}</h3>
             </div>
@@ -26,9 +22,10 @@ const SpotInfo = ({ spot, index }) => {
             </div>
 
 
-            <h3 key={spot?.id + 'price'}>
-                {`$${spot?.price} night`}
-            </h3>
+            <h4 key={spot?.id + 'price'}>
+                {<span className='bolded-price'>${spot?.price} </span>}
+                night
+            </h4>
         </div>
 
         // </div >
