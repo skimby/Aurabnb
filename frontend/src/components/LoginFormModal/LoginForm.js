@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 import './LoginForm.css';
 import * as sessionActions from '../../store/session';
 
@@ -11,9 +10,6 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
-    // if (sessionUser) return (
-    //     <Redirect to='/' />
-    // )
 
     const handleSubmit = (e) => {
         e.preventDefault();
