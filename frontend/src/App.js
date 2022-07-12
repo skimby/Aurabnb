@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 
 import Navigation from './components/Navigation';
 import CreateSpotPage from "./components/CreateSpotPage";
-import { useSelector } from "react-redux";
 import HomePage from "./components/HomePage";
-import { useHistory } from 'react-router-dom';
 import GetSpot from "./components/GetSpot";
-import GetAllSpots from "./components/GetSpot/GetAllSpots";
 
 function App() {
   const dispatch = useDispatch();

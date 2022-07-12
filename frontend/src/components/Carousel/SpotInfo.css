@@ -34,6 +34,7 @@ h4 {
     justify-content: end;
     column-gap: .5em;
     align-items: center;
+    display: flex;
     width: 100%;
 
 }

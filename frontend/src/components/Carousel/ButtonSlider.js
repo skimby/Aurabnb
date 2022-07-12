@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 
 const ButtonSlider = ({ direction, spotIndex, spot, slideIndex, setSlideIndex }) => {
-    const dispatch = useDispatch();
 
     const nextSlide = () => {
         let index = parseInt(spotIndex)

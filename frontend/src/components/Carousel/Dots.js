@@ -10,7 +10,7 @@ const Dots = ({ slideIndex, spot, status }) => {
     return (
         numDots.map((dot, index) => {
             return (
-                <div className={slideIndex === index + 1 ? 'active-dot' : 'not-active'}>
+                <div className={slideIndex === index + 1 ? 'active-dot' : 'not-active'} key={index}>
                     <i className="fa-solid fa-circle fa-2xs"></i>
                 </div>
 
