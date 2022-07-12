@@ -23,7 +23,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 }
 
 // INITIAL STATE
-const initialState = { currentReview: null }
+const initialState = {}
 
 
 
@@ -32,6 +32,8 @@ const reviewReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_REVIEWS:
             const getReviewsState = { ...state };
+            console.log(action.payload)
+
             action.payload.Reviews.forEach(review => {
                 getReviewsState[review.id] = review;
             })

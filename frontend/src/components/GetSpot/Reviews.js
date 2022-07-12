@@ -1,23 +1,33 @@
 import { getSpotReviews } from "../../store/review";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import EachReview from "./EachReview";
+import { getOneSpot } from "../../store/spot";
 
-const Reviews = ({ spot }) => {
+const Reviews = ({ spotId }) => {
     const dispatch = useDispatch();
-    // console.log(spot)
-    // const reviews = Object.values(useSelector(state => state.reviews));
-    const reviews = useSelector(state => state.reviews);
+    const reviews = Object.values(useSelector(state => state.review));
+    const spot = useSelector(state => state.spot.currentSpot);
 
-    // console.log(reviews)
+    useEffect(() => {
+        dispatch(getSpotReviews(spotId));
+        dispatch(getOneSpot(spotId));
+    }, [dispatch])
 
-    // useEffect(() => {
-    //     dispatch(getSpotReviews(spot.id))
-    // }, [dispatch])
-
+    console.log(spot)
     return (
-        <div >
-            {/* <h2>{reviews?.id}</h2> */}
+        <div className="reviews-container">
+            <i className="fa-solid fa-star fa-sm"></i>
+            <h2>{spot?.avgStarRatings} · {spot?.numReviews} Reviews</h2>
+            {reviews.map((review, index) => {
+                return (
+                    <div className='each-review'>
+                        <EachReview review={review} />
+                    </div>
+
+                )
+            })}
+            <h2>{reviews?.id}</h2>
         </div>
     )
 }

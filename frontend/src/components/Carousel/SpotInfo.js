@@ -11,12 +11,9 @@ const SpotInfo = ({ spot, index }) => {
     const reviews = useSelector(state => state.review)
     const eachSpot = useSelector(state => state.spot.currentSpot);
 
-
     const handleClick = () => {
         history.push(`/spots/${spot.id}`);
     }
-
-
 
     useEffect(() => {
         dispatch(getOneSpot(spot.id));
@@ -31,14 +28,20 @@ const SpotInfo = ({ spot, index }) => {
             </div>
 
             <div className='header' key={spot?.id + 'rating'}>
-                <i className="fa-solid fa-star fa-sm" key={spot?.id + 'star'}></i>
-                <h4 key={spot?.id + 'test'}>{eachSpot?.avgStarRatings}</h4>
+
+                <div className='star-icon-box'>
+                    <i className="fa-solid fa-star fa-sm" key={spot?.id + 'star'}></i>
+                </div>
+
+                <div className='rating-box'>
+                    <h4 key={spot?.id + 'test'}>{eachSpot?.avgStarRatings}</h4>
+                </div>
+
             </div>
 
             <h4 key={spot?.id + 'price'}>
-                {<span className='bolded-price'>${spot?.price} </span>}
-                night
-            </h4>
+                ${spot?.price} night</h4>
+
         </div>
     )
 }

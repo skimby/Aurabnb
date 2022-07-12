@@ -1,0 +1,21 @@
+.reviews-container {
+    display: inline-flex
+        /* grid-auto-columns: 1fr, 1fr; */
+}
+
+.each-review {
+    width: 50%;
+}
+
+.review-header,
+h4 {
+    display: inline-flex;
+    width: 100%;
+    font-size: 18px;
+    margin: 0;
+}
+
+.fa-star {
+    align-items: center;
+    font-size: 12px;
+}

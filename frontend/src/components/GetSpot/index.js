@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, useParams, useHistory } from "react-router-dom";
-import { getOneSpot } from "../../store/spot";
+import { useParams, useHistory } from "react-router-dom";
+import { getOneSpot, deleteSpot } from "../../store/spot";
 import SpotForm from "../SpotForm";
-import { deleteSpot } from "../../store/spot";
 import Reviews from "./Reviews";
+import './GetSpot.css'
+import SpotInfo from "./SpotInfo";
 
 const GetSpot = () => {
     const dispatch = useDispatch();
@@ -25,23 +26,19 @@ const GetSpot = () => {
     //trying to load all spots first then get one by id.
     useEffect(() => {
         dispatch(getOneSpot(spotId));
-        // console.log(spot)
-    }, [dispatch])
-    // console.log(spot)
-    return (
-        <div className="spots-body">
 
-            <h2>{spot?.name}</h2>
-            <p>{spot?.id}</p>
-            <p>{spot?.description}</p>
-            <p>Price: {spot?.price}</p>
-            <p>Ratings: {spot?.avgStarRatings}</p>
+    }, [dispatch])
+
+    return (
+        <div className="spot-container">
+            <SpotInfo spot={spot} />
+
             {spot?.images.map((image, index) => {
                 return (
                     <img src={image.url} alt={image.name} key={index} />
                 )
             })}
-            <Reviews spot={spot} />
+            <Reviews spotId={spotId} />
             <button onClick={handleClick}>Edit Spot</button>
             <button onClick={handleDelete}>Delete Spot</button>
 
