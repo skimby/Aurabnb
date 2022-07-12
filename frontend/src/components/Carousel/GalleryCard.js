@@ -13,13 +13,13 @@ const GalleryCard = ({ spot, index }) => {
     const spots = Object.values(useSelector(state => state.spot));
     const [slideIndex, setSlideIndex] = useState(1);
 
+    console.log(spots)
     const { spotId } = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
 
     const handleClick = () => {
         dispatch(getOneSpot(spotId));
-        console.log(spotId)
         history.push(`/spots/${spotId}`)
     }
     return (
@@ -30,7 +30,6 @@ const GalleryCard = ({ spot, index }) => {
 
                 <div className='container-dots'>
                     <Dots slideIndex={slideIndex} spot={spot} />
-
                 </div>
 
 

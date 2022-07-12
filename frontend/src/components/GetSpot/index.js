@@ -4,12 +4,14 @@ import { Redirect, Route, useParams, useHistory } from "react-router-dom";
 import { getOneSpot } from "../../store/spot";
 import SpotForm from "../SpotForm";
 import { deleteSpot } from "../../store/spot";
+import Reviews from "./Reviews";
 
 const GetSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const spot = useSelector(state => state.spot.currentSpot);
     const history = useHistory();
+
 
     const handleClick = () => {
         history.push(`/editSpot`)
@@ -23,9 +25,9 @@ const GetSpot = () => {
     //trying to load all spots first then get one by id.
     useEffect(() => {
         dispatch(getOneSpot(spotId));
-        console.log(spot)
+        // console.log(spot)
     }, [dispatch])
-
+    // console.log(spot)
     return (
         <div className="spots-body">
 
@@ -34,12 +36,12 @@ const GetSpot = () => {
             <p>{spot?.description}</p>
             <p>Price: {spot?.price}</p>
             <p>Ratings: {spot?.avgStarRatings}</p>
-            {spot?.images.map(image => {
+            {spot?.images.map((image, index) => {
                 return (
-                    <img src={image.url} alt={image.name} key={image.id} />
-
+                    <img src={image.url} alt={image.name} key={index} />
                 )
             })}
+            <Reviews spot={spot} />
             <button onClick={handleClick}>Edit Spot</button>
             <button onClick={handleDelete}>Delete Spot</button>
 

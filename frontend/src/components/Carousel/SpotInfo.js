@@ -1,13 +1,27 @@
 import './SpotInfo.css';
 import { useHistory } from "react-router-dom";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getOneSpot } from '../../store/spot';
+import { useEffect } from 'react';
+import { getSpotReviews } from '../../store/review';
 
 const SpotInfo = ({ spot, index }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const reviews = useSelector(state => state.review)
+    const eachSpot = useSelector(state => state.spot.currentSpot);
+
 
     const handleClick = () => {
-        history.push(`/spots/${spot.id}`)
+        history.push(`/spots/${spot.id}`);
     }
+
+
+
+    useEffect(() => {
+        dispatch(getOneSpot(spot.id));
+    }, [dispatch]);
+
     return (
         <div className="spots-body" key={spot?.id} onClick={handleClick}>
 
@@ -18,7 +32,7 @@ const SpotInfo = ({ spot, index }) => {
 
             <div className='header' key={spot?.id + 'rating'}>
                 <i className="fa-solid fa-star fa-sm" key={spot?.id + 'star'}></i>
-                <h3 key={spot?.id + 'test'}>{spot?.avgStarRating}test</h3>
+                <h4 key={spot?.id + 'test'}>{eachSpot?.avgStarRatings}</h4>
             </div>
 
             <h4 key={spot?.id + 'price'}>

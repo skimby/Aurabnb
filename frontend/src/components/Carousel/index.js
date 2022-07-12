@@ -19,13 +19,7 @@ const Carousel = () => {
             <div className='spot-carousel'>
                 {spots.map((spot, index) => {
                     return (
-
-                        // <Route path='/spots/:spotId' exact>
-
                         <GalleryCard spot={spot} index={index} key={index} />
-
-                        // </Route>
-
                     )
                 })}
             </div>
