@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { getOneSpot, deleteSpot } from "../../store/spot";
+import { getOneSpot, deleteOneSpot } from "../../store/spot";
 import Reviews from "./Reviews";
 import './GetSpot.css'
 import SpotInfo from "./SpotInfo";
@@ -23,7 +23,7 @@ const GetSpot = () => {
 
     const handleDelete = async () => {
         //deletes from state but retains page... fix later ???
-        await dispatch(deleteSpot(parseInt(spotId)));
+        await dispatch(deleteOneSpot(parseInt(spotId)));
         history.push(`/`)
     }
 

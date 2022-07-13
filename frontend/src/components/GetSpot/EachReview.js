@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { deleteUserReview } from "../../store/review";
+import { getUserReviews, deleteUserReview } from "../../store/review";
 
 const EachReview = ({ review }) => {
     const user = useSelector(state => state.session.user);
@@ -14,13 +14,18 @@ const EachReview = ({ review }) => {
     // console.log(user);
 
     useEffect(() => {
-        if (user.id === review.id) {
+        console.log(user.id)
+        console.log(review.id)
+        console.log(review)
+
+        if (user.id === review?.userId) {
             setIsUser(true);
         }
     }, []);
 
-    const handleClick = () => {
-        // dispatch(deleteUserReview(review.id));
+    const handleClick = async (e) => {
+        e.preventDefault();
+        await dispatch(deleteUserReview(review?.id));
     }
 
     return (

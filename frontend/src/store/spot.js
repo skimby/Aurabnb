@@ -38,10 +38,9 @@ export const editSpot = (spot) => {
     }
 }
 
-export const deleteSpot = (spotId) => {
+export const deleteSpot = () => {
     return {
-        type: DELETE_SPOT,
-        payload: spotId
+        type: DELETE_SPOT
     }
 }
 
@@ -92,6 +91,17 @@ export const getOneSpot = (spotId) => async (dispatch) => {
     }
 };
 
+export const deleteOneSpot = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/spots/${spotId}`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        const parsedRes = await response.json();
+        dispatch(deleteSpot(parsedRes));
+        return parsedRes;
+    }
+};
 
 // SET INITIAL STATE BY LOADING SEED DATA
 const initialState = { currentSpot: null }
@@ -125,8 +135,6 @@ const spotReducer = (state = initialState, action) => {
 
         case DELETE_SPOT:
             const deleteSpotState = { ...state };
-            delete deleteSpotState[action.payload];
-
             deleteSpotState.currentSpot = null;
             return deleteSpotState;
         default:
