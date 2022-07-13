@@ -13,9 +13,10 @@ export const getReviews = (reviews) => {
     }
 }
 
-export const deleteReview = () => {
+export const deleteReview = (reviewId) => {
     return {
-        type: DELETE_REVIEW
+        type: DELETE_REVIEW,
+        payload: reviewId
     }
 }
 
@@ -63,7 +64,7 @@ const reviewReducer = (state = initialState, action) => {
             return getReviewsState;
         case DELETE_REVIEW:
             const deleteReviewState = { ...state }
-            delete deleteReview[action.payload.id];
+            delete deleteReview[action.payload];
             return deleteReviewState;
         default:
             return state

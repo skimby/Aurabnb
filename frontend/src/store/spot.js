@@ -36,9 +36,10 @@ export const editSpot = (spot) => {
         payload: spot
     }
 }
-export const deleteSpot = () => {
+export const deleteSpot = (spotId) => {
     return {
-        type: DELETE_SPOT
+        type: DELETE_SPOT,
+        payload: spotId
     }
 }
 
@@ -81,6 +82,8 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 };
 
 
+
+
 // SET INITIAL STATE BY LOADING SEED DATA
 const initialState = { currentSpot: null }
 
@@ -93,7 +96,7 @@ const loadAllSpots = async () => {
         initialState[spot.id] = spot;
     })
 }
-loadAllSpots();
+// loadAllSpots();
 
 
 // REDUCERS
@@ -117,7 +120,8 @@ const spotReducer = (state = initialState, action) => {
             return getSpotState
         case DELETE_SPOT:
             const deleteSpotState = { ...state };
-            delete deleteSpotState[deleteSpotState.currentSpot.id];
+
+            delete deleteSpotState[action.payload];
             deleteSpotState.currentSpot = null;
             return deleteSpotState;
         default:

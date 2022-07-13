@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { getOneSpot, deleteSpot } from "../../store/spot";
-import SpotForm from "../SpotForm";
 import Reviews from "./Reviews";
 import './GetSpot.css'
 import SpotInfo from "./SpotInfo";
@@ -11,24 +10,36 @@ import SpotGallery from "./SpotGallery";
 const GetSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
+    const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
     const history = useHistory();
 
+    const [userOwned, setUserOwned] = useState();
 
     const handleClick = () => {
         history.push(`/editSpot`)
     }
-    const handleDelete = () => {
+    const handleDelete = async () => {
         //deletes from state but retains page... fix later ???
-        dispatch(deleteSpot());
+        await dispatch(deleteSpot(parseInt(spotId)));
         history.push(`/`)
     }
 
     //trying to load all spots first then get one by id.
     useEffect(() => {
-        dispatch(getOneSpot(spotId));
+        if (spotId) {
+            dispatch(getOneSpot(parseInt(spotId)));
 
-    }, [dispatch])
+        }
+    }, [dispatch, spotId]);
+
+    useEffect(() => {
+        if (user && spot) {
+            if (user.id === spot.ownerId) {
+                setUserOwned(true)
+            }
+        }
+    }, [user, spot])
 
     return (
         <div className="spot-container">
@@ -37,8 +48,12 @@ const GetSpot = () => {
 
 
             <Reviews spotId={spotId} />
-            <button onClick={handleClick}>Edit Spot</button>
-            <button onClick={handleDelete}>Delete Spot</button>
+            {userOwned && (
+                <>
+                    <button onClick={handleClick}>Edit Spot</button>
+                    <button onClick={handleDelete}>Delete Spot</button>
+                </>
+            )}
 
         </div>
     )

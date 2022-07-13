@@ -20,7 +20,7 @@ const Reviews = ({ spotId }) => {
             <h2>{spot?.avgStarRatings.toFixed(1)} · {spot?.numReviews} Reviews</h2>
             {reviews.map((review, index) => {
                 return (
-                    <div className='each-review'>
+                    <div className='each-review' key={index}>
                         <EachReview review={review} />
                     </div>
 

@@ -18,9 +18,11 @@ const GalleryCard = ({ spot, index }) => {
     const dispatch = useDispatch();
 
     const handleClick = () => {
-        dispatch(getOneSpot(spotId));
+        // dispatch(getOneSpot(spotId));
         history.push(`/spots/${spotId}`)
     }
+    // console.log("spot")
+    // console.log(spot)
 
     return (
         <>
