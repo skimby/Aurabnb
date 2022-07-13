@@ -13,23 +13,23 @@ const GetSpot = () => {
     const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
     const history = useHistory();
-
     const [userOwned, setUserOwned] = useState();
+
+
 
     const handleClick = () => {
         history.push(`/editSpot`)
     }
+
     const handleDelete = async () => {
         //deletes from state but retains page... fix later ???
         await dispatch(deleteSpot(parseInt(spotId)));
         history.push(`/`)
     }
 
-    //trying to load all spots first then get one by id.
     useEffect(() => {
         if (spotId) {
             dispatch(getOneSpot(parseInt(spotId)));
-
         }
     }, [dispatch, spotId]);
 
@@ -41,12 +41,11 @@ const GetSpot = () => {
         }
     }, [user, spot])
 
+
     return (
         <div className="spot-container">
             <SpotInfo spot={spot} />
             <SpotGallery spotId={spotId} />
-
-
             <Reviews spotId={spotId} />
             {userOwned && (
                 <>

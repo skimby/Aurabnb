@@ -7,22 +7,21 @@ import SpotInfo from "./SpotInfo";
 import Dots from "./Dots";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getOneSpot } from "../../store/spot";
+
 
 const GalleryCard = ({ spot, index }) => {
-    const spots = Object.values(useSelector(state => state.spot));
     const [slideIndex, setSlideIndex] = useState(1);
 
     const { spotId } = useParams();
+
     const history = useHistory();
     const dispatch = useDispatch();
 
     const handleClick = () => {
-        // dispatch(getOneSpot(spotId));
-        history.push(`/spots/${spotId}`)
+
+        history.push(`/spots/${spot?.id}`)
     }
-    // console.log("spot")
-    // console.log(spot)
+
 
     return (
         <>
@@ -40,7 +39,7 @@ const GalleryCard = ({ spot, index }) => {
                     <ButtonSlider className={index} direction={'next'} spotIndex={index} key={`${index} next button`} spot={spot} slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
                 </div>
 
-                <SpotInfo spot={spot} index={index} onClick={handleClick} />
+                <SpotInfo spot={spot} spotId={spotId} index={index} onClick={handleClick} />
 
             </div>
         </>

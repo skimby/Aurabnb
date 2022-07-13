@@ -1,41 +1,40 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, Route, useHistory } from "react-router-dom";
-import { createSpot, getOneSpot } from "../../store/spot";
+import { Route, useHistory } from "react-router-dom";
+import { createSpot, getOneSpot, updateSpot } from "../../store/spot";
 import GetSpot from "../GetSpot";
 
 const SpotForm = ({ isLoaded }) => {
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [isEdited, setIsEdited] = useState(false);
-
     const spot = useSelector(state => state.spot.currentSpot);
-
+    const [address, setAddress] = useState(spot?.address);
+    const [city, setCity] = useState(spot?.city);
+    const [state, setState] = useState(spot?.state);
+    const [country, setCountry] = useState(spot?.country);
+    const [lat, setLat] = useState(spot?.lat);
+    const [lng, setLng] = useState(spot?.lng);
+    const [name, setName] = useState(spot?.name);
+    const [description, setDescription] = useState(spot?.description);
+    const [price, setPrice] = useState(spot?.price);
     const history = useHistory();
     const dispatch = useDispatch();
-    // add validations here later
+
+    // add validations here later ***
+
 
     //Set form header (create vs edit)
     const header = () => {
-        console.log('header')
-        console.log(spot)
         if (spot) {
             return (<h2>Edit your Spot</h2>)
         } else if (spot === null) {
             return (<h2>Create a Spot</h2>)
         }
-        // if (isEdited) {
-        //     return ()
-        // } else if (!isEdited) {
-        //     return (<h2>Create a Spot</h2>)
-        // }
+    }
+    const submitButton = () => {
+        if (spot) {
+            return (<button type='submit'>Submit Edit</button>)
+        } else if (spot === null) {
+            return (<button type='submit'>Create New Spot</button>)
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -53,13 +52,17 @@ const SpotForm = ({ isLoaded }) => {
         }
         //pass into thunk
         //await the dispatch and use the value
-        const newSpot = await dispatch(createSpot(spotFormInput))
-        history.push(`/spots/${newSpot.id}`)
-
-        //come back to this later
-        // setIsEdited(true);
+        if (spot) {
+            const editSpot = await dispatch(updateSpot(spotFormInput, spot.id))
+            history.push(`/spots/${editSpot.id}`)
+        } else if (spot === null) {
+            const newSpot = await dispatch(createSpot(spotFormInput))
+            history.push(`/spots/${newSpot.id}`)
+        }
     }
-
+    useEffect(() => {
+        dispatch(getOneSpot(spot?.id))
+    }, [address, city, state, country, lat, lng, name, description, price])
 
     return (
         <>
@@ -68,72 +71,66 @@ const SpotForm = ({ isLoaded }) => {
                 <input
                     placeholder="Address"
                     type='text'
-                    value={spot?.address}
+                    value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 >
                 </input>
                 <input
                     placeholder="City"
                     type="text"
-                    value={spot?.city}
+                    value={city}
                     onChange={(e) => setCity(e.target.value)}
-
                 ></input>
                 <input
                     placeholder="State"
                     type='text'
-                    value={spot?.state}
+                    value={state}
                     onChange={(e) => setState(e.target.value)}
-
                 >
                 </input>
                 <input
                     placeholder="Country"
                     type='text'
-                    value={spot?.country}
+                    value={country}
                     onChange={(e) => setCountry(e.target.value)}
-
                 >
                 </input>
                 <input
                     placeholder="Latitude"
                     type='text'
-                    value={spot?.lat}
+                    value={lat}
                     onChange={(e) => setLat(e.target.value)}
-
-
                 >
                 </input>
                 <input
                     placeholder="Longitude"
                     type='text'
-                    value={spot?.lng}
+                    value={lng}
                     onChange={(e) => setLng(e.target.value)}
-
                 >
                 </input>
                 <input
                     placeholder="Name"
                     type='text'
-                    value={spot?.name}
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                 >
                 </input>
                 <input
                     placeholder="Description"
                     type='text'
-                    value={spot?.description}
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 >
                 </input>
                 <input
                     placeholder="Price"
                     type='text'
-                    value={spot?.price}
+                    value={price}
                     onChange={(e) => setPrice(e.target.value)}
                 >
                 </input>
-                <button type='submit'>Submit</button>
+                {submitButton()}
             </form >
 
             < Route path='spots/:spotId' >

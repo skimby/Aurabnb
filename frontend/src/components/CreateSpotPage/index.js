@@ -1,7 +1,7 @@
 import SpotForm from "../SpotForm"
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-import GetSpot from "../GetSpot";
+
 
 const CreateSpotPage = () => {
     const user = useSelector(state => state.session.user);
@@ -14,9 +14,7 @@ const CreateSpotPage = () => {
     }
 
     return (
-        <>
-            <SpotForm />
-        </>
+        <SpotForm />
     )
 }
 export default CreateSpotPage;

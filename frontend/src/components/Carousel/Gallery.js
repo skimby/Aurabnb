@@ -1,13 +1,13 @@
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 
 const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
     const history = useHistory();
-    // const spot = useSelector(state => state.spot);
 
     const handleClick = () => {
         history.push(`/spots/${spot.id}`)
     }
+
     return (
         <>
             {

@@ -1,18 +1,31 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import './SpotGallery.css';
-import { Route } from "react-router-dom";
-
 import GalleryCard from "./GalleryCard";
+import { useEffect } from "react";
+import { loadAllSpots } from "../../store/spot";
 
 
 const Carousel = () => {
-    const spots = Object.values(useSelector(state => state.spot))
-    delete spots[10];
+    const spots = Object.values(useSelector(state => state.spot));
+    const dispatch = useDispatch();
+
+    delete spots[spots.length - 1];
+
 
     //remove this later!!
-    delete spots[0];
-    delete spots[1];
-    delete spots[2];
+    // delete spots[0];
+    // delete spots[1];
+    // delete spots[2];
+
+    useEffect(() => {
+        //why is this dispatching again? isnt' it only supposed to dispatch once?
+        dispatch(loadAllSpots());
+        console.log('dispatching again')
+    }, [dispatch])
+
+
+    console.log(spots)
+    console.log('^')
 
     return (
         <>

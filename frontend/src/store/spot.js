@@ -3,13 +3,20 @@ import { csrfFetch } from './csrf';
 
 
 // TYPES
+const LOAD_SPOTS = 'spot/loadSpots'
 const ADD_SPOT = 'spot/createSpot'
 const EDIT_SPOT = 'spot/editSpot'
 const GET_SPOT = 'spot/getSpot'
-const LOAD_SPOTS = 'spot/loadSpots'
 const DELETE_SPOT = 'spot/deleteSpot'
 
 // ACTION
+export const loadSpots = (spots) => {
+    return {
+        type: LOAD_SPOTS,
+        payload: spots
+    }
+}
+
 export const addSpot = (spotFormInput) => {
     return {
         type: ADD_SPOT,
@@ -24,18 +31,13 @@ export const getSpot = (spot) => {
     }
 }
 
-export const loadSpots = (spots) => {
-    return {
-        type: LOAD_SPOTS,
-        payload: spots
-    }
-}
 export const editSpot = (spot) => {
     return {
         type: EDIT_SPOT,
         payload: spot
     }
 }
+
 export const deleteSpot = (spotId) => {
     return {
         type: DELETE_SPOT,
@@ -44,6 +46,16 @@ export const deleteSpot = (spotId) => {
 }
 
 // THUNKS
+export const loadAllSpots = () => async (dispatch) => {
+    const response = await csrfFetch("/spots");
+
+    if (response.ok) {
+        const parsedRes = await response.json();
+        dispatch(loadSpots(parsedRes));
+    }
+}
+
+
 export const createSpot = (spotFormInput) => async (dispatch) => {
     const response = await csrfFetch("/spots", {
         method: "POST",
@@ -57,10 +69,10 @@ export const createSpot = (spotFormInput) => async (dispatch) => {
     }
 };
 
-export const updateSpot = (spotId) => async (dispatch) => {
+export const updateSpot = (spotFormInput, spotId) => async (dispatch) => {
     const response = await csrfFetch(`/spots/${spotId}`, {
         method: "PUT",
-        body: JSON.stringify(spotId)
+        body: JSON.stringify(spotFormInput)
     });
 
     if (response.ok) {
@@ -78,30 +90,22 @@ export const getOneSpot = (spotId) => async (dispatch) => {
         //then we get the full spot obj and then pass it into getSpot
         dispatch(getSpot(parsedRes));
     }
-    // return parsedRes;
 };
-
-
 
 
 // SET INITIAL STATE BY LOADING SEED DATA
 const initialState = { currentSpot: null }
 
-const loadAllSpots = async () => {
-    const response = await csrfFetch("/spots");
-    const parsedRes = await response.json();
-    const spotsArr = await parsedRes.Spots;
-
-    spotsArr.forEach(spot => {
-        initialState[spot.id] = spot;
-    })
-}
-// loadAllSpots();
-
-
 // REDUCERS
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
+        case LOAD_SPOTS:
+            const loadSpotsState = { ...state };
+            action.payload.Spots.forEach((spot) => {
+                loadSpotsState[spot.id] = spot;
+            })
+            return loadSpotsState;
+
         case ADD_SPOT:
             const setSpotState = { ...state };
             setSpotState[action.payload.id] = action.payload;
@@ -118,10 +122,11 @@ const spotReducer = (state = initialState, action) => {
             const getSpotState = { ...state };
             getSpotState.currentSpot = action.payload;
             return getSpotState
+
         case DELETE_SPOT:
             const deleteSpotState = { ...state };
-
             delete deleteSpotState[action.payload];
+
             deleteSpotState.currentSpot = null;
             return deleteSpotState;
         default:

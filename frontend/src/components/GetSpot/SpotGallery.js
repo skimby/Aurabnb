@@ -5,7 +5,7 @@ import ShowAllButton from "./ShowAllButton";
 
 const SpotGallery = ({ spotId }) => {
     const spot = useSelector(state => state.spot.currentSpot);
-    // console.log(spot)
+    console.log(spot)
     return (
         <>
 
