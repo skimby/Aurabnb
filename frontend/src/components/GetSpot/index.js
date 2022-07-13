@@ -6,6 +6,7 @@ import SpotForm from "../SpotForm";
 import Reviews from "./Reviews";
 import './GetSpot.css'
 import SpotInfo from "./SpotInfo";
+import SpotGallery from "./SpotGallery";
 
 const GetSpot = () => {
     const dispatch = useDispatch();
@@ -32,12 +33,9 @@ const GetSpot = () => {
     return (
         <div className="spot-container">
             <SpotInfo spot={spot} />
+            <SpotGallery spotId={spotId} />
 
-            {spot?.images.map((image, index) => {
-                return (
-                    <img src={image.url} alt={image.name} key={index} />
-                )
-            })}
+
             <Reviews spotId={spotId} />
             <button onClick={handleClick}>Edit Spot</button>
             <button onClick={handleDelete}>Delete Spot</button>

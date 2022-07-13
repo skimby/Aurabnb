@@ -1,7 +1,9 @@
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
     const history = useHistory();
+    // const spot = useSelector(state => state.spot);
 
     const handleClick = () => {
         history.push(`/spots/${spot.id}`)
@@ -9,7 +11,7 @@ const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
     return (
         <>
             {
-                spot.previewImage.map((image, i) => {
+                spot?.previewImage.map((image, i) => {
                     return (
                         <div
                             className={slideIndex === i + 1 ? `slide active ${index}` : `slide ${index}`} key={i + `div ${i}`} onClick={handleClick}>

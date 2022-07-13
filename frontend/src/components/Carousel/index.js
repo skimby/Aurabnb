@@ -17,7 +17,7 @@ const Carousel = () => {
     return (
         <>
             <div className='spot-carousel'>
-                {spots.map((spot, index) => {
+                {spots?.map((spot, index) => {
                     return (
                         <GalleryCard spot={spot} index={index} key={index} />
                     )

@@ -8,17 +8,16 @@ const Reviews = ({ spotId }) => {
     const dispatch = useDispatch();
     const reviews = Object.values(useSelector(state => state.review));
     const spot = useSelector(state => state.spot.currentSpot);
-
+    // console.log(reviews)
     useEffect(() => {
         dispatch(getSpotReviews(spotId));
         dispatch(getOneSpot(spotId));
     }, [dispatch])
 
-    console.log(spot)
     return (
         <div className="reviews-container">
             <i className="fa-solid fa-star fa-sm"></i>
-            <h2>{spot?.avgStarRatings} · {spot?.numReviews} Reviews</h2>
+            <h2>{spot?.avgStarRatings.toFixed(1)} · {spot?.numReviews} Reviews</h2>
             {reviews.map((review, index) => {
                 return (
                     <div className='each-review'>

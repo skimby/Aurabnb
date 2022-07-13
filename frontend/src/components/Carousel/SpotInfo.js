@@ -16,7 +16,7 @@ const SpotInfo = ({ spot, index }) => {
     }
 
     useEffect(() => {
-        dispatch(getOneSpot(spot.id));
+        dispatch(getOneSpot(spot?.id));
     }, [dispatch]);
 
     return (
