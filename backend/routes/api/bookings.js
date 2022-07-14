@@ -30,7 +30,6 @@ router.get('/me', requireAuth, async (req, res) => {
 
 
     Bookings.forEach(booking => {
-        // console.log(booking.Spot.Images)
         booking.dataValues.Spot.dataValues.previewImage = booking.dataValues.Spot.dataValues.Images;
         delete booking.dataValues.Spot.dataValues.Images;
 
