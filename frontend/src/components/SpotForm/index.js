@@ -22,6 +22,7 @@ const SpotForm = () => {
     const [name, setName] = useState(spot?.name);
     const [description, setDescription] = useState(spot?.description);
     const [price, setPrice] = useState(spot?.price);
+    const [images, setImages] = useState([]);
 
     //if someone find url, it redirects them to home
     //redirect on actual page, not app.js
@@ -69,6 +70,9 @@ const SpotForm = () => {
             description,
             price
         }
+        // const uploadedImages = {
+
+        // }
 
         if (spotId) {
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
@@ -80,7 +84,6 @@ const SpotForm = () => {
     }
 
 
-    console.log(spotId)
 
     return (
         <>
@@ -148,6 +151,11 @@ const SpotForm = () => {
                     onChange={(e) => setPrice(e.target.value)}
                 >
                 </input>
+
+                <label forhtml="images">Please upload images of your spot:</label>
+                <input type="file" value={images} onChange={(e) => setImages(e.target.value)}
+                    id="images" name="images"
+                    accept="image/png, image/jpeg" multiple></input>
                 {submitButton()}
             </form >
 
