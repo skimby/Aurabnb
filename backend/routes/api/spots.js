@@ -1,6 +1,6 @@
 const express = require('express');
 const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3.js');
-
+const asyncHandler = require('express-async-handler')
 
 //validator
 const { check } = require('express-validator');
@@ -289,10 +289,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 // })
 
 // ADD AN IMAGE TO SPOT BASED ON SPOTID
-router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, async (req, res, next) => {
-    // const { url } = req.body;
+router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, asyncHandler(async (req, res, next) => {
+    const { url } = req.body;
 
-    const url = await singlePublicFileUpload(req.file);
+    const uploadedImgUrl = await singlePublicFileUpload(req.file);
+
 
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
@@ -305,7 +306,7 @@ router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, async (
             const image = await Image.create({
                 id: imageCount + 1,
                 imageableType: 'Spot',
-                url,
+                url: uploadedImgUrl,
                 spotId,
                 reviewId: null
             });
@@ -334,7 +335,7 @@ router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, async (
         err.status = 404;
         next(err);
     }
-});
+}));
 
 
 // GET ALL SPOTS OF CURRENT USER
