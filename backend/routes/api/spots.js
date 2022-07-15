@@ -90,7 +90,8 @@ const previewImage = (Spots) => {
 //ROUTES
 // GET ALL REVIEWS BY SPOT ID
 router.get('/:spotId/reviews', async (req, res) => {
-    const { spotId } = req.params;
+    let { spotId } = req.params;
+    spotId = parseInt(spotId);
 
     const Reviews = await Review.findAll({
         where: {
@@ -105,7 +106,7 @@ router.get('/:spotId/reviews', async (req, res) => {
             attributes: { exclude: ['isHost', 'email', 'password', 'createdAt', 'updatedAt'] }
         }]
     });
-    // console.log(Reviews.length)
+
     if (Reviews.length > 0) {
         res.status(200);
         return res.json({ Reviews });
