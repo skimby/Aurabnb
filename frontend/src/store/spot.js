@@ -8,7 +8,7 @@ const ADD_SPOT = 'spot/createSpot'
 const EDIT_SPOT = 'spot/editSpot'
 const GET_SPOT = 'spot/getSpot'
 const DELETE_SPOT = 'spot/deleteSpot'
-
+const ADD_IMAGE = 'spot/addImage'
 // ACTION
 export const loadSpots = (spots) => {
     return {
@@ -38,9 +38,17 @@ export const editSpot = (spot) => {
     }
 }
 
-export const deleteSpot = () => {
+export const deleteSpot = (spotId) => {
     return {
-        type: DELETE_SPOT
+        type: DELETE_SPOT,
+        payload: spotId
+    }
+}
+export const addImage = (image, spotId) => {
+    return {
+        type: ADD_IMAGE,
+        payload: [image, spotId]
+
     }
 }
 
@@ -63,7 +71,9 @@ export const createSpot = (spotFormInput) => async (dispatch) => {
 
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(addSpot(parsedRes));
+        const spot = await csrfFetch(`/spots/${parsedRes.id}`)
+        const parsedSpot = await spot.json();
+        dispatch(addSpot(parsedSpot));
         return parsedRes;
     }
 };
@@ -98,7 +108,20 @@ export const deleteOneSpot = (spotId) => async (dispatch) => {
 
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(deleteSpot(parsedRes));
+        dispatch(deleteSpot(spotId));
+        return parsedRes;
+    }
+};
+//Add image to spot by spotID
+export const addSpotImage = (formInput, spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/spots/${spotId}/images`, {
+        method: "POST",
+        body: JSON.stringify(formInput)
+    });
+
+    if (response.ok) {
+        const parsedRes = await response.json();
+        dispatch(addImage(parsedRes, spotId));
         return parsedRes;
     }
 };
@@ -122,21 +145,29 @@ const spotReducer = (state = initialState, action) => {
             setSpotState.currentSpot = action.payload;
 
             return setSpotState;
+
         case EDIT_SPOT:
             const editSpotState = { ...state };
             editSpotState[action.payload.id] = action.payload;
-            editSpotState.currentSpot = action.payload;
+            // editSpotState.currentSpot = action.payload;
             return editSpotState
 
         case GET_SPOT:
             const getSpotState = { ...state };
             getSpotState.currentSpot = action.payload;
-            return getSpotState
+            return getSpotState;
 
         case DELETE_SPOT:
             const deleteSpotState = { ...state };
+            delete deleteSpotState[action.payload];
             deleteSpotState.currentSpot = null;
             return deleteSpotState;
+
+        case ADD_IMAGE:
+            const addImageState = { ...state };
+
+            // addImageState[action.payload[1]] =
+            return addImageState;
         default:
             return state;
     }

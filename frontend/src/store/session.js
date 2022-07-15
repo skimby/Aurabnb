@@ -18,6 +18,7 @@ export const removeUser = () => {
     }
 }
 
+
 // THUNK ACTIONS
 export const login = (user) => async (dispatch) => {
     const { email, password } = user;
@@ -68,7 +69,6 @@ export const logout = () => async (dispatch) => {
 export const demoUser = () => async (dispatch) => {
     const res = await csrfFetch('/users/demoUser');
     const parsedRes = await res.json();
-    // console.log(parsedRes)
     dispatch(setUser(parsedRes));
     return parsedRes;
 }
@@ -88,6 +88,7 @@ const sessionReducer = (state = initialState, action) => {
 
         case REMOVE_USER:
             return initialState;
+
         default:
             return state;
     }

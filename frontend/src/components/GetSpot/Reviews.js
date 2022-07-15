@@ -1,33 +1,78 @@
-import { getSpotReviews } from "../../store/review";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import EachReview from "./EachReview";
-import { getOneSpot } from "../../store/spot";
+import { useEffect, useState } from "react";
 
-const Reviews = ({ spotId }) => {
+import { getUsersBookings } from "../../store/booking";
+import { deleteUserReview } from "../../store/review";
+
+const monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+
+
+const Reviews = ({ review, spot }) => {
     const dispatch = useDispatch();
-    const reviews = Object.values(useSelector(state => state.review));
-    const spot = useSelector(state => state.spot.currentSpot);
-    // console.log(reviews)
+
+    const user = useSelector(state => state.session.user);
+    const bookings = Object.values(useSelector(state => state.booking))
+
+    const [isUser, setIsUser] = useState(false);
+    const [dateMonth, setDateMonth] = useState(null);
+    const [dateYear, setDateYear] = useState(null);
+    const [bookedUser, setBookedUser] = useState(false);
+
     useEffect(() => {
-        dispatch(getSpotReviews(spotId));
-        dispatch(getOneSpot(spotId));
-    }, [dispatch])
+        if (review) {
+            setDateMonth(new Date(review.createdAt).getMonth());
+            setDateYear(new Date(review.createdAt).getFullYear());
+        }
+    }, [review]);
+
+    useEffect(() => {
+        if (user?.id === review?.userId) {
+            setIsUser(true);
+        } else {
+            setIsUser(false)
+        }
+    }, [user, review]);
+
+    useEffect(() => {
+        dispatch(getUsersBookings(user.id))
+    }, [dispatch, user])
+
+
+    useEffect(() => {
+        if (spot && bookings) {
+            const hasBooked = bookings.find(booking => spot.id === booking.spotId
+            );
+            if (hasBooked) {
+                setBookedUser(true);
+            } else {
+                setBookedUser(false);
+            }
+        }
+    }, [bookedUser, spot, bookings])
+
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        await dispatch(deleteUserReview(review?.id));
+    }
 
     return (
-        <div className="reviews-container">
-            <i className="fa-solid fa-star fa-sm"></i>
-            <h2>{spot?.avgStarRatings.toFixed(1)} · {spot?.numReviews} Reviews</h2>
-            {reviews.map((review, index) => {
-                return (
-                    <div className='each-review' key={index}>
-                        <EachReview review={review} />
-                    </div>
+        <>
+            <div className="user-info">
+                <h3>{review?.User?.firstName}</h3>
+                {dateMonth && dateYear && (
+                    <h4>{monthArr[dateMonth]} {dateYear}</h4>
+                )}
+            </div>
+            <div className="review">
+                <p>{review?.review}</p>
+            </div>
 
-                )
-            })}
-            <h2>{reviews?.id}</h2>
-        </div>
+            {isUser && (
+                <button onClick={handleDelete}>Delete Review</button>)}
+
+        </>
     )
 }
 export default Reviews;

@@ -1,11 +1,18 @@
+import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Route, useHistory } from "react-router-dom";
-import { createSpot, getOneSpot, updateSpot } from "../../store/spot";
-import GetSpot from "../GetSpot";
 
-const SpotForm = ({ isLoaded }) => {
+import { createSpot, getOneSpot, updateSpot } from "../../store/spot";
+
+const SpotForm = () => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    let { spotId } = useParams();
+    spotId = parseInt(spotId);
+
+    const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
+
     const [address, setAddress] = useState(spot?.address);
     const [city, setCity] = useState(spot?.city);
     const [state, setState] = useState(spot?.state);
@@ -15,30 +22,42 @@ const SpotForm = ({ isLoaded }) => {
     const [name, setName] = useState(spot?.name);
     const [description, setDescription] = useState(spot?.description);
     const [price, setPrice] = useState(spot?.price);
-    const history = useHistory();
-    const dispatch = useDispatch();
+
+    //if someone find url, it redirects them to home
+    //redirect on actual page, not app.js
+    if (!user) {
+        history.push('/');
+    }
 
     // add validations here later ***
+    useEffect(() => {
+        if (spotId) {
+            dispatch(getOneSpot(spotId))
+        }
+    }, [dispatch, spotId])
+
 
 
     //Set form header (create vs edit)
     const header = () => {
-        if (spot) {
+        if (spotId) {
             return (<h2>Edit your Spot</h2>)
-        } else if (spot === null) {
+        } else {
             return (<h2>Create a Spot</h2>)
         }
     }
     const submitButton = () => {
-        if (spot) {
+        if (spotId) {
             return (<button type='submit'>Submit Edit</button>)
-        } else if (spot === null) {
+        } else {
             return (<button type='submit'>Create New Spot</button>)
         }
     }
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const spotFormInput = {
             address,
             city,
@@ -50,19 +69,18 @@ const SpotForm = ({ isLoaded }) => {
             description,
             price
         }
-        //pass into thunk
-        //await the dispatch and use the value
-        if (spot) {
-            const editSpot = await dispatch(updateSpot(spotFormInput, spot.id))
+
+        if (spotId) {
+            const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
             history.push(`/spots/${editSpot.id}`)
-        } else if (spot === null) {
+        } else {
             const newSpot = await dispatch(createSpot(spotFormInput))
             history.push(`/spots/${newSpot.id}`)
         }
     }
-    useEffect(() => {
-        dispatch(getOneSpot(spot?.id))
-    }, [address, city, state, country, lat, lng, name, description, price])
+
+
+    console.log(spotId)
 
     return (
         <>
@@ -132,11 +150,6 @@ const SpotForm = ({ isLoaded }) => {
                 </input>
                 {submitButton()}
             </form >
-
-            < Route path='spots/:spotId' >
-                <GetSpot />
-            </Route >
-
 
         </>
     )

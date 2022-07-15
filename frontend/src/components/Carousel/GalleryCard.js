@@ -1,27 +1,22 @@
-import { useSelector } from "react-redux";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import Gallery from "./Gallery";
 import ButtonSlider from "./ButtonSlider";
 import SpotInfo from "./SpotInfo";
 import Dots from "./Dots";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 
 const GalleryCard = ({ spot, index }) => {
+    const history = useHistory();
+
     const [slideIndex, setSlideIndex] = useState(1);
 
-    const { spotId } = useParams();
-
-    const history = useHistory();
-    const dispatch = useDispatch();
-
     const handleClick = () => {
-
-        history.push(`/spots/${spot?.id}`)
+        if (spot) {
+            history.push(`/spots/${spot.id}`)
+        }
     }
-
 
     return (
         <>
@@ -39,7 +34,18 @@ const GalleryCard = ({ spot, index }) => {
                     <ButtonSlider className={index} direction={'next'} spotIndex={index} key={`${index} next button`} spot={spot} slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
                 </div>
 
-                <SpotInfo spot={spot} spotId={spotId} index={index} onClick={handleClick} />
+                <div className="spots-body" key={spot?.id} onClick={handleClick}>
+
+                    <div className='spot-card-header' key={spot?.id + 'card'}>
+                        <h3 key={spot?.id + 'location'}>
+                            {`${spot?.city}, ${spot?.state}`}</h3>
+                        <h4 key={spot?.id + 'price'}>
+                            ${spot?.price} night</h4>
+                    </div>
+                </div>
+
+                {/*
+                    <SpotInfo spot={spot} spotId={spotId} index={index} onClick={handleClick} /> */}
 
             </div>
         </>

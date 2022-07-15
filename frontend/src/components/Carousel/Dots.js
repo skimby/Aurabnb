@@ -21,17 +21,3 @@ const Dots = ({ slideIndex, spot, status }) => {
 }
 
 export default Dots;
-
-        // <>
-        //     {
-        //         numDots.map((dot, index) => {
-        //             return (
-        //                 <>
-        //                     <div className={slideIndex === 1 ? 'active-dot' : 'not-active'}>
-        //                         <i className="fa-solid fa-circle fa-2xs"></i>
-        //                     </div>
-        //                 </>
-        //             )
-        //         }
-        //     }
-        // </>

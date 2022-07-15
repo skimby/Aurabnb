@@ -3,20 +3,18 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneSpot } from '../../store/spot';
 import { useEffect } from 'react';
-import { getSpotReviews } from '../../store/review';
 
 const SpotInfo = ({ spot, spotId, index }) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const reviews = useSelector(state => state.review)
     const eachSpot = useSelector(state => state.spot.currentSpot);
 
     const handleClick = () => {
         history.push(`/spots/${spot?.id}`);
     }
-    // console.log(spot.id)
+
     useEffect(() => {
-        // dispatch(getOneSpot(spot?.id));
+        dispatch(getOneSpot(spot?.id));
     }, [dispatch]);
 
     return (
