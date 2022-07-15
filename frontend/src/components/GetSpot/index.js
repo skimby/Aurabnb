@@ -57,8 +57,10 @@ const GetSpot = () => {
         }
     }, [spot, spotId, userBookings])
 
+
+
     useEffect(() => {
-        if (spot.images.length <= 0) {
+        if (spot.images.length === 0) {
             setHasNoImages(true);
         } else {
             setHasNoImages(false);
@@ -76,6 +78,8 @@ const GetSpot = () => {
     }
 
     const handleAddImage = () => {
+
+        history.push(`/addImages/${spotId}`)
 
         //need to create an add image form and redirect to that route in this function.
         //submitting form should use the addImage thunk

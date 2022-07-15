@@ -1,7 +1,6 @@
 import { csrfFetch } from './csrf';
 
 
-
 // TYPES
 const LOAD_SPOTS = 'spot/loadSpots'
 const ADD_SPOT = 'spot/createSpot'
@@ -17,10 +16,10 @@ export const loadSpots = (spots) => {
     }
 }
 
-export const addSpot = (spotFormInput) => {
+export const addSpot = (spot) => {
     return {
         type: ADD_SPOT,
-        payload: spotFormInput
+        payload: spot
     }
 }
 
@@ -63,7 +62,8 @@ export const loadAllSpots = () => async (dispatch) => {
 }
 
 
-export const createSpot = (spotFormInput) => async (dispatch) => {
+export const createSpot = (spotFormInput, uploadedImages) => async (dispatch) => {
+    //Create Spot Request
     const response = await csrfFetch("/spots", {
         method: "POST",
         body: JSON.stringify(spotFormInput)
@@ -71,10 +71,32 @@ export const createSpot = (spotFormInput) => async (dispatch) => {
 
     if (response.ok) {
         const parsedRes = await response.json();
-        const spot = await csrfFetch(`/spots/${parsedRes.id}`)
-        const parsedSpot = await spot.json();
-        dispatch(addSpot(parsedSpot));
-        return parsedRes;
+        dispatch(addSpot(parsedRes));
+
+        const spot = await csrfFetch(`/spots/${parsedRes.id}`);
+
+        if (spot.ok) {
+            const parsedSpot = await spot.json();
+
+
+            //IMAGE STUFF
+            // for single file
+            // const formData = new FormData();
+            // if (uploadedImages) formData.append("image", uploadedImages);
+
+            //Create Image request //going to try not adding anything image realted to the reducer since it it connected to spot and spot will be update??
+            // await csrfFetch(`/spots/${parsedSpot.id}/images`, {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "multipart/form-data",
+            //     },
+            //     body: formData
+            // });
+
+            dispatch(getSpot(parsedSpot));
+            return parsedSpot;
+        }
+
     }
 };
 
@@ -143,7 +165,6 @@ const spotReducer = (state = initialState, action) => {
             const setSpotState = { ...state };
             setSpotState[action.payload.id] = action.payload;
             setSpotState.currentSpot = action.payload;
-
             return setSpotState;
 
         case EDIT_SPOT:

@@ -1,4 +1,5 @@
 const express = require('express');
+const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3.js');
 
 
 //validator
@@ -288,11 +289,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 // })
 
 // ADD AN IMAGE TO SPOT BASED ON SPOTID
-router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-    const { url } = req.body;
+router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, async (req, res, next) => {
+    // const { url } = req.body;
+
+    const url = await singlePublicFileUpload(req.file);
+
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
     const imageCount = await Image.count();
+
 
     if (spot) {
         if (req.user.id === spot.ownerId) {

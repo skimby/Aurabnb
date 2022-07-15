@@ -13,16 +13,16 @@ const SpotForm = () => {
     const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
 
-    const [address, setAddress] = useState(spot?.address);
-    const [city, setCity] = useState(spot?.city);
-    const [state, setState] = useState(spot?.state);
-    const [country, setCountry] = useState(spot?.country);
-    const [lat, setLat] = useState(spot?.lat);
-    const [lng, setLng] = useState(spot?.lng);
-    const [name, setName] = useState(spot?.name);
-    const [description, setDescription] = useState(spot?.description);
-    const [price, setPrice] = useState(spot?.price);
-    const [images, setImages] = useState([]);
+    const [address, setAddress] = useState(spot?.address || '');
+    const [city, setCity] = useState(spot?.city || '');
+    const [state, setState] = useState(spot?.state || '');
+    const [country, setCountry] = useState(spot?.country || '');
+    const [lat, setLat] = useState(spot?.lat || '');
+    const [lng, setLng] = useState(spot?.lng || '');
+    const [name, setName] = useState(spot?.name || '');
+    const [description, setDescription] = useState(spot?.description || '');
+    const [price, setPrice] = useState(spot?.price || '');
+    const [images, setImages] = useState('');
 
     //if someone find url, it redirects them to home
     //redirect on actual page, not app.js
@@ -56,6 +56,11 @@ const SpotForm = () => {
     }
 
 
+    const handleChange = (e) => {
+        const file = e.target.value;
+        if (file) setImages(file);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -70,19 +75,19 @@ const SpotForm = () => {
             description,
             price
         }
-        // const uploadedImages = {
-
-        // }
+        const uploadedImages = {
+            images
+        }
 
         if (spotId) {
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
             history.push(`/spots/${editSpot.id}`)
         } else {
-            const newSpot = await dispatch(createSpot(spotFormInput))
+            const newSpot = await dispatch(createSpot(spotFormInput, uploadedImages));
+            console.log(newSpot)
             history.push(`/spots/${newSpot.id}`)
         }
     }
-
 
 
     return (
@@ -153,9 +158,9 @@ const SpotForm = () => {
                 </input>
 
                 <label forhtml="images">Please upload images of your spot:</label>
-                <input type="file" value={images} onChange={(e) => setImages(e.target.value)}
+                <input type="file" onChange={handleChange}
                     id="images" name="images"
-                    accept="image/png, image/jpeg" multiple></input>
+                    accept="image/png, image/jpeg" ></input>
                 {submitButton()}
             </form >
 

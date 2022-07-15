@@ -1,42 +1,55 @@
-// import { csrfFetch } from './csrf';
+import { csrfFetch } from './csrf';
 
-// //TYPE
-// const GET_IMAGES = 'spots/:spotId/images';
+//TYPE
+const ADD_IMAGES = 'images/addImages';
 
-// //ACTION
-// export const getSpotImages = (spot) => {
-//     return {
-//         type: GET_IMAGES,
-//         payload: spot
-//     }
-// }
+//ACTION
+export const addImages = (image) => {
+    return {
+        type: ADD_IMAGES,
+        payload: image
+    }
+}
 
-// //THUNKS
-// export const getImages = (spotId) => async (dispatch) => {
-//     const response = await csrfFetch(`/spots/${spotId}/images`);
+//THUNKS
+export const addSpotImages = ((uploadedImages, spotId) => async (dispatch) => {
 
-//     if (response.ok) {
-//         const parsedRes = await response.json();
+    const formData = new FormData();
+    // for single file
+    if (uploadedImages) formData.append("image", uploadedImages);
 
-//         console.log(parsedRes);
-//         dispatch(getSpotImages(parsedRes));
-//     }
-// }
+    const res = await csrfFetch(`/spots/${spotId}/images`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+    });
 
-// // INITIAL STATE
-// const initialState = {};
+    const data = await res.json();
+    dispatch(addImages(data));
+
+    // const response = await csrfFetch(`/spots/${spotId}/images`);
+    // if (response.ok) {
+    //     const parsedRes = await response.json();
+
+    //     dispatch(addImages(parsedRes));
+    // }
+})
+
+// INITIAL STATE
+const initialState = {};
 
 
-// //REDUCERS
-// const imageReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case GET_IMAGES:
-//             const getImagesState = { ...state };
-//             getImagesState[action.payload.id] = action.payload;
-//             console.log(getImagesState)
-//             return getImagesState;
-//         default:
-//             return state;
-//     }
-// }
-// export default imageReducer;
+//REDUCERS
+const imageReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case ADD_IMAGES:
+            const addImagesState = { ...state };
+            addImagesState[action.payload.id] = action.payload;
+            return addImagesState;
+        default:
+            return state;
+    }
+}
+export default imageReducer;

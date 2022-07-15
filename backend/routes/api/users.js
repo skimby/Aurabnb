@@ -7,7 +7,11 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+
+
 const router = express.Router();
+
+
 
 
 // GET /api/set-token-cookie
@@ -137,6 +141,10 @@ router.post('/signup', validateSignup, async (req, res, next) => {
         next(err);
     } else {
         const user = await User.signup({ firstName, lastName, email, password });
+
+
+
+
 
         await setTokenCookie(res, user);
 

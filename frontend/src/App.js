@@ -8,6 +8,7 @@ import SpotForm from "./components/SpotForm";
 import HomePage from "./components/HomePage";
 import GetSpot from "./components/GetSpot";
 import CreateReview from "./components/GetSpot/CreateReview";
+import AddImagesForm from "./components/GetSpot/AddImagesForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ function App() {
 
           <Route path='/editSpot/:spotId' >
             <SpotForm />
+          </Route>
+          <Route path='/addImages/:spotId' >
+            <AddImagesForm />
           </Route>
 
           <Route path='/createReview/:spotId' >
