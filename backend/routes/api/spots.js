@@ -307,7 +307,7 @@ router.post('/:spotId/images', requireAuth, multipleMulterUpload("images"), asyn
                 const image = Image.create({
                     id: imageCount + 1 + index,
                     imageableType: 'Spot',
-                    url: img[index],
+                    url: img,
                     spotId,
                     reviewId: null
                 });
