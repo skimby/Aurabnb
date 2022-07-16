@@ -89,7 +89,6 @@ const GetSpot = () => {
         history.push(`/`)
     }
 
-
     return (
         <>
             {spot && (

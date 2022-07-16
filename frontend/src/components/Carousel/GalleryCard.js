@@ -22,6 +22,8 @@ const GalleryCard = ({ spot, index }) => {
     useEffect(() => {
         if (spot?.previewImage?.length === 0) {
             setNeedsDefaultImg(true);
+        } else {
+            setNeedsDefaultImg(false);
         }
     }, [spot])
 

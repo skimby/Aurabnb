@@ -158,6 +158,7 @@ const spotReducer = (state = initialState, action) => {
             action.payload.Spots.forEach((spot) => {
                 loadSpotsState[spot.id] = spot;
             })
+            loadSpotsState.currentSpot = null;
             return loadSpotsState;
 
         case ADD_SPOT:
