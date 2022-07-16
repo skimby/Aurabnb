@@ -11,8 +11,13 @@ const Carousel = () => {
     const spots = Object.values(useSelector(state => state.spot));
 
     //does this affect re-renders?
-    delete spots[spots.length - 1];
+    // delete spots[spots.length - 1];
 
+    useEffect(() => {
+        if (spots?.currentSpot) {
+            delete spots[spots?.length - 1];
+        }
+    }, [spots])
     useEffect(() => {
         dispatch(loadAllSpots());
     }, [dispatch])

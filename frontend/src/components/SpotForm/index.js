@@ -22,6 +22,7 @@ const SpotForm = () => {
     const [name, setName] = useState(spot?.name || '');
     const [description, setDescription] = useState(spot?.description || '');
     const [price, setPrice] = useState(spot?.price || '');
+    const [errors, setErrors] = useState([]);
 
     //if someone find url, it redirects them to home
     //redirect on actual page, not app.js
@@ -73,12 +74,17 @@ const SpotForm = () => {
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
             history.push(`/spots/${editSpot.id}`)
         } else {
-            const newSpot = await dispatch(createSpot(spotFormInput));
-            console.log(newSpot)
+            const newSpot = await dispatch(createSpot(spotFormInput))
+                .catch(async (res) => {
+                    const data = await res.json()
+                    console.log(data)
+                    setErrors(data.errors);
+                    console.log(data.errors)
+                });
+
             history.push(`/spots/${newSpot.id}`)
         }
     }
-
 
     return (
         <>
@@ -148,6 +154,9 @@ const SpotForm = () => {
                 </input>
 
                 {submitButton()}
+                {errors && (
+                    <p>{errors}</p>
+                )}
             </form >
 
         </>

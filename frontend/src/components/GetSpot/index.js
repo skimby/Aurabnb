@@ -34,10 +34,6 @@ const GetSpot = () => {
         //     console.log(data)
         //     console.log(data.errors)
         // });
-        // dispatch(getSpotReviews(spotId))
-    }, [dispatch, spotId]);
-
-    useEffect(() => {
         dispatch(getSpotReviews(spotId))
     }, [dispatch, spotId]);
 
