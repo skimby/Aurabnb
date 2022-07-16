@@ -41,10 +41,10 @@ export const deleteReview = (reviewId) => {
 //get a spot's reviews
 export const getSpotReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/spots/${spotId}/reviews`);
-    if (response.ok) {
-        const parsedRes = await response.json();
-        dispatch(getReviews(parsedRes));
-    }
+    // if (response.ok) {
+    const parsedRes = await response.json();
+    dispatch(getReviews(parsedRes));
+    // }
 }
 
 //get a User's reviews for current spot
@@ -57,14 +57,15 @@ export const getUserReviews = (userId) => async (dispatch) => {
 }
 
 export const createNewReview = (reviewFormInput, spotId) => async (dispatch) => {
+    console.log(reviewFormInput)
     const response = await csrfFetch(`/spots/${spotId}/reviews`, {
         method: "POST",
         body: JSON.stringify(reviewFormInput)
     });
+    console.log(response)
 
     if (response.ok) {
         const parsedRes = await response.json();
-
         dispatch(createReview(parsedRes));
         return parsedRes;
     }

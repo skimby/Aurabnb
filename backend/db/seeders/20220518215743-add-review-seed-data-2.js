@@ -6,7 +6,7 @@ module.exports = {
       {
         userId: 2,
         spotId: 4,
-        review: 'Such a cute IG spot!! I rented out the space for a photoshoot and only was there about 2 hours! The place is stunning, and it’s a great location near uptown Dallas! Host was kind, left a really cool laminated book of eats and things to do! Getting in and out was simple! will definitely be returning to stay the night with some friends very soon!!        ',
+        review: 'Such a cute IG spot!! I rented out the space for a photoshoot and only was there about 2 hours! The place is stunning, and its a great location near uptown Dallas! Host was kind, left a really cool laminated book of eats and things to do! Getting in and out was simple! will definitely be returning to stay the night with some friends very soon!!        ',
         stars: 5
       },
       {
@@ -72,7 +72,7 @@ module.exports = {
       {
         userId: 1,
         spotId: 10,
-        review: 'Our stay here was amazing, the house was amazing with plenty of space. We loved the beautiful backyard and pool. The backyard was so peaceful we hardly wanted to leave. Paul was a super helpful host and we will definitely be contacting him the next time we’re in town! :)',
+        review: 'Our stay here was amazing, the house was amazing with plenty of space. We loved the beautiful backyard and pool. The backyard was so peaceful we hardly wanted to leave. Paul was a super helpful host and we will definitely be contacting him the next time were in town! :)',
         stars: 4
       },
       {

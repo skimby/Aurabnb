@@ -122,11 +122,14 @@ router.get('/:spotId/reviews', async (req, res) => {
 
 // CREATE A REVIEW FOR A SPOT BASED ON THE SPOTS ID
 router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
-    const { spotId } = req.params;
+    let { spotId } = req.params;
+    spotId = parseInt(spotId);
     const { review, stars } = req.body;
     const reviewCount = await Review.count();
+
     const spotCount = await Spot.count();
     const spot = await Spot.findByPk(spotId)
+
 
     const alreadyReviewedByUser = await Review.findOne({
         where: {
@@ -143,13 +146,20 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
             err.status = 403;
             next(err);
         } else {
+
+
+
+            const count = reviewCount;
             const newReview = await Review.create({
-                id: reviewCount + 1,
+                id: count + 1,
                 userId: req.user.id,
-                spotId: parseInt(spotId),
+                spotId,
                 review,
                 stars
             });
+
+            console.log(newReview)
+
             res.status(200);
             return res.json(newReview)
         }
