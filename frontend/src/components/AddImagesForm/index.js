@@ -11,22 +11,29 @@ const AddImagesForm = () => {
     spotId = parseInt(spotId);
 
     const [images, setImages] = useState([]);
-    const [errors, setErrors] = useState([]);
-    // for multiple file upload
+    const [errors, setErrors] = useState();
+
     const updateFiles = (e) => {
         const files = e.target.files;
         setImages(files);
     };
+
+    console.log(images)
+
     useEffect(() => {
-        if (images.length < 5) {
-            errors.push('Please upload a minimum of five images for your spot.');
+        let res = [];
+        if (images.length) {
+            if (images.length < 5) {
+                res.push('Please upload a minimum of five images for your spot.');
+            }
         }
-    }, [errors])
+        setErrors(res)
+    }, [images])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!errors.length) {
+        if (errors?.length === 0) {
             await dispatch(addSpotImage(images, spotId))
             history.push(`/spots/${spotId}`)
         }
@@ -35,9 +42,7 @@ const AddImagesForm = () => {
         //     console.log(data)
         //     console.log(data.errors)
         // });
-
     }
-
 
     return (
         <>
@@ -48,7 +53,6 @@ const AddImagesForm = () => {
                     type="file"
                     multiple
                     onChange={updateFiles} />
-
                 <button>submit</button>
             </form >
         </>
