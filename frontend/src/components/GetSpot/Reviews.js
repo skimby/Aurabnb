@@ -57,8 +57,12 @@ const Reviews = ({ review, spot }) => {
 
     const handleImages = (e) => {
         e.preventDefault();
-        console.log('getting to review img form')
         history.push(`/addImages/spots/${spot?.id}/reviews/${review?.id}`)
+    }
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        history.push(`/editReview/${review?.id}`)
     }
 
     const handleDelete = async (e) => {
@@ -93,6 +97,7 @@ const Reviews = ({ review, spot }) => {
             {isUser && (
                 <>
                     <button onClick={handleImages}>Add Photos to your Review</button>
+                    <button onClick={handleEdit}>Edit your Review</button>
 
                     <button onClick={handleDelete}>Delete Review</button>
                 </>

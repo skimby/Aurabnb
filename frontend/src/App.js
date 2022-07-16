@@ -6,10 +6,10 @@ import * as sessionActions from "./store/session";
 import Navigation from './components/Navigation';
 import SpotForm from "./components/SpotForm";
 import GetSpot from "./components/GetSpot";
-import CreateReview from "./components/GetSpot/CreateReview";
 import AddImagesForm from "./components/AddImagesForm";
 import AddReviewImagesForm from "./components/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
+import ReviewForm from "./components/ReviewForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,7 +55,11 @@ function App() {
           </Route>
 
           <Route path='/createReview/:spotId' >
-            <CreateReview />
+            <ReviewForm />
+          </Route>
+
+          <Route path='/editReview/:reviewId' >
+            <ReviewForm />
           </Route>
 
         </Switch>
