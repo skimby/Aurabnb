@@ -21,7 +21,7 @@ router.get("/api/csrf/restore", (req, res) => {
 });
 
 //connecting all API folder routers
-router.use('/', apiRouter);
+router.use('/api', apiRouter);
 
 // Static routes
 // Serve React build files in production

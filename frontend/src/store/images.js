@@ -18,7 +18,7 @@ export const addSpotImages = ((uploadedImages, spotId) => async (dispatch) => {
     // for single file
     if (uploadedImages) formData.append("image", uploadedImages);
 
-    const res = await csrfFetch(`/spots/${spotId}/images`, {
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {
             "Content-Type": "multipart/form-data",

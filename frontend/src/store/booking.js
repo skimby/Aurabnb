@@ -14,7 +14,7 @@ export const getBookings = (bookings) => {
 
 // THUNKS
 export const getUsersBookings = () => async (dispatch) => {
-    const res = await csrfFetch('/bookings/me');
+    const res = await csrfFetch('/api/bookings/me');
     const parsedRes = await res.json();
     dispatch(getBookings(parsedRes));
     return res;

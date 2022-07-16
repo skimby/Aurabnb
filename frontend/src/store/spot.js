@@ -53,7 +53,7 @@ export const addImage = (image) => {
 
 // THUNKS
 export const loadAllSpots = () => async (dispatch) => {
-    const response = await csrfFetch("/spots");
+    const response = await csrfFetch("/api/spots");
 
     if (response.ok) {
         const parsedRes = await response.json();
@@ -64,7 +64,7 @@ export const loadAllSpots = () => async (dispatch) => {
 
 export const createSpot = (spotFormInput, uploadedImages) => async (dispatch) => {
     //Create Spot Request
-    const response = await csrfFetch("/spots", {
+    const response = await csrfFetch("/api/spots", {
         method: "POST",
         body: JSON.stringify(spotFormInput)
     });
@@ -73,7 +73,7 @@ export const createSpot = (spotFormInput, uploadedImages) => async (dispatch) =>
         const parsedRes = await response.json();
         dispatch(addSpot(parsedRes));
 
-        const spot = await csrfFetch(`/spots/${parsedRes.id}`);
+        const spot = await csrfFetch(`/api/spots/${parsedRes.id}`);
 
         if (spot.ok) {
             const parsedSpot = await spot.json();
@@ -85,7 +85,7 @@ export const createSpot = (spotFormInput, uploadedImages) => async (dispatch) =>
 };
 
 export const updateSpot = (spotFormInput, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: "PUT",
         body: JSON.stringify(spotFormInput)
     });
@@ -99,7 +99,7 @@ export const updateSpot = (spotFormInput, spotId) => async (dispatch) => {
 
 //the thunk is what is called on th front end so it needs to take in the spotID, not spot. It uses the spotId to then fetch the backend info
 export const getOneSpot = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/spots/${spotId}`);
+    const response = await csrfFetch(`/api/spots/${spotId}`);
     if (response.ok) {
         const parsedRes = await response.json();
         //then we get the full spot obj and then pass it into getSpot
@@ -108,7 +108,7 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 };
 
 export const deleteOneSpot = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: "DELETE"
     });
 
@@ -131,7 +131,7 @@ export const addSpotImage = (uploadedImages, spotId) => async (dispatch) => {
         }
     }
 
-    const response = await csrfFetch(`/spots/${spotId}/images`, {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {
             "Content-Type": "multipart/form-data",

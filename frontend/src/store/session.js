@@ -22,7 +22,7 @@ export const removeUser = () => {
 // THUNK ACTIONS
 export const login = (user) => async (dispatch) => {
     const { email, password } = user;
-    const response = await csrfFetch('/users/login', {
+    const response = await csrfFetch('/api/users/login', {
         method: 'POST',
         body: JSON.stringify({
             email,
@@ -39,7 +39,7 @@ export const login = (user) => async (dispatch) => {
 
 
 export const restoreUser = () => async (dispatch) => {
-    const res = await csrfFetch('/session');
+    const res = await csrfFetch('/api/session');
     // console.log(res)
     const parsedRes = await res.json();
     dispatch(setUser(parsedRes.user));
@@ -48,7 +48,7 @@ export const restoreUser = () => async (dispatch) => {
 
 export const signup = (user) => async (dispatch) => {
     const { firstName, lastName, email, password } = user;
-    const response = await csrfFetch("/users/signup", {
+    const response = await csrfFetch("/api/users/signup", {
         method: "POST",
         body: JSON.stringify({ firstName, lastName, email, password }),
     });
@@ -58,7 +58,7 @@ export const signup = (user) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-    const res = await csrfFetch("/session", {
+    const res = await csrfFetch("/api/session", {
         method: 'DELETE'
     });
     dispatch(removeUser());
@@ -67,7 +67,7 @@ export const logout = () => async (dispatch) => {
 
 // DEMO USER
 export const demoUser = () => async (dispatch) => {
-    const res = await csrfFetch('/users/demoUser');
+    const res = await csrfFetch('/api/users/demoUser');
     const parsedRes = await res.json();
     dispatch(setUser(parsedRes));
     return parsedRes;

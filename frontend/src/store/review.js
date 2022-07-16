@@ -40,7 +40,7 @@ export const deleteReview = (reviewId) => {
 
 //get a spot's reviews
 export const getSpotReviews = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/spots/${spotId}/reviews`);
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
     // if (response.ok) {
     const parsedRes = await response.json();
     dispatch(getReviews(parsedRes));
@@ -49,7 +49,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
 //get a User's reviews for current spot
 export const getUserReviews = (userId) => async (dispatch) => {
-    const response = await csrfFetch(`/reviews/me`);
+    const response = await csrfFetch(`/api/reviews/me`);
     if (response.ok) {
         const parsedRes = await response.json();
         dispatch(userReviews(parsedRes));
@@ -58,7 +58,7 @@ export const getUserReviews = (userId) => async (dispatch) => {
 
 export const createNewReview = (reviewFormInput, spotId) => async (dispatch) => {
     console.log(reviewFormInput)
-    const response = await csrfFetch(`/spots/${spotId}/reviews`, {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
         body: JSON.stringify(reviewFormInput)
     });
@@ -73,7 +73,7 @@ export const createNewReview = (reviewFormInput, spotId) => async (dispatch) => 
 
 
 export const deleteUserReview = (reviewId) => async (dispatch) => {
-    const response = await csrfFetch(`/reviews/${reviewId}`, {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: "DELETE"
     });
     if (response.ok) {
