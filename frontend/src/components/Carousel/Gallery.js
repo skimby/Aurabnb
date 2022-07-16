@@ -12,7 +12,7 @@ const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
     }
 
     useEffect(() => {
-        if (spot?.previewImage.length === 0) {
+        if (spot?.previewImage?.length === 0) {
             setNeedsDefaultImg(true);
         }
     }, [spot])
@@ -22,7 +22,7 @@ const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
             {spot && (
                 <>
                     {!needsDefaultImg && (
-                        spot?.previewImage.map((image, i) => {
+                        spot?.previewImage?.map((image, i) => {
                             return (
                                 <div
                                     className={slideIndex === i + 1 ? `slide active ${index}` : `slide ${index}`} key={i + `div ${i}`} onClick={handleClick}>

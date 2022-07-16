@@ -20,20 +20,19 @@ const GalleryCard = ({ spot, index }) => {
         }
     }
     useEffect(() => {
-        if (spot?.previewImage.length === 0) {
+        if (spot?.previewImage?.length === 0) {
             setNeedsDefaultImg(true);
         }
-    })
+    }, [spot])
 
     return (
         <>
             <div className="gallery-card" >
 
-
-
                 {spot && !needsDefaultImg && (
                     <>
                         <Gallery spot={spot} index={index} slideIndex={slideIndex} setSlideIndex={setSlideIndex} onClick={handleClick} />
+
                         <div className='container-dots'>
                             <Dots slideIndex={slideIndex} spot={spot} />
                         </div>

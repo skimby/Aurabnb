@@ -1,0 +1,32 @@
+.gallery-fullscreen {
+    /* padding: 10% 17%; */
+}
+
+#modal.gallery-fullscreen {
+    background-color: red;
+}
+
+/* #modal-background {
+    background-color: rgba(0, 0, 0, 0.9);
+} */
+
+.image-gallery-styling {
+    width: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.each-img {
+    width: 20%;
+}
+
+.slide2 {
+    opacity: 0;
+    position: absolute;
+    display: inline-block;
+    width: 50%;
+}
+
+.active2 {
+    opacity: 1;
+}

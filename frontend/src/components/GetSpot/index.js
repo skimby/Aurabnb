@@ -7,7 +7,6 @@ import { getUsersBookings } from "../../store/booking";
 
 import Reviews from "./Reviews";
 import SpotGallery from "./SpotGallery";
-
 import './GetSpot.css'
 
 
@@ -95,7 +94,6 @@ const GetSpot = () => {
                 <div className="spot-container">
                     <>
                         <h2>{spot?.name}</h2>
-
                         <div className="review-header">
                             <i className="fa-solid fa-star fa-sm spots-star"></i>
                             <h4>{spot?.avgStarRatings?.toFixed(1)} · {spot?.numReviews} reviews  · {spot?.city}, {spot?.state}</h4>
@@ -130,6 +128,7 @@ const GetSpot = () => {
                                     </div>
                                 )
                             })}
+
 
                             <h2>{reviews?.id}</h2>
                         </div>

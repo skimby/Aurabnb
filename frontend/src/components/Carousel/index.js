@@ -19,7 +19,7 @@ const Carousel = () => {
 
     return (
         <>
-            {spots && spots.length > 2 && (
+            {spots && spots?.length > 2 && (
                 <div className='spot-carousel'>
                     {spots?.map((spot, index) => {
                         return (
