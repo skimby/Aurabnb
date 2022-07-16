@@ -8,6 +8,7 @@ import SpotForm from "./components/SpotForm";
 import GetSpot from "./components/GetSpot";
 import CreateReview from "./components/GetSpot/CreateReview";
 import AddImagesForm from "./components/AddImagesForm";
+import AddReviewImagesForm from "./components/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
 
 function App() {
@@ -44,8 +45,13 @@ function App() {
           <Route path='/editSpot/:spotId' >
             <SpotForm />
           </Route>
-          <Route path='/addImages/:spotId' >
+
+          <Route path='/addImages/:spotId' exact >
             <AddImagesForm />
+          </Route>
+
+          <Route path='/addImages/spots/:spotId/reviews/:reviewId' exact>
+            <AddReviewImagesForm />
           </Route>
 
           <Route path='/createReview/:spotId' >

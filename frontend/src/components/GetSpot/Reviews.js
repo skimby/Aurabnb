@@ -55,6 +55,11 @@ const Reviews = ({ review, spot }) => {
         }
     }, [bookedUser, spot, bookings])
 
+    const handleImages = (e) => {
+        e.preventDefault();
+        console.log('getting to review img form')
+        history.push(`/addImages/spots/${spot?.id}/reviews/${review?.id}`)
+    }
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -62,7 +67,7 @@ const Reviews = ({ review, spot }) => {
         await dispatch(getOneSpot(spot?.id));
     }
 
-    console.log(review)
+
     return (
         <>
             <div className="user-info">
@@ -86,7 +91,12 @@ const Reviews = ({ review, spot }) => {
             </div>
 
             {isUser && (
-                <button onClick={handleDelete}>Delete Review</button>)}
+                <>
+                    <button onClick={handleImages}>Add Photos to your Review</button>
+
+                    <button onClick={handleDelete}>Delete Review</button>
+                </>
+            )}
 
         </>
     )

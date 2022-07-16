@@ -5,8 +5,7 @@ const GET_SPOT_REVIEWS = 'spot/getSpotsReview'
 const GET_USER_REVIEWS = 'spot/getUserReviews'
 const CREATE_REVIEW = 'spot/createNewReview'
 const DELETE_REVIEW = 'reviews/deleteUserReview'
-
-
+const ADD_IMG = 'reviews/addImage'
 // ACTIONS
 export const getReviews = (reviews) => {
     return {
@@ -33,6 +32,12 @@ export const deleteReview = (reviewId) => {
     return {
         type: DELETE_REVIEW,
         payload: reviewId
+    }
+}
+export const addImg = (images) => {
+    return {
+        type: ADD_IMG,
+        payload: images
     }
 }
 
@@ -62,7 +67,7 @@ export const createNewReview = (reviewFormInput, spotId) => async (dispatch) => 
         method: "POST",
         body: JSON.stringify(reviewFormInput)
     });
-    console.log(response)
+
 
     if (response.ok) {
         const parsedRes = await response.json();
@@ -79,6 +84,32 @@ export const deleteUserReview = (reviewId) => async (dispatch) => {
     if (response.ok) {
         const parsedRes = await response.json();
         dispatch(deleteReview(reviewId));
+        return parsedRes;
+    }
+}
+
+
+export const addImgToReview = (uploadedImages, reviewId) => async (dispatch) => {
+    const formData = new FormData();
+
+    // for multiple files
+    if (uploadedImages && uploadedImages.length !== 0) {
+        for (let i = 0; i < uploadedImages.length; i++) {
+            formData.append("images", uploadedImages[i]);
+        }
+    }
+
+    const response = await csrfFetch(`/api/reviews/${reviewId}/images`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        body: formData
+    });
+
+    if (response.ok) {
+        const parsedRes = await response.json();
+        dispatch(addImg(parsedRes));
         return parsedRes;
     }
 }

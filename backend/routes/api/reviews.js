@@ -1,4 +1,6 @@
 const express = require('express');
+const { singlePublicFileUpload, singleMulterUpload, multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3.js');
+const asyncHandler = require('express-async-handler')
 
 //validator
 const { check } = require('express-validator');
@@ -19,9 +21,15 @@ const validateReview = [
 ];
 
 // ADD IMAGE TO REVIEW BASED ON REVIEWID
-router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+router.post('/:reviewId/images', multipleMulterUpload("images"), requireAuth, async (req, res, next) => {
+
+    const multipleUploadedImgUrl = await multiplePublicFileUpload(req.files);
+
+
     const { url } = req.body;
-    const { reviewId } = req.params;
+    let { reviewId } = req.params;
+    reviewId = parseInt(reviewId);
+
     const review = await Review.findByPk(reviewId);
     const allReviewImagesCount = await Image.count({
         where: {
@@ -41,21 +49,23 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
                 err.status = 400;
                 return next(err);
             } else {
-                const image = await Image.create({
-                    imageableType: 'Review',
-                    url,
-                    spotId: null,
-                    reviewId
-                });
 
-                image.dataValues.imageableId = parseInt(reviewId);
-                delete image.dataValues.spotId;
-                delete image.dataValues.reviewId;
-                delete image.dataValues.createdAt;
-                delete image.dataValues.updatedAt;
+                const responseArr = [];
+                multipleUploadedImgUrl.forEach((img, index) => {
+
+                    const image = Image.create({
+                        imageableType: 'Review',
+                        url: img,
+                        spotId: null,
+                        reviewId
+                    });
+
+                    responseArr.push(image);
+                })
+
 
                 res.status(200);
-                res.json(image);
+                res.json(responseArr);
             }
         } else {
             res.status(403)

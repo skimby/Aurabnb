@@ -29,11 +29,11 @@ const GetSpot = () => {
 
     useEffect(() => {
         dispatch(getOneSpot(spotId))
-            .catch(async (res) => {
-                const data = await res.json()
-                console.log(data)
-                console.log(data.errors)
-            });
+        // .catch(async (res) => {
+        //     const data = await res.json()
+        //     console.log(data)
+        //     console.log(data.errors)
+        // });
         dispatch(getSpotReviews(spotId))
     }, [dispatch, spotId]);
 
@@ -54,13 +54,15 @@ const GetSpot = () => {
     useEffect(() => {
         if (spot && userBookings) {
             const hasBooked = userBookings?.find(booking => spotId === booking.spotId);
-            if (hasBooked) {
+            const hasReviewed = reviews?.find(review => user.id === review.userId);
+
+            if (hasBooked && !hasReviewed) {
                 setBookedUser(true);
             } else {
                 setBookedUser(false);
             }
         }
-    }, [spot, spotId, userBookings])
+    }, [spot, spotId, userBookings, reviews, user])
 
     useEffect(() => {
         if (spot?.images.length === 0) {

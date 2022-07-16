@@ -290,7 +290,7 @@ router.post('/:spotId/images', requireAuth, multipleMulterUpload("images"), asyn
 
     const multipleUploadedImgUrl = await multiplePublicFileUpload(req.files);
 
-    console.log(multipleUploadedImgUrl)
+
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
 
@@ -301,12 +301,14 @@ router.post('/:spotId/images', requireAuth, multipleMulterUpload("images"), asyn
             const responseArr = [];
             multipleUploadedImgUrl.forEach((img, index) => {
 
+
                 const image = Image.create({
                     imageableType: 'Spot',
                     url: img,
                     spotId,
                     reviewId: null
                 });
+
 
                 if (image.spotId) {
                     image.dataValues.imageableId = parseInt(spotId);
@@ -370,7 +372,7 @@ router.get('/:spotId', async (req, res) => {
         }]
     });
 
-    console.log(spots)
+
     if (spots) {
 
         const reviews = await Review.count({

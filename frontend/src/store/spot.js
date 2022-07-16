@@ -139,7 +139,6 @@ export const addSpotImage = (uploadedImages, spotId) => async (dispatch) => {
         body: formData
     });
 
-    console.log(response)
     if (response.ok) {
         const parsedRes = await response.json();
         dispatch(addImage(parsedRes));
