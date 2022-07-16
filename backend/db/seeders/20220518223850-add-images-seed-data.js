@@ -5,91 +5,100 @@ module.exports = {
     return queryInterface.bulkInsert('Images', [
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/23a02d127997540a6596d62e651a0140-p_c.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/28500e98-fda8-4704-962a-c2cdb759270a.jpg',
         spotId: 1,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/3349c30dc156911016262fb65af7da7dl-m3652894416od-w480_h480_q80.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/2aa8a931-fefd-4b6a-91a8-27e7ba88820d.jpg',
         spotId: 1,
         reviewId: null
       },
 
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/349b0d626a3ca5f27f32602108186274l-m0od-w480_h480_q80.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/3ba65716-fbf5-4f39-b255-0b7bcb51f2e9.jpg',
         spotId: 1,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/48fc794d5de870c3ea4f8ecc63ddae59-p_c.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/67c5c0b5-9e10-4cbd-b24f-470ddeb4e924.jpg',
         spotId: 1,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/c89589a57c9ce562508a80330733fdfcl-m4196730048od-w480_h360_x2.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/8a42fe3e-63e6-41bb-b697-155b69a62672.jpg',
         spotId: 1,
         reviewId: null
       },
-
+      {
+        imageableType: 'Spot',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/9867dd5b-fd0a-434d-9bdd-bf4c418d3b0a.jpg',
+        spotId: 1,
+        reviewId: null
+      },
+      {
+        imageableType: 'Spot',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/e0f636a2-b397-464a-9bf2-95a1ac5c29be.jpg',
+        spotId: 1,
+        reviewId: null
+      },
+      {
+        imageableType: 'Spot',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/zen-garden/eec478ea-80d3-457d-bee2-0805205752e2.jpg',
+        spotId: 1,
+        reviewId: null
+      },
 
       {
         imageableType: 'Review',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/c89589a57c9ce562508a80330733fdfcl-m4196730048od-w480_h360_x2.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/review-img/Moms+Place-01.jpg',
         spotId: null,
         reviewId: 1
       },
       {
         imageableType: 'Review',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/power-mound/c89589a57c9ce562508a80330733fdfcl-m4196730048od-w480_h360_x2.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/review-img/6715685F-8EF3-45BB-A4F5-D1185176DE32.JPG',
         spotId: null,
-        reviewId: 2
+        reviewId: 7
+      },
+      {
+        imageableType: 'Review',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/review-img/IMG_5838.JPG',
+        spotId: null,
+        reviewId: 7
       },
 
-
-
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/54978353a65122cdee73d5d48b55d729-cc_ft_960.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/preston-hollow/03801e7a-1702-47e7-a239-177dae52a4c6.jpg',
         spotId: 2,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/6c8077c7bad04f0fa31f06267c63a2ad-cc_ft_384.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/preston-hollow/41da5497-0b1e-4bee-80dc-0ab1ff9d70d5.jpg',
         spotId: 2,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/download.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/preston-hollow/4f84aa3e-68c3-4f68-b763-0f8292230538.jpg',
         spotId: 2,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/img-21.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/preston-hollow/6892ee1f-a229-4a3b-b048-032102603d57.jpg',
         spotId: 2,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/img-29.jpeg',
-        spotId: 2,
-        reviewId: null
-      },
-      {
-        imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/img-3.jpeg',
-        spotId: 2,
-        reviewId: null
-      },
-      {
-        imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/cartwright/img-30.jpeg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/preston-hollow/da8aac3b-a60b-4998-8de4-82bc37587599.jpg',
         spotId: 2,
         reviewId: null
       },
@@ -98,58 +107,47 @@ module.exports = {
 
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/0b66f8d8-461f-4ae6-a194-72cbfbaf73b5.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/2035804d-d28f-41e3-8394-7e4a97835631.jpg',
         spotId: 3,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/49c7623b-be7c-4c69-801e-b15316c2f304.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/22b158ff-66c3-4afd-a014-6c2206480000.jpg',
         spotId: 3,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/4c01e692-a47a-46ab-9eb4-019ecc1d24f3.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/369dc2a1-8ad7-4ad3-9035-7701d06fad6f.jpg',
         spotId: 3,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/65cf90cb-9a6e-426d-a44d-4c1236537239.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/9f884668-30b7-43c2-9e9c-4b6cc0234b20.jpg',
         spotId: 3,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/86d635c6-11c8-46b6-a0cd-818ad792eb47.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/ad0b81e6-f685-4e3f-beaa-87bfc0be2668.jpg',
         spotId: 3,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/9b7a655c-baaf-4337-add8-c7335b021485.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/d718d73e-d096-41a7-9bbe-734ed2601c11.jpg',
         spotId: 3,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/cfd13eb0-553c-4e80-9049-219da3b56950.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/boat-house/f42e0657-54e9-4197-92dc-8b0218aeab7a.jpg',
         spotId: 3,
         reviewId: null
-      },
-      {
-        imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/d6c44262-3aaa-4a4a-a26f-1678d54efdc9.jpg',
-        spotId: 3,
-        reviewId: null
-      },
-      {
-        imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/the-colony/f72a3482-7451-40c0-b7e5-2c461b2829c7.jpg',
-        spotId: 3,
-        reviewId: null
-      },
+      }
+
     ])
 
   },

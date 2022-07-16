@@ -24,3 +24,7 @@ h4 {
 .spots-star {
     padding: 0 2px 0 0;
 }
+
+.review-img-styling {
+    display: inline-flex;
+}

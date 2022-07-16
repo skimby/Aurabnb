@@ -10,7 +10,7 @@ module.exports = {
         lastName: 'Tan',
         email: 'amytan@gmail.com',
         password: bcrypt.hashSync('password1'),
-        isHost: false
+        isHost: true
       },
       {
         firstName: 'Lady',
@@ -24,7 +24,21 @@ module.exports = {
         lastName: 'Biden',
         email: 'joebiden@gmail.com',
         password: bcrypt.hashSync('password3'),
-        isHost: false
+        isHost: true
+      },
+      {
+        firstName: 'Smoochie',
+        lastName: 'Kim',
+        email: 'smoochiekim@gmail.com',
+        password: bcrypt.hashSync('password4'),
+        isHost: true
+      },
+      {
+        firstName: 'Princess',
+        lastName: 'Peach',
+        email: 'princesspeach@gmail.com',
+        password: bcrypt.hashSync('password5'),
+        isHost: true
       },
       {
         firstName: 'Demo',

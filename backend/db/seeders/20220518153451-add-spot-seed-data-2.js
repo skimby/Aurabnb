@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Spots', [
       {
-        ownerId: 1,
+        ownerId: 4,
         address: '123 Flamingo Street',
         city: 'Dallas',
         state: 'Texas',
@@ -16,7 +16,7 @@ module.exports = {
         price: 468
       },
       {
-        ownerId: 2,
+        ownerId: 5,
         address: '2009 Pool House Lane',
         city: 'Dallas',
         state: 'Texas',
@@ -28,7 +28,7 @@ module.exports = {
         price: 251
       },
       {
-        ownerId: 3,
+        ownerId: 1,
         address: '6983 Private Room',
         city: 'Irving',
         state: 'Texas',
@@ -40,7 +40,7 @@ module.exports = {
         price: 250
       },
       {
-        ownerId: 1,
+        ownerId: 2,
         address: '3832 Colony Street',
         city: 'The Colony',
         state: 'Texas',
@@ -52,7 +52,7 @@ module.exports = {
         price: 207
       },
       {
-        ownerId: 1,
+        ownerId: 3,
         address: '3832 Medicinal Drive',
         city: 'Dallas',
         state: 'Texas',
@@ -64,7 +64,7 @@ module.exports = {
         price: 101
       },
       {
-        ownerId: 3,
+        ownerId: 4,
         address: '3393 Deep Ellum',
         city: 'Dallas',
         state: 'Texas',
@@ -76,7 +76,7 @@ module.exports = {
         price: 95
       },
       {
-        ownerId: 2,
+        ownerId: 5,
         address: '8990 Plano Drive',
         city: 'Plano',
         state: 'Texas',

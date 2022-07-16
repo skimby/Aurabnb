@@ -62,6 +62,7 @@ const Reviews = ({ review, spot }) => {
         await dispatch(getOneSpot(spot?.id));
     }
 
+    console.log(review)
     return (
         <>
             <div className="user-info">
@@ -72,6 +73,16 @@ const Reviews = ({ review, spot }) => {
             </div>
             <div className="review">
                 <p>{review?.review}</p>
+            </div>
+            <div className="review-img">
+                {review?.images?.map((image, index) => {
+                    return (
+                        <div className='review-img-styling'>
+                            <img src={image.url} alt={image.url} key={index} width='30%' />
+                        </div>
+                    )
+                })}
+
             </div>
 
             {isUser && (
