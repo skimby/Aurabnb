@@ -1,5 +1,5 @@
 const express = require('express');
-const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3.js');
+const { singlePublicFileUpload, singleMulterUpload, multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3.js');
 const asyncHandler = require('express-async-handler')
 
 //validator
@@ -289,41 +289,41 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 // })
 
 // ADD AN IMAGE TO SPOT BASED ON SPOTID
-router.post('/:spotId/images', requireAuth, singleMulterUpload("image"), asyncHandler(async (req, res, next) => {
-    // const { url } = req.body;
+router.post('/:spotId/images', requireAuth, multipleMulterUpload("images"), asyncHandler(async (req, res, next) => {
 
-    console.log(req.file)
+    const multipleUploadedImgUrl = await multiplePublicFileUpload(req.files);
 
-    const uploadedImgUrl = await singlePublicFileUpload(req.file);
-    console.log(uploadedImgUrl);
-    console.log('i got here --------!!!!@#')
-
+    console.log(multipleUploadedImgUrl)
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
     const imageCount = await Image.count();
 
-
     if (spot) {
         if (req.user.id === spot.ownerId) {
 
-            const image = await Image.create({
-                id: imageCount + 1,
-                imageableType: 'Spot',
-                url: uploadedImgUrl,
-                spotId,
-                reviewId: null
-            });
+            const responseArr = [];
+            multipleUploadedImgUrl.forEach((img, index) => {
 
-            if (image.spotId) {
-                image.dataValues.imageableId = parseInt(spotId);
-                delete image.dataValues.spotId;
-                delete image.dataValues.reviewId;
-                delete image.dataValues.createdAt;
-                delete image.dataValues.updatedAt;
-            }
+                const image = Image.create({
+                    id: imageCount + 1 + index,
+                    imageableType: 'Spot',
+                    url: img[index],
+                    spotId,
+                    reviewId: null
+                });
 
+                if (image.spotId) {
+                    image.dataValues.imageableId = parseInt(spotId);
+                    delete image.dataValues.spotId;
+                    delete image.dataValues.reviewId;
+                    delete image.dataValues.createdAt;
+                    delete image.dataValues.updatedAt;
+                }
+                responseArr.push(image);
+            })
             res.status(200);
-            res.json(image);
+            res.json(responseArr);
+
 
         } else {
             const err = new Error('Forbidden');
