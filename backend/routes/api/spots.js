@@ -125,9 +125,6 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     let { spotId } = req.params;
     spotId = parseInt(spotId);
     const { review, stars } = req.body;
-    const reviewCount = await Review.count();
-
-    const spotCount = await Spot.count();
     const spot = await Spot.findByPk(spotId)
 
 
@@ -146,19 +143,12 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
             err.status = 403;
             next(err);
         } else {
-
-
-
-            const count = reviewCount;
             const newReview = await Review.create({
-                id: count + 1,
                 userId: req.user.id,
                 spotId,
                 review,
                 stars
             });
-
-            console.log(newReview)
 
             res.status(200);
             return res.json(newReview)
@@ -177,7 +167,6 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
-    const spotCount = await Spot.count();
 
     if (spot) {
         if (req.user.id !== spot.ownerId) {
@@ -216,7 +205,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
-    const bookingCount = await Booking.count();
     let { startDate, endDate } = req.body;
 
     const userId = req.user.id;
@@ -253,7 +241,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         } else {
             if (req.user.id !== spot.ownerId) {
                 const booking = await Booking.create({
-                    id: bookingCount + 1,
                     spotId: parseInt(spotId),
                     userId,
                     startDate,
@@ -306,7 +293,7 @@ router.post('/:spotId/images', requireAuth, multipleMulterUpload("images"), asyn
     console.log(multipleUploadedImgUrl)
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
-    const imageCount = await Image.count();
+
 
     if (spot) {
         if (req.user.id === spot.ownerId) {
@@ -315,7 +302,6 @@ router.post('/:spotId/images', requireAuth, multipleMulterUpload("images"), asyn
             multipleUploadedImgUrl.forEach((img, index) => {
 
                 const image = Image.create({
-                    id: imageCount + 1 + index,
                     imageableType: 'Spot',
                     url: img,
                     spotId,
@@ -383,10 +369,9 @@ router.get('/:spotId', async (req, res) => {
             attributes: ['url']
         }]
     });
-    // console.log(spots, spotCount)
-    // console.log(1)
+
     if (spots && (spots.id <= spotCount)) {
-        // console.log(2)
+
         const reviews = await Review.count({
             where: {
                 spotId
@@ -632,9 +617,7 @@ router.get('/', validatePagination, validateLat, validateLng, async (req, res) =
 router.post('/', requireAuth, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
-    const spotCount = await Spot.count();
     const spot = await Spot.create({
-        id: (spotCount + 1),
         ownerId: req.user.id,
         address,
         city,

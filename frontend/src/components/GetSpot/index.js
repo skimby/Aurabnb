@@ -25,6 +25,8 @@ const GetSpot = () => {
     const reviews = Object.values(useSelector(state => state.review));
     const userBookings = Object.values(useSelector(state => state.booking));
 
+
+
     useEffect(() => {
         dispatch(getOneSpot(spotId))
         // .catch(async (res) => {
@@ -32,6 +34,10 @@ const GetSpot = () => {
         //     console.log(data)
         //     console.log(data.errors)
         // });
+        // dispatch(getSpotReviews(spotId))
+    }, [dispatch, spotId]);
+
+    useEffect(() => {
         dispatch(getSpotReviews(spotId))
     }, [dispatch, spotId]);
 

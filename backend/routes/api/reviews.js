@@ -23,7 +23,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const { url } = req.body;
     const { reviewId } = req.params;
     const review = await Review.findByPk(reviewId);
-    const imageCount = await Image.count();
     const allReviewImagesCount = await Image.count({
         where: {
             reviewId
@@ -43,7 +42,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
                 return next(err);
             } else {
                 const image = await Image.create({
-                    id: imageCount + 1,
                     imageableType: 'Review',
                     url,
                     spotId: null,

@@ -79,7 +79,6 @@ export const deleteUserReview = (reviewId) => async (dispatch) => {
     if (response.ok) {
         const parsedRes = await response.json();
         dispatch(deleteReview(reviewId));
-
         return parsedRes;
     }
 }
@@ -102,7 +101,6 @@ const reviewReducer = (state = initialState, action) => {
             action.payload.Reviews.forEach(review => {
                 getUserReviews[review.id] = review;
             })
-
             return getUserReviews;
 
         case CREATE_REVIEW:

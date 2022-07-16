@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { getUsersBookings } from "../../store/booking";
 import { deleteUserReview } from "../../store/review";
+import { getOneSpot } from "../../store/spot";
 
 const monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -10,9 +12,11 @@ const monthArr = ["January", "February", "March", "April", "May", "June", "July"
 
 const Reviews = ({ review, spot }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const user = useSelector(state => state.session.user);
-    const bookings = Object.values(useSelector(state => state.booking))
+    const bookings = Object.values(useSelector(state => state.booking));
+    const currentSpot = useSelector(state => state.spot.currentSpot);
 
     const [isUser, setIsUser] = useState(false);
     const [dateMonth, setDateMonth] = useState(null);
@@ -55,6 +59,7 @@ const Reviews = ({ review, spot }) => {
     const handleDelete = async (e) => {
         e.preventDefault();
         await dispatch(deleteUserReview(review?.id));
+        await dispatch(getOneSpot(spot?.id));
     }
 
     return (
