@@ -359,7 +359,7 @@ router.get('/me', requireAuth, async (req, res) => {
 // GET SPOT BY ID
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params;
-    const spotCount = await Spot.count();
+
     const spots = await Spot.findOne({
         where: {
             id: spotId
@@ -370,7 +370,8 @@ router.get('/:spotId', async (req, res) => {
         }]
     });
 
-    if (spots && (spots.id <= spotCount)) {
+    console.log(spots)
+    if (spots) {
 
         const reviews = await Review.count({
             where: {

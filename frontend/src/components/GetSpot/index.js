@@ -29,11 +29,11 @@ const GetSpot = () => {
 
     useEffect(() => {
         dispatch(getOneSpot(spotId))
-        // .catch(async (res) => {
-        //     const data = await res.json()
-        //     console.log(data)
-        //     console.log(data.errors)
-        // });
+            .catch(async (res) => {
+                const data = await res.json()
+                console.log(data)
+                console.log(data.errors)
+            });
         dispatch(getSpotReviews(spotId))
     }, [dispatch, spotId]);
 
