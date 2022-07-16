@@ -108,7 +108,7 @@ router.get('/:spotId/reviews', async (req, res) => {
         }]
     });
 
-    if (Reviews.length > 0) {
+    if (Reviews.length >= 0) {
         res.status(200);
         return res.json({ Reviews });
     } else {
@@ -289,11 +289,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 // })
 
 // ADD AN IMAGE TO SPOT BASED ON SPOTID
-router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, asyncHandler(async (req, res, next) => {
-    const { url } = req.body;
+router.post('/:spotId/images', requireAuth, singleMulterUpload("image"), asyncHandler(async (req, res, next) => {
+    // const { url } = req.body;
+
+    console.log(req.file)
 
     const uploadedImgUrl = await singlePublicFileUpload(req.file);
-
+    console.log(uploadedImgUrl);
+    console.log('i got here --------!!!!@#')
 
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId);
