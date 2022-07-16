@@ -26,19 +26,23 @@ const GetSpot = () => {
     const reviews = Object.values(useSelector(state => state.review));
     const userBookings = Object.values(useSelector(state => state.booking));
 
-
     useEffect(() => {
-        dispatch(getOneSpot(spotId));
-        dispatch(getSpotReviews(spotId));
+        dispatch(getOneSpot(spotId))
+        // .catch(async (res) => {
+        //     const data = await res.json()
+        //     console.log(data)
+        //     console.log(data.errors)
+        // });
+        dispatch(getSpotReviews(spotId))
     }, [dispatch, spotId]);
 
     useEffect(() => {
-        dispatch(getUsersBookings(user.id));
+        dispatch(getUsersBookings(user?.id));
     }, [dispatch, user]);
 
     useEffect(() => {
         if (spot) {
-            if (user.id === spot.ownerId) {
+            if (user?.id === spot?.ownerId) {
                 setUserOwned(true)
             } else {
                 setUserOwned(false);
@@ -48,7 +52,7 @@ const GetSpot = () => {
 
     useEffect(() => {
         if (spot && userBookings) {
-            const hasBooked = userBookings.find(booking => spotId === booking.spotId);
+            const hasBooked = userBookings?.find(booking => spotId === booking.spotId);
             if (hasBooked) {
                 setBookedUser(true);
             } else {
@@ -57,10 +61,8 @@ const GetSpot = () => {
         }
     }, [spot, spotId, userBookings])
 
-
-
     useEffect(() => {
-        if (spot.images.length === 0) {
+        if (spot?.images.length === 0) {
             setHasNoImages(true);
         } else {
             setHasNoImages(false);
@@ -78,11 +80,7 @@ const GetSpot = () => {
     }
 
     const handleAddImage = () => {
-
         history.push(`/addImages/${spotId}`)
-
-        //need to create an add image form and redirect to that route in this function.
-        //submitting form should use the addImage thunk
     }
 
     const handleDelete = async () => {
@@ -105,11 +103,12 @@ const GetSpot = () => {
 
                         {hasNoImages && (
                             <div className='default-img'>
-                                <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' width='100%' alt='default-image' className='default' />
+                                <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' width='100%' alt='placeholder' className='default' />
                             </div>
                         )}
-                        <SpotGallery spot={spot} />
-
+                        {!hasNoImages && (
+                            <SpotGallery spot={spot} />
+                        )}
 
 
                         <div className="reviews-container">

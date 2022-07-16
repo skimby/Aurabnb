@@ -35,13 +35,13 @@ const Reviews = ({ review, spot }) => {
     }, [user, review]);
 
     useEffect(() => {
-        dispatch(getUsersBookings(user.id))
+        dispatch(getUsersBookings(user?.id))
     }, [dispatch, user])
 
 
     useEffect(() => {
         if (spot && bookings) {
-            const hasBooked = bookings.find(booking => spot.id === booking.spotId
+            const hasBooked = bookings?.find(booking => spot.id === booking.spotId
             );
             if (hasBooked) {
                 setBookedUser(true);

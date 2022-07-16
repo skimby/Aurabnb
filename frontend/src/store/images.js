@@ -28,13 +28,7 @@ export const addSpotImages = ((uploadedImages, spotId) => async (dispatch) => {
 
     const data = await res.json();
     dispatch(addImages(data));
-
-    // const response = await csrfFetch(`/spots/${spotId}/images`);
-    // if (response.ok) {
-    //     const parsedRes = await response.json();
-
-    //     dispatch(addImages(parsedRes));
-    // }
+    return data;
 })
 
 // INITIAL STATE

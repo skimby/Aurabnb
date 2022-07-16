@@ -3,10 +3,6 @@ import { useState, useEffect } from "react";
 const Dots = ({ slideIndex, spot, status }) => {
     const numDots = [1, 2, 3, 4, 5];
 
-    useEffect(() => {
-
-    }, [slideIndex])
-
     return (
         numDots.map((dot, index) => {
             return (

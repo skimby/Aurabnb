@@ -8,6 +8,7 @@ const EDIT_SPOT = 'spot/editSpot'
 const GET_SPOT = 'spot/getSpot'
 const DELETE_SPOT = 'spot/deleteSpot'
 const ADD_IMAGE = 'spot/addImage'
+
 // ACTION
 export const loadSpots = (spots) => {
     return {
@@ -43,11 +44,10 @@ export const deleteSpot = (spotId) => {
         payload: spotId
     }
 }
-export const addImage = (image, spotId) => {
+export const addImage = (image) => {
     return {
         type: ADD_IMAGE,
-        payload: [image, spotId]
-
+        payload: image
     }
 }
 
@@ -77,22 +77,6 @@ export const createSpot = (spotFormInput, uploadedImages) => async (dispatch) =>
 
         if (spot.ok) {
             const parsedSpot = await spot.json();
-
-
-            //IMAGE STUFF
-            // for single file
-            // const formData = new FormData();
-            // if (uploadedImages) formData.append("image", uploadedImages);
-
-            //Create Image request //going to try not adding anything image realted to the reducer since it it connected to spot and spot will be update??
-            // await csrfFetch(`/spots/${parsedSpot.id}/images`, {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "multipart/form-data",
-            //     },
-            //     body: formData
-            // });
-
             dispatch(getSpot(parsedSpot));
             return parsedSpot;
         }
@@ -134,16 +118,31 @@ export const deleteOneSpot = (spotId) => async (dispatch) => {
         return parsedRes;
     }
 };
+
 //Add image to spot by spotID
-export const addSpotImage = (formInput, spotId) => async (dispatch) => {
+export const addSpotImage = (uploadedImages, spotId) => async (dispatch) => {
+
+    const formData = new FormData();
+
+    // for multiple files
+    if (uploadedImages && uploadedImages.length !== 0) {
+        for (let i = 0; i < uploadedImages.length; i++) {
+            formData.append("images", uploadedImages[i]);
+        }
+    }
+
     const response = await csrfFetch(`/spots/${spotId}/images`, {
         method: "POST",
-        body: JSON.stringify(formInput)
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        body: formData
     });
 
+    console.log(response)
     if (response.ok) {
         const parsedRes = await response.json();
-        dispatch(addImage(parsedRes, spotId));
+        dispatch(addImage(parsedRes));
         return parsedRes;
     }
 };
@@ -155,7 +154,7 @@ const initialState = { currentSpot: null }
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
-            const loadSpotsState = { ...state };
+            const loadSpotsState = {};
             action.payload.Spots.forEach((spot) => {
                 loadSpotsState[spot.id] = spot;
             })

@@ -1,17 +1,19 @@
-import ProfileButton from "./ProfileButton";
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import * as sessionActions from '../../store/session';
-import logo from '../../images/airbnb-logo.png';
 import './Navigation.css'
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import ProfileButton from "./ProfileButton";
+import Logo from './Logo';
+
 
 const Navigation = ({ isLoaded }) => {
-
-    const sessionUser = useSelector(state => state.session.user);
+    const history = useHistory();
     const dispatch = useDispatch();
 
+    const sessionUser = useSelector(state => state.session.user);
     //set sessionLinks variable
     let sessionLinks;
     //check if the user is logged in, if yes, let the user button appear. Pass in the sessionUser object as a prop
@@ -30,23 +32,12 @@ const Navigation = ({ isLoaded }) => {
     }
     const handleClick = () => {
         dispatch(sessionActions.demoUser());
-        <Redirect to='/' />
+        history.push('/');
     }
 
     return (
-        //always return a navlink to the home page
         <div className="nav-bar">
-
-            <ul className='nav-left'>
-                <li >
-                    <NavLink exact to="/">
-                        <div className='logo-box'>
-                            <img src={logo} alt='airbnb logo' width='100%' />
-                        </div>
-                    </NavLink>
-                </li>
-            </ul>
-
+            <Logo />
             <ul className='nav-right'>
                 <li >
                     <NavLink to="/">
@@ -62,15 +53,9 @@ const Navigation = ({ isLoaded }) => {
                         </div>
                     </NavLink>
                 </li>
-                {/* conditionally rendering if isLoaded is truthy */}
                 <li >
                     {isLoaded && sessionLinks}
                 </li>
-                {/* <li> */}
-                {/* <NavLink exact to="/">Home</NavLink> */}
-                {/* *** what is this doing?  */}
-                {/* {isLoaded && sessionLinks} */}
-                {/* </li> */}
 
             </ul>
         </div >

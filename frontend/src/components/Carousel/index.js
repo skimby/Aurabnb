@@ -3,9 +3,7 @@ import { useEffect } from "react";
 import { loadAllSpots } from "../../store/spot";
 
 import GalleryCard from "./GalleryCard";
-
 import './SpotGallery.css';
-
 
 const Carousel = () => {
     const dispatch = useDispatch();
@@ -21,13 +19,16 @@ const Carousel = () => {
 
     return (
         <>
-            <div className='spot-carousel'>
-                {spots?.map((spot, index) => {
-                    return (
-                        <GalleryCard spot={spot} index={index} key={index} />
-                    )
-                })}
-            </div>
+            {spots && spots.length > 2 && (
+                <div className='spot-carousel'>
+                    {spots?.map((spot, index) => {
+                        return (
+                            <GalleryCard spot={spot} index={index} key={index} />
+                        )
+                    })}
+                </div>
+
+            )}
         </>
     )
 }

@@ -5,10 +5,10 @@ import * as sessionActions from "./store/session";
 
 import Navigation from './components/Navigation';
 import SpotForm from "./components/SpotForm";
-import HomePage from "./components/HomePage";
 import GetSpot from "./components/GetSpot";
 import CreateReview from "./components/GetSpot/CreateReview";
-import AddImagesForm from "./components/GetSpot/AddImagesForm";
+import AddImagesForm from "./components/AddImagesForm";
+import Carousel from "./components/Carousel";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ function App() {
   useEffect(() => {
     //use .then to make sure restoreUser runs first
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+
   }, [dispatch]);
 
   return (
@@ -29,7 +30,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route path='/' exact >
-            <HomePage />
+            <Carousel />
           </Route>
 
           <Route path='/spots/:spotId' >
@@ -50,9 +51,6 @@ function App() {
           <Route path='/createReview/:spotId' >
             <CreateReview />
           </Route>
-
-
-
 
         </Switch>
       )}

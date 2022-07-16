@@ -95,11 +95,13 @@ const reviewReducer = (state = initialState, action) => {
                 getReviewsState[review.id] = review;
             })
             return getReviewsState;
+
         case GET_USER_REVIEWS:
-            const getUserReviews = { ...state };
+            const getUserReviews = {};
             action.payload.Reviews.forEach(review => {
                 getUserReviews[review.id] = review;
             })
+
             return getUserReviews;
 
         case CREATE_REVIEW:

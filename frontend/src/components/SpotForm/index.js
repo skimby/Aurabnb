@@ -1,6 +1,6 @@
-import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 
 import { createSpot, getOneSpot, updateSpot } from "../../store/spot";
 
@@ -22,7 +22,6 @@ const SpotForm = () => {
     const [name, setName] = useState(spot?.name || '');
     const [description, setDescription] = useState(spot?.description || '');
     const [price, setPrice] = useState(spot?.price || '');
-    const [images, setImages] = useState('');
 
     //if someone find url, it redirects them to home
     //redirect on actual page, not app.js
@@ -36,7 +35,6 @@ const SpotForm = () => {
             dispatch(getOneSpot(spotId))
         }
     }, [dispatch, spotId])
-
 
 
     //Set form header (create vs edit)
@@ -56,11 +54,6 @@ const SpotForm = () => {
     }
 
 
-    const handleChange = (e) => {
-        const file = e.target.value;
-        if (file) setImages(file);
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -75,15 +68,12 @@ const SpotForm = () => {
             description,
             price
         }
-        const uploadedImages = {
-            images
-        }
 
         if (spotId) {
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
             history.push(`/spots/${editSpot.id}`)
         } else {
-            const newSpot = await dispatch(createSpot(spotFormInput, uploadedImages));
+            const newSpot = await dispatch(createSpot(spotFormInput));
             console.log(newSpot)
             history.push(`/spots/${newSpot.id}`)
         }
@@ -157,10 +147,6 @@ const SpotForm = () => {
                 >
                 </input>
 
-                <label forhtml="images">Please upload images of your spot:</label>
-                <input type="file" onChange={handleChange}
-                    id="images" name="images"
-                    accept="image/png, image/jpeg" ></input>
                 {submitButton()}
             </form >
 

@@ -13,8 +13,8 @@ const SpotInfo = ({ spot, spotId, index }) => {
         history.push(`/spots/${spot?.id}`);
     }
 
-    useEffect(() => {
-        dispatch(getOneSpot(spot?.id));
+    useEffect(async () => {
+        await dispatch(getOneSpot(spot?.id));
     }, [dispatch]);
 
     return (
