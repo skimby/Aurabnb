@@ -6,6 +6,7 @@ import { deleteOneSpot, getOneSpot } from "../../store/spot";
 import { getSpotReviews } from "../../store/review";
 import { getUsersBookings } from "../../store/booking";
 import SpotFormModal from "../SpotFormModal";
+import AddImagesFormModal from "../AddImagesFormModal";
 import Reviews from "./Reviews";
 import SpotGallery from "./SpotGallery";
 import './GetSpot.css'
@@ -55,7 +56,7 @@ const GetSpot = () => {
     useEffect(() => {
         if (spot && userBookings) {
             const hasBooked = userBookings?.find(booking => spotId === booking.spotId);
-            const hasReviewed = reviews?.find(review => user.id === review.userId);
+            const hasReviewed = reviews?.find(review => user?.id === review.userId);
 
             if (hasBooked && !hasReviewed) {
                 setBookedUser(true);
@@ -128,11 +129,9 @@ const GetSpot = () => {
                                 return (
                                     <div className='each-review' key={index}>
                                         <Reviews spot={spot} review={review} />
-
                                     </div>
                                 )
                             })}
-
 
                             <h2>{reviews?.id}</h2>
                         </div>
@@ -144,7 +143,10 @@ const GetSpot = () => {
                         <>
                             <SpotFormModal editForm={editForm} />
                             {/* <button onClick={handleClick}>Edit Spot</button> */}
-                            <button onClick={handleAddImage}>Add Images</button>
+
+                            <AddImagesFormModal />
+                            {/* <button onClick={handleAddImage}>Add Images</button> */}
+
 
                             <button onClick={handleDelete}>Delete Spot</button>
                         </>

@@ -26,9 +26,7 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
     const [errors, setErrors] = useState(['']);
 
 
-    console.log(1)
-    console.log(errors)
-    console.log('^^^^^^')
+
     //if someone find url, it redirects them to home
     //redirect on actual page, not app.js
     if (!user) {

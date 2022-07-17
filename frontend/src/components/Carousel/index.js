@@ -21,7 +21,7 @@ const Carousel = () => {
         dispatch(loadAllSpots())
             .catch(async (res) => {
                 const data = await res.json()
-                console.log(data)
+
             });
     }, [dispatch])
 

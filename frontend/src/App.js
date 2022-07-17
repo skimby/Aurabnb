@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 
 import Navigation from './components/Navigation';
 import GetSpot from "./components/GetSpot";
-import AddImagesForm from "./components/AddImagesForm";
+import AddImagesForm from "./components/AddImagesFormModal/AddImagesForm";
 import AddReviewImagesForm from "./components/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
 import ReviewForm from "./components/ReviewForm";
@@ -19,7 +19,6 @@ function App() {
   useEffect(() => {
     //use .then to make sure restoreUser runs first
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-
   }, [dispatch]);
 
   return (
@@ -46,9 +45,9 @@ function App() {
             <SpotForm />
           </Route> */}
 
-          <Route path='/addImages/:spotId' exact >
+          {/* <Route path='/addImages/:spotId' exact >
             <AddImagesForm />
-          </Route>
+          </Route> */}
 
           <Route path='/addImages/spots/:spotId/reviews/:reviewId' exact>
             <AddReviewImagesForm />

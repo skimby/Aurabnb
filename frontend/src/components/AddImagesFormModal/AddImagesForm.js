@@ -2,16 +2,21 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import { addSpotImage } from "../../store/spot"
+import { addSpotImage, getOneSpot } from "../../store/spot"
 
-const AddImagesForm = () => {
+const AddImagesForm = ({ showModal, setShowModal }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     let { spotId } = useParams();
     spotId = parseInt(spotId);
 
     const [images, setImages] = useState([]);
-    const [errors, setErrors] = useState();
+    const [errors, setErrors] = useState(['']);
+    console.log('errors:')
+    console.log(errors.length)
+    console.log(errors)
+    console.log('images:')
+    console.log(images.length)
 
     const updateFiles = (e) => {
         const files = e.target.files;
@@ -20,11 +25,17 @@ const AddImagesForm = () => {
 
     useEffect(() => {
         let res = [];
+
         if (images.length) {
             if (images.length < 5) {
                 res.push('Please upload a minimum of five images for your spot.');
+            } else if (images.length >= 5) {
+                res.push();
             }
+        } else {
+            res.push('Please upload a minimum of five images for your spot.');
         }
+
         setErrors(res)
     }, [images])
 
@@ -32,7 +43,9 @@ const AddImagesForm = () => {
         e.preventDefault();
 
         if (errors?.length === 0) {
-            await dispatch(addSpotImage(images, spotId))
+            await dispatch(addSpotImage(images, spotId));
+            await dispatch(getOneSpot(spotId));
+            setShowModal(false);
             history.push(`/spots/${spotId}`)
         }
         // .catch(async (res) => {
@@ -45,12 +58,14 @@ const AddImagesForm = () => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <p>{errors}</p>
-                <label forhtml="images">Please upload images of your spot:</label>
+
+                <label forhtml="images">Please upload a variety of images that best showcase your spot!</label>
                 <input
                     type="file"
                     multiple
                     onChange={updateFiles} />
+
+                <p>{errors}</p>
                 <button>submit</button>
             </form >
         </>
