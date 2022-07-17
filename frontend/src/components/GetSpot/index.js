@@ -66,16 +66,16 @@ const GetSpot = () => {
     }, [spot, spotId, userBookings, reviews, user])
 
     useEffect(() => {
-        if (spot?.images.length === 0) {
+        if (spot?.images?.length === 0) {
             setHasNoImages(true);
         } else {
             setHasNoImages(false);
         }
     }, [spot])
 
-    const handleClick = () => {
-        history.push(`/editSpot/${spotId}`)
-    }
+    // const handleClick = () => {
+    //     history.push(`/editSpot/${spotId}`)
+    // }
 
     const handleReviewClick = () => {
         if (spot) {

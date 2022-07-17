@@ -77,9 +77,9 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                     const data = await res.json()
                     setErrors(data.errors);
                 });
-            history.push(`/spots/${editSpot.id}`)
             setShowModal(false)
-            await dispatch(getOneSpot(spotId))
+            await dispatch(getOneSpot(editSpot?.id))
+            history.push(`/spots/${editSpot?.id}`)
 
         } else {
             const newSpot = await dispatch(createSpot(spotFormInput))
@@ -88,10 +88,9 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                     setErrors(data.errors);
                 });
 
-
-            history.push(`/spots/${newSpot.id}`)
             setShowModal(false)
-            await dispatch(getOneSpot(spotId))
+            await dispatch(getOneSpot(newSpot?.id))
+            history.push(`/spots/${newSpot?.id}`)
 
         }
     }
