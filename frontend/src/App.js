@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 
 import Navigation from './components/Navigation';
 import GetSpot from "./components/GetSpot";
-import AddImagesForm from "./components/AddImagesFormModal/AddImagesForm";
+// import AddImagesForm from "./components/AddImagesFormModal/AddImagesForm";
 import AddReviewImagesForm from "./components/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
 import ReviewForm from "./components/ReviewForm";

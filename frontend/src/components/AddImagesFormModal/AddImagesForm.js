@@ -11,7 +11,7 @@ const AddImagesForm = ({ showModal, setShowModal }) => {
     spotId = parseInt(spotId);
 
     const [images, setImages] = useState([]);
-    const [errors, setErrors] = useState(['']);
+    const [errors, setErrors] = useState([]);
     console.log('errors:')
     console.log(errors.length)
     console.log(errors)
