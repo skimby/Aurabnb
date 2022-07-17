@@ -6,6 +6,7 @@ const GET_USER_REVIEWS = 'spot/getUserReviews'
 const CREATE_REVIEW = 'spot/createNewReview'
 const DELETE_REVIEW = 'reviews/deleteUserReview'
 const ADD_IMG = 'reviews/addImage'
+const EDIT_REVIEW = 'reviews/editReview'
 // ACTIONS
 export const getReviews = (reviews) => {
     return {
@@ -40,6 +41,12 @@ export const addImg = (images) => {
         payload: images
     }
 }
+export const editReview = (review) => {
+    return {
+        type: EDIT_REVIEW,
+        payload: review
+    }
+}
 
 // THUNKS
 
@@ -62,7 +69,7 @@ export const getUserReviews = (userId) => async (dispatch) => {
 }
 
 export const createNewReview = (reviewFormInput, spotId) => async (dispatch) => {
-    console.log(reviewFormInput)
+
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
         body: JSON.stringify(reviewFormInput)
@@ -113,6 +120,20 @@ export const addImgToReview = (uploadedImages, reviewId) => async (dispatch) => 
         return parsedRes;
     }
 }
+export const updateReview = (formInput, reviewId) => async (dispatch) => {
+
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "PUT",
+        body: JSON.stringify(formInput)
+    });
+
+    if (response.ok) {
+        const parsedRes = await response.json();
+        dispatch(editReview(parsedRes));
+        return parsedRes;
+    }
+}
+
 
 // INITIAL STATE
 const initialState = {}
@@ -143,6 +164,10 @@ const reviewReducer = (state = initialState, action) => {
             const deleteReviewState = { ...state }
             delete deleteReviewState[action.payload];
             return deleteReviewState;
+        case EDIT_REVIEW:
+            const editReviewState = { ...state }
+            editReviewState[action.payload.id] = action.payload;
+            return editReviewState;
         default:
             return state
     }

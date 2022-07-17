@@ -16,7 +16,7 @@ const Reviews = ({ review, spot }) => {
 
     const user = useSelector(state => state.session.user);
     const bookings = Object.values(useSelector(state => state.booking));
-    const currentSpot = useSelector(state => state.spot.currentSpot);
+    // const currentSpot = useSelector(state => state.spot.currentSpot);
 
     const [isUser, setIsUser] = useState(false);
     const [dateMonth, setDateMonth] = useState(null);
@@ -62,7 +62,7 @@ const Reviews = ({ review, spot }) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        history.push(`/editReview/${review?.id}`)
+        history.push(`/spots/${spot?.id}/reviews/${review?.id}`)
     }
 
     const handleDelete = async (e) => {

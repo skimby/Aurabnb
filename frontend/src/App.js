@@ -34,15 +34,15 @@ function App() {
             <Carousel />
           </Route>
 
-          <Route path='/spots/:spotId' >
+          <Route path='/spots/:spotId' exact>
             <GetSpot />
           </Route>
 
-          <Route path='/createSpot' >
+          <Route path='/createSpot' exact>
             <SpotForm />
           </Route>
 
-          <Route path='/editSpot/:spotId' >
+          <Route path='/editSpot/:spotId' exact>
             <SpotForm />
           </Route>
 
@@ -54,11 +54,11 @@ function App() {
             <AddReviewImagesForm />
           </Route>
 
-          <Route path='/createReview/:spotId' >
+          <Route path='/spots/:spotId/reviews' exact >
             <ReviewForm />
           </Route>
 
-          <Route path='/editReview/:reviewId' >
+          <Route path='/spots/:spotId/reviews/:reviewId' exact>
             <ReviewForm />
           </Route>
 

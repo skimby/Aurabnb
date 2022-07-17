@@ -78,7 +78,7 @@ const GetSpot = () => {
 
     const handleReviewClick = () => {
         if (spot) {
-            history.push(`/createReview/${spotId}`)
+            history.push(`/spots/${spotId}/reviews`)
         }
     }
 

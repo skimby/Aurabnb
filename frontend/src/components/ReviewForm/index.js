@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { createNewReview } from "../../store/review";
+import { createNewReview, updateReview } from "../../store/review";
 
 const ReviewForm = () => {
     const dispatch = useDispatch();
@@ -28,7 +28,14 @@ const ReviewForm = () => {
             stars: parseInt(starRating)
         }
 
-        await dispatch(createNewReview(formInput, spotId))
+        if (reviewId) {
+            await dispatch(updateReview(formInput, reviewId))
+            history.push(`/spots/${spotId}`)
+        } else {
+            await dispatch(createNewReview(formInput, spotId))
+            history.push(`/spots/${spotId}`)
+        }
+
         // .catch(async (res) => {
         //     const data = await res.json()
         //     console.log(data)
@@ -36,6 +43,7 @@ const ReviewForm = () => {
         // });
         history.push(`/spots/${spotId}`)
     }
+
     //Set form header (create vs edit)
     const header = () => {
         if (reviewId) {
