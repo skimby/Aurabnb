@@ -14,7 +14,6 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        //*** i think the problem is here: never throws an error
         return dispatch(sessionActions.login({ email, password }))
             .catch(async (res) => {
                 // console.log('catching error')

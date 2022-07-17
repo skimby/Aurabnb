@@ -4,24 +4,25 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { createSpot, getOneSpot, updateSpot } from "../../store/spot";
 
-const SpotForm = () => {
+const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    let { spots } = useParams();
     let { spotId } = useParams();
     spotId = parseInt(spotId);
 
     const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
 
-    const [address, setAddress] = useState(spot?.address || '');
-    const [city, setCity] = useState(spot?.city || '');
-    const [state, setState] = useState(spot?.state || '');
-    const [country, setCountry] = useState(spot?.country || '');
-    const [lat, setLat] = useState(spot?.lat || '');
-    const [lng, setLng] = useState(spot?.lng || '');
-    const [name, setName] = useState(spot?.name || '');
-    const [description, setDescription] = useState(spot?.description || '');
-    const [price, setPrice] = useState(spot?.price || '');
+    const [address, setAddress] = useState((!isNewForm && spot?.address) || '');
+    const [city, setCity] = useState((!isNewForm && spot?.city) || '');
+    const [state, setState] = useState((!isNewForm && spot?.state) || '');
+    const [country, setCountry] = useState((!isNewForm && spot?.country) || '');
+    const [lat, setLat] = useState((!isNewForm && spot?.lat) || '');
+    const [lng, setLng] = useState((!isNewForm && spot?.lng) || '');
+    const [name, setName] = useState((!isNewForm && spot?.name) || '');
+    const [description, setDescription] = useState((!isNewForm && spot?.description) || '');
+    const [price, setPrice] = useState((!isNewForm && spot?.price) || '');
     const [errors, setErrors] = useState([]);
 
     //if someone find url, it redirects them to home
@@ -72,17 +73,21 @@ const SpotForm = () => {
 
         if (spotId) {
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
+                .catch(async (res) => {
+                    const data = await res.json()
+                    setErrors(data.errors);
+                });
             history.push(`/spots/${editSpot.id}`)
+            setShowModal(false)
         } else {
             const newSpot = await dispatch(createSpot(spotFormInput))
                 .catch(async (res) => {
                     const data = await res.json()
-                    console.log(data)
                     setErrors(data.errors);
-                    console.log(data.errors)
                 });
 
             history.push(`/spots/${newSpot.id}`)
+
         }
     }
 

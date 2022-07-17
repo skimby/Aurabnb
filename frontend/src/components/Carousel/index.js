@@ -8,6 +8,7 @@ import './SpotGallery.css';
 const Carousel = () => {
     const dispatch = useDispatch();
 
+
     const spots = Object.values(useSelector(state => state.spot));
 
     useEffect(() => {

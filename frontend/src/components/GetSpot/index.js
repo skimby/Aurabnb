@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
+
 import { deleteOneSpot, getOneSpot } from "../../store/spot";
 import { getSpotReviews } from "../../store/review";
 import { getUsersBookings } from "../../store/booking";
-
+import SpotFormModal from "../SpotFormModal";
 import Reviews from "./Reviews";
 import SpotGallery from "./SpotGallery";
 import './GetSpot.css'
+
 
 
 const GetSpot = () => {
@@ -19,13 +21,12 @@ const GetSpot = () => {
     const [userOwned, setUserOwned] = useState();
     const [bookedUser, setBookedUser] = useState(false);
     const [hasNoImages, setHasNoImages] = useState();
+    const [editForm, setEditForm] = useState(true);
 
     const user = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.currentSpot);
     const reviews = Object.values(useSelector(state => state.review));
     const userBookings = Object.values(useSelector(state => state.booking));
-
-
 
     useEffect(() => {
         dispatch(getOneSpot(spotId))
@@ -141,8 +142,10 @@ const GetSpot = () => {
 
                     {userOwned && (
                         <>
-                            <button onClick={handleClick}>Edit Spot</button>
+                            <SpotFormModal editForm={editForm} />
+                            {/* <button onClick={handleClick}>Edit Spot</button> */}
                             <button onClick={handleAddImage}>Add Images</button>
+
                             <button onClick={handleDelete}>Delete Spot</button>
                         </>
                     )}

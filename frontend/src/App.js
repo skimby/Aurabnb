@@ -4,12 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 
 import Navigation from './components/Navigation';
-import SpotForm from "./components/SpotForm";
 import GetSpot from "./components/GetSpot";
 import AddImagesForm from "./components/AddImagesForm";
 import AddReviewImagesForm from "./components/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
 import ReviewForm from "./components/ReviewForm";
+// import SpotForm from "./components/SpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,13 +38,13 @@ function App() {
             <GetSpot />
           </Route>
 
-          <Route path='/createSpot' exact>
+          {/* <Route path='/createSpot' exact>
             <SpotForm />
-          </Route>
-
+          </Route> */}
+          {/*
           <Route path='/editSpot/:spotId' exact>
             <SpotForm />
-          </Route>
+          </Route> */}
 
           <Route path='/addImages/:spotId' exact >
             <AddImagesForm />
