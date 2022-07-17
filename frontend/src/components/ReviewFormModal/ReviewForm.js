@@ -34,10 +34,9 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
                     setErrors(data.errors)
                 });
 
-            // setErrors(res);
             if (updatedReview) {
-                await dispatch(getOneSpot(spotId))
                 setShowModal(false)
+                await dispatch(getOneSpot(spotId))
             }
         } else {
             const newReview = await dispatch(createNewReview(formInput, spotId))
@@ -47,8 +46,8 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
                 });
 
             if (newReview) {
-                await dispatch(getOneSpot(spotId))
                 setShowModal(false)
+                await dispatch(getOneSpot(spotId))
             }
         }
     }
