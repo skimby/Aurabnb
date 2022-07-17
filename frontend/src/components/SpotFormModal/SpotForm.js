@@ -7,7 +7,7 @@ import { createSpot, getOneSpot, updateSpot } from "../../store/spot";
 const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    let { spots } = useParams();
+
     let { spotId } = useParams();
     spotId = parseInt(spotId);
 
@@ -79,6 +79,8 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                 });
             history.push(`/spots/${editSpot.id}`)
             setShowModal(false)
+            await dispatch(getOneSpot(spotId))
+
         } else {
             const newSpot = await dispatch(createSpot(spotFormInput))
                 .catch(async (res) => {
@@ -86,7 +88,10 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                     setErrors(data.errors);
                 });
 
+
             history.push(`/spots/${newSpot.id}`)
+            setShowModal(false)
+            await dispatch(getOneSpot(spotId))
 
         }
     }
