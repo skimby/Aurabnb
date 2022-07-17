@@ -13,7 +13,7 @@ const SpotGallery = ({ spot }) => {
     return (
 
         <>
-            {spot && (
+            {spot?.images && (
 
                 <>
                     <div className='spot-gallery-main'>

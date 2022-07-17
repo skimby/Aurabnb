@@ -23,38 +23,40 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
     const [name, setName] = useState((!isNewForm && spot?.name) || '');
     const [description, setDescription] = useState((!isNewForm && spot?.description) || '');
     const [price, setPrice] = useState((!isNewForm && spot?.price) || '');
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState(['']);
 
+
+    console.log(1)
+    console.log(errors)
+    console.log('^^^^^^')
     //if someone find url, it redirects them to home
     //redirect on actual page, not app.js
     if (!user) {
         history.push('/');
     }
 
-    // add validations here later ***
     useEffect(() => {
         if (spotId) {
             dispatch(getOneSpot(spotId))
         }
     }, [dispatch, spotId])
 
-
     //Set form header (create vs edit)
     const header = () => {
-        if (spotId) {
+        if (!isNewForm) {
             return (<h2>Edit your Spot</h2>)
         } else {
             return (<h2>Create a Spot</h2>)
         }
     }
+
     const submitButton = () => {
-        if (spotId) {
+        if (!isNewForm) {
             return (<button type='submit'>Submit Edit</button>)
         } else {
             return (<button type='submit'>Create New Spot</button>)
         }
     }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -71,27 +73,30 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
             price
         }
 
-        if (spotId) {
+        if (!isNewForm) {
+            setErrors([]);
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
                 .catch(async (res) => {
                     const data = await res.json()
                     setErrors(data.errors);
                 });
-            setShowModal(false)
-            await dispatch(getOneSpot(editSpot?.id))
-            history.push(`/spots/${editSpot?.id}`)
+
+            if (editSpot) {
+                setShowModal(false)
+                history.push(`/spots/${editSpot?.id}`)
+            }
 
         } else {
             const newSpot = await dispatch(createSpot(spotFormInput))
                 .catch(async (res) => {
                     const data = await res.json()
-                    setErrors(data.errors);
+                    setErrors(data.errors)
                 });
 
-            setShowModal(false)
-            await dispatch(getOneSpot(newSpot?.id))
-            history.push(`/spots/${newSpot?.id}`)
-
+            if (newSpot) {
+                setShowModal(false)
+                history.push(`/spots/${newSpot?.id}`)
+            }
         }
     }
 
@@ -162,10 +167,21 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                 >
                 </input>
 
-                {submitButton()}
-                {errors && (
-                    <p>{errors}</p>
+                {/*
+                {spotId && (
+                    <button type='submit'>Submit Edit</button>
                 )}
+                {!spotId && (
+                    <button type='submit'>Create New Spot</button>
+                )} */}
+
+
+
+
+                {submitButton()}
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
             </form >
 
         </>

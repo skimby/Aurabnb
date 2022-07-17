@@ -14,7 +14,7 @@ const ReviewForm = () => {
 
     const [review, setReview] = useState('');
     const [starRating, setStarRating] = useState();
-
+    const [errors, setErrors] = useState([]);
 
     const handleChange = (e) => {
         setStarRating(e.target.value)
@@ -30,10 +30,24 @@ const ReviewForm = () => {
 
         if (reviewId) {
             await dispatch(updateReview(formInput, reviewId))
-            history.push(`/spots/${spotId}`)
+                .catch(async (res) => {
+                    const data = await res.json()
+                    setErrors(data.errors)
+                    // console.log(data)
+                    // console.log(data.errors)
+                });
+
+            // history.push(`/spots/${spotId}`)
+
         } else {
             await dispatch(createNewReview(formInput, spotId))
             history.push(`/spots/${spotId}`)
+                .catch(async (res) => {
+                    const data = await res.json()
+                    setErrors(data.errors)
+                    // console.log(data)
+                    // console.log(data.errors)
+                });
         }
 
         // .catch(async (res) => {
@@ -128,6 +142,7 @@ const ReviewForm = () => {
                     <label htmlFor="5">5 {<i className="fa-solid fa-star fa-2xl"></i>}</label>
                 </div>
             </fieldset>
+            <p>{errors}</p>
             {submitButton()}
 
 

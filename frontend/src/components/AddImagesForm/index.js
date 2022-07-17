@@ -18,8 +18,6 @@ const AddImagesForm = () => {
         setImages(files);
     };
 
-    console.log(images)
-
     useEffect(() => {
         let res = [];
         if (images.length) {

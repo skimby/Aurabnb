@@ -16,6 +16,7 @@ const Carousel = () => {
             delete spots[spots?.length - 1];
         }
     }, [spots])
+
     useEffect(() => {
         dispatch(loadAllSpots());
     }, [dispatch])

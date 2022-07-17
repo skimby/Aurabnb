@@ -62,7 +62,7 @@ export const loadAllSpots = () => async (dispatch) => {
 }
 
 
-export const createSpot = (spotFormInput, uploadedImages) => async (dispatch) => {
+export const createSpot = (spotFormInput) => async (dispatch) => {
     //Create Spot Request
     const response = await csrfFetch("/api/spots", {
         method: "POST",
@@ -90,10 +90,23 @@ export const updateSpot = (spotFormInput, spotId) => async (dispatch) => {
         body: JSON.stringify(spotFormInput)
     });
 
+    // if (response.ok) {
+    //     const parsedRes = await response.json();
+    //     dispatch(editSpot(parsedRes));
+    //     return parsedRes;
+    // }
     if (response.ok) {
         const parsedRes = await response.json();
         dispatch(editSpot(parsedRes));
-        return parsedRes;
+
+        const spot = await csrfFetch(`/api/spots/${parsedRes.id}`);
+
+        if (spot.ok) {
+            const parsedSpot = await spot.json();
+            dispatch(getSpot(parsedSpot));
+            return parsedSpot;
+        }
+
     }
 };
 
