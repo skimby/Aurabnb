@@ -63,6 +63,15 @@ const GalleryCard = ({ spot, index }) => {
                     <>
                         <Gallery spot={spot} index={index} slideIndex={slideIndex} setSlideIndex={setSlideIndex} onClick={handleClick} />
 
+                        <div className='container-dots hide'>
+                            <Dots slideIndex={slideIndex} spot={spot} />
+                        </div>
+                        <div className='button-div hide'>
+                            <ButtonSlider className={index} direction={'prev'} spotIndex={index} key={`${index} prev button`} spot={spot} slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
+
+                            <ButtonSlider className={index} direction={'next'} spotIndex={index} key={`${index} next button`} spot={spot} slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
+                        </div>
+
                         <div className="spots-body" key={spot?.id} onClick={handleClick}>
 
                             <div className='spot-card-header' key={spot?.id + 'card'}>
@@ -70,6 +79,8 @@ const GalleryCard = ({ spot, index }) => {
                                     {`${spot?.city}, ${spot?.state}`}</h3>
                                 <h4 key={spot?.id + 'price'}>
                                     ${spot?.price} night</h4>
+                                <h5 key={spot?.id + 'name'}>
+                                    {spot?.name} </h5>
                             </div>
                         </div>
                     </>

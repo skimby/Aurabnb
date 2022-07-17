@@ -54,3 +54,7 @@ h5 {
     top: 65%;
     padding-left: 0;
 }
+
+.hide {
+    opacity: 0;
+}
