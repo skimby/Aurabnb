@@ -9,18 +9,15 @@ function ProfileButton({ user }) {
     //set state for the menu, true or false
     const [showMenu, setShowMenu] = useState(false);
 
-    // function that sets the showMenu state to true. why is this not in useeffect?
+
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
     };
 
-    // console.log(user)
     useEffect(() => {
-        //if showMenu, set to false, just return, nothing else needs to happen
         if (!showMenu) return;
 
-        //closeMenu function that sets showMenu to false. inside the use effect bc we want to rerender
         const closeMenu = () => {
             setShowMenu(false);
         };
@@ -51,12 +48,12 @@ function ProfileButton({ user }) {
                     </div>
                 </button>
             </div>
-            {/* *** */}
+
             {showMenu && (
-                <ul className="profile-dropdown">
-                    <li>{user.firstName}</li>
-                    <li>{user.lastName}</li>
-                    <li>{user.email}</li>
+                <ul className="dropdown">
+                    <li>{user?.firstName}</li>
+                    <li>{user?.lastName}</li>
+                    <li>{user?.email}</li>
                     <li>
                         <button onClick={logout}>Log Out</button>
                     </li>

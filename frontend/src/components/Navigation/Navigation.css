@@ -13,8 +13,6 @@ h4 {
     font-weight: 500;
 }
 
-
-
 .nav-bar {
     border: 1px solid #dfdfdf;
     margin: 0;
@@ -24,11 +22,10 @@ h4 {
     position: fixed;
     top: 0;
     background-color: white;
-    /* height: 80%; */
+    height: 93px;
     z-index: 3;
-    /* position: relative; */
-
 }
+
 
 .nav-left {
     width: 50%;
@@ -88,16 +85,17 @@ button {
     align-items: flex-start;
     justify-content: flex-start;
 } */
-
+/*
 li .profile-dropdown {
     display: block;
     align-items: flex-start;
     flex-direction: column;
     justify-content: flex-start;
-}
+} */
 
 .user-button-box {
     padding: 10%;
+
     width: 70px;
     height: 25px;
     border: 1px solid #dfdfdf;
@@ -115,7 +113,76 @@ li .profile-dropdown {
     justify-items: stretch;
     align-items: center;
     padding: 5%;
+
     width: 20px;
     height: auto;
     display: inline-flex;
 }
+
+.icon-details {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.dropdown-container {
+    display: flex;
+    position: fixed;
+    justify-content: flex-end;
+    width: 84%;
+    z-index: 2;
+    padding: 0 8%;
+    margin: 0;
+}
+
+.dd-box {
+    width: 200px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 8px;
+}
+
+.dropdown-container ul {
+    padding-left: 5px;
+}
+
+.dropdown li {
+    padding: 10px;
+}
+
+/* .nav-bar {
+    border: 1px solid #dfdfdf;
+    margin: 0;
+    width: auto;
+    display: flex;
+    padding: 0 8%;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    height: 93px;
+    z-index: 3;
+} */
+
+/* .dropdown-bar {
+    border: 1px solid #dfdfdf;
+    margin: 0;
+    width: auto;
+    display: flex;
+    padding: 0 8%;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    height: 93px;
+    z-index: 3;
+} */
+
+/* DROP DOWN NAV */
+/* The dropdown container */
+/* .dropdown {
+    float: left;
+    position: relative;
+    justify-items: flex-end;
+    text-align: right;
+    top: 100px;
+} */
