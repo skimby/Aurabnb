@@ -22,7 +22,6 @@ const { Op } = require("sequelize");
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
-        // .notEmpty()
         .withMessage("Street address is required"),
     check('city')
         .exists({ checkFalsy: true })
