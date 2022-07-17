@@ -18,7 +18,11 @@ const Carousel = () => {
     }, [spots])
 
     useEffect(() => {
-        dispatch(loadAllSpots());
+        dispatch(loadAllSpots())
+            .catch(async (res) => {
+                const data = await res.json()
+                console.log(data)
+            });
     }, [dispatch])
 
     return (
