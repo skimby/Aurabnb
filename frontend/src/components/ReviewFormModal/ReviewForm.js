@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { createNewReview, updateReview } from "../../store/review";
 import { getSpotReviews } from "../../store/review";
+import { getOneSpot } from "../../store/spot";
 
 const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
 
             // setErrors(res);
             if (updatedReview) {
-                await dispatch(getSpotReviews(spotId));
+                await dispatch(getOneSpot(spotId))
                 setShowModal(false)
             }
         } else {
@@ -46,7 +47,7 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
                 });
 
             if (newReview) {
-                await dispatch(getSpotReviews(spotId));
+                await dispatch(getOneSpot(spotId))
                 setShowModal(false)
             }
         }
