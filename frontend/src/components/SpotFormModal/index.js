@@ -9,11 +9,12 @@ const SpotFormModal = ({ editForm, newSpot }) => {
     return (
         <>
             {newSpot && (
-                <button onClick={() => {
-                    setIsNewForm(true)
-                    setShowModal(true)
-                }}>Become a Host</button>
-
+                <li>
+                    <button id='nav-button' onClick={() => {
+                        setIsNewForm(true)
+                        setShowModal(true)
+                    }}>Create a Spot</button>
+                </li>
             )}
 
             {editForm && (

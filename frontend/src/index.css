@@ -5,8 +5,33 @@ body {
     margin: 0;
 }
 
-button {
+/* button {
     background-color: #ff385c;
     align-items: center;
     display: flex;
+} */
+
+button {
+    background-color: #ff385c;
+    color: white;
+    align-items: center;
+    white-space: nowrap;
+    /* padding: 20%; */
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* NAV BAR BUTTONS */
+#nav-button {
+    background-color: #ff385c;
+    color: white;
+    align-items: center;
+    white-space: nowrap;
+    padding: 20%;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    width: auto;
+    text-align: center;
 }

@@ -7,7 +7,7 @@ const SignupFormModal = () => {
 
     return (
         <>
-            <button onClick={() => setShowModal(true)}>
+            <button id='nav-button' onClick={() => setShowModal(true)}>
                 Sign Up
             </button>
             {

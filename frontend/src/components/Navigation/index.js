@@ -24,7 +24,6 @@ const Navigation = ({ isLoaded }) => {
 
     useEffect(() => {
         if (!showMenu) return;
-
         const closeMenu = () => {
             setShowMenu(false);
         };
@@ -75,13 +74,9 @@ const Navigation = ({ isLoaded }) => {
                     {isLoaded && !sessionUser && (
                         <>
                             <li >
-                                <NavLink to="/">
-                                    <div className='demo-user-box'>
-                                        <button onClick={handleClick}>Demo User</button>
-                                    </div>
-                                </NavLink>
+                                <button id='nav-button' onClick={handleClick}>Demo User</button>
                             </li>
-                            <li>
+                            <li >
                                 <LoginFormModal />
                             </li>
                             <li>
@@ -99,19 +94,15 @@ const Navigation = ({ isLoaded }) => {
 
                             <li>
                                 <div className="user-button-box">
-                                    <button className='user-button' onClick={openMenu}>
-                                        <div className="icon">
-                                            <div className='icon-details'>
-                                                <i className="fa-solid fa-bars fa-xl"></i>
-                                            </div>
+                                    <div className='user-button' onClick={openMenu}>
+                                        <div className="icon icon-1">
+                                            <i className="fa-solid fa-bars fa-lg"></i>
                                         </div>
 
                                         <div className="icon">
-                                            <div className='icon-details'>
-                                                <i className="fa-solid fa-circle-user fa-2xl"></i>
-                                            </div>
+                                            <i className="fa-solid fa-circle-user fa-xl"></i>
                                         </div>
-                                    </button>
+                                    </div>
                                 </div>
                             </li>
                         </>
@@ -127,7 +118,7 @@ const Navigation = ({ isLoaded }) => {
                             <li>{sessionUser?.lastName}</li>
                             <li>{sessionUser?.email}</li>
                             <li>
-                                <button onClick={logout}>Log Out</button>
+                                <p className='bolded' onClick={logout}>Log Out</p>
                             </li>
                         </ul>
                     </div>

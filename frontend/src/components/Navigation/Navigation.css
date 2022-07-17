@@ -13,6 +13,12 @@ h4 {
     font-weight: 500;
 }
 
+.bolded {
+    color: rgb(39, 39, 39);
+    font-weight: 600;
+}
+
+
 .nav-bar {
     border: 1px solid #dfdfdf;
     margin: 0;
@@ -50,18 +56,8 @@ li {
     list-style-type: none;
 }
 
-button {
-    background-color: #ff385c;
-    align-items: center;
-    display: flex;
-
-}
 
 
-
-/* .user-button {
-    background-color: #ff385c;
-} */
 
 .logo-box {
     width: 20%;
@@ -74,56 +70,37 @@ button {
     display: inline-flex;
 }
 
-
-/* .demo-user-box {
-    align-items: center;
-} */
-
-/* .profile-dropdown ul {
-    display: block;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-} */
-/*
-li .profile-dropdown {
-    display: block;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: flex-start;
-} */
-
 .user-button-box {
-    padding: 10%;
-
-    width: 70px;
+    padding: 5%;
+    width: 72px;
     height: 25px;
     border: 1px solid #dfdfdf;
     border-radius: 25px;
-    display: inline-flex;
+    margin-left: 30px;
+
 }
 
 .user-button {
     background-color: white;
     align-items: center;
-    width: 75px;
+    width: 70px;
+    justify-items: center;
+    padding-top: 6px;
 }
 
 .icon {
     justify-items: stretch;
     align-items: center;
-    padding: 5%;
-
     width: 20px;
     height: auto;
     display: inline-flex;
+    padding: 5px;
+    /* margin-right: 5px; */
 }
 
-.icon-details {
-    margin: 0;
-    padding: 0;
+.icon-1 {
+    padding-left: 10px;
 }
-
 
 
 .dropdown-container {
@@ -150,39 +127,3 @@ li .profile-dropdown {
 .dropdown li {
     padding: 10px;
 }
-
-/* .nav-bar {
-    border: 1px solid #dfdfdf;
-    margin: 0;
-    width: auto;
-    display: flex;
-    padding: 0 8%;
-    position: fixed;
-    top: 0;
-    background-color: white;
-    height: 93px;
-    z-index: 3;
-} */
-
-/* .dropdown-bar {
-    border: 1px solid #dfdfdf;
-    margin: 0;
-    width: auto;
-    display: flex;
-    padding: 0 8%;
-    position: fixed;
-    top: 0;
-    background-color: white;
-    height: 93px;
-    z-index: 3;
-} */
-
-/* DROP DOWN NAV */
-/* The dropdown container */
-/* .dropdown {
-    float: left;
-    position: relative;
-    justify-items: flex-end;
-    text-align: right;
-    top: 100px;
-} */
