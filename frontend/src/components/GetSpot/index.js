@@ -7,6 +7,7 @@ import { getSpotReviews } from "../../store/review";
 import { getUsersBookings } from "../../store/booking";
 import SpotFormModal from "../SpotFormModal";
 import AddImagesFormModal from "../AddImagesFormModal";
+import ReviewFormModal from "../ReviewFormModal";
 import Reviews from "./Reviews";
 import SpotGallery from "./SpotGallery";
 import './GetSpot.css'
@@ -78,15 +79,15 @@ const GetSpot = () => {
     //     history.push(`/editSpot/${spotId}`)
     // }
 
-    const handleReviewClick = () => {
-        if (spot) {
-            history.push(`/spots/${spotId}/reviews`)
-        }
-    }
+    // const handleReviewClick = () => {
+    //     if (spot) {
+    //         history.push(`/spots/${spotId}/reviews`)
+    //     }
+    // }
 
-    const handleAddImage = () => {
-        history.push(`/addImages/${spotId}`)
-    }
+    // const handleAddImage = () => {
+    //     history.push(`/addImages/${spotId}`)
+    // }
 
     const handleDelete = async () => {
         await dispatch(deleteOneSpot(spotId));
@@ -121,7 +122,10 @@ const GetSpot = () => {
                             {bookedUser && (
                                 <div className='write-review'>
                                     <h3>You've stayed here recently. Write a review of your visit!</h3>
-                                    <button onClick={handleReviewClick}>Write Review</button>
+
+                                    <ReviewFormModal spotId={spotId} />
+                                    {/* <button onClick={handleReviewClick}>Write Review</button> */}
+
                                 </div>
                             )}
 

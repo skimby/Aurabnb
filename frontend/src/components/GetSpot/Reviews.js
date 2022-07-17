@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { getUsersBookings } from "../../store/booking";
 import { deleteUserReview } from "../../store/review";
 import { getOneSpot } from "../../store/spot";
+import AddReviewImagesFormModal from "../AddReviewImagesFormModal";
+import ReviewFormModal from "../ReviewFormModal";
 
 const monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -55,10 +57,10 @@ const Reviews = ({ review, spot }) => {
         }
     }, [bookedUser, spot, bookings])
 
-    const handleImages = (e) => {
-        e.preventDefault();
-        history.push(`/addImages/spots/${spot?.id}/reviews/${review?.id}`)
-    }
+    // const handleImages = (e) => {
+    //     e.preventDefault();
+    //     history.push(`/addImages/spots/${spot?.id}/reviews/${review?.id}`)
+    // }
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -96,8 +98,12 @@ const Reviews = ({ review, spot }) => {
 
             {isUser && (
                 <>
-                    <button onClick={handleImages}>Add Photos to your Review</button>
-                    <button onClick={handleEdit}>Edit your Review</button>
+                    <AddReviewImagesFormModal
+                        spotId={spot?.id} reviewId={review?.id} />
+                    {/* <button onClick={handleImages}>Add Photos to your Review</button> */}
+
+                    <ReviewFormModal reviewId={review?.id} />
+                    {/* < button onClick={handleEdit}>Edit your Review</button> */}
 
                     <button onClick={handleDelete}>Delete Review</button>
                 </>

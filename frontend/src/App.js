@@ -6,9 +6,9 @@ import * as sessionActions from "./store/session";
 import Navigation from './components/Navigation';
 import GetSpot from "./components/GetSpot";
 // import AddImagesForm from "./components/AddImagesFormModal/AddImagesForm";
-import AddReviewImagesForm from "./components/AddReviewImagesForm";
+// import AddReviewImagesForm from "./components/AddReviewImagesFormModal/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
-import ReviewForm from "./components/ReviewForm";
+// import ReviewForm from "./components/ReviewForm";
 // import SpotForm from "./components/SpotForm";
 
 function App() {
@@ -49,17 +49,17 @@ function App() {
             <AddImagesForm />
           </Route> */}
 
-          <Route path='/addImages/spots/:spotId/reviews/:reviewId' exact>
+          {/* <Route path='/addImages/spots/:spotId/reviews/:reviewId' exact>
             <AddReviewImagesForm />
-          </Route>
-
+          </Route> */}
+          {/*
           <Route path='/spots/:spotId/reviews' exact >
             <ReviewForm />
           </Route>
 
           <Route path='/spots/:spotId/reviews/:reviewId' exact>
             <ReviewForm />
-          </Route>
+          </Route> */}
 
         </Switch>
       )}

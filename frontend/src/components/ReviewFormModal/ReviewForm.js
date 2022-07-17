@@ -1,20 +1,14 @@
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { createNewReview, updateReview } from "../../store/review";
 
-const ReviewForm = () => {
+const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    let { spotId } = useParams();
-    spotId = parseInt(spotId);
-    let { reviewId } = useParams();
-    reviewId = parseInt(reviewId);
 
     const [review, setReview] = useState('');
     const [starRating, setStarRating] = useState();
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState(['']);
 
     const handleChange = (e) => {
         setStarRating(e.target.value)
@@ -23,39 +17,39 @@ const ReviewForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         const formInput = {
             review,
             stars: parseInt(starRating)
         }
 
+        // if (!errors.length) {
         if (reviewId) {
-            await dispatch(updateReview(formInput, reviewId))
+            setErrors([])
+            const updatedReview = await dispatch(updateReview(formInput, reviewId))
                 .catch(async (res) => {
                     const data = await res.json()
                     setErrors(data.errors)
-                    // console.log(data)
-                    // console.log(data.errors)
                 });
 
-            // history.push(`/spots/${spotId}`)
-
+            // setErrors(res);
+            if (updatedReview) {
+                setShowModal(false)
+            }
         } else {
-            await dispatch(createNewReview(formInput, spotId))
-            history.push(`/spots/${spotId}`)
+            const newReview = await dispatch(createNewReview(formInput, spotId))
                 .catch(async (res) => {
                     const data = await res.json()
                     setErrors(data.errors)
-                    // console.log(data)
-                    // console.log(data.errors)
                 });
-        }
+            // setErrors(res);
 
-        // .catch(async (res) => {
-        //     const data = await res.json()
-        //     console.log(data)
-        //     console.log(data.errors)
-        // });
-        history.push(`/spots/${spotId}`)
+            if (newReview) {
+                setShowModal(false)
+            }
+
+            // }
+        }
     }
 
     //Set form header (create vs edit)
@@ -142,7 +136,9 @@ const ReviewForm = () => {
                     <label htmlFor="5">5 {<i className="fa-solid fa-star fa-2xl"></i>}</label>
                 </div>
             </fieldset>
-            <p>{errors}</p>
+            <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             {submitButton()}
 
 
