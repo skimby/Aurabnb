@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import Gallery from "./Gallery";
 import ButtonSlider from "./ButtonSlider";
-
 import Dots from "./Dots";
 
 
@@ -52,7 +51,10 @@ const GalleryCard = ({ spot, index }) => {
                                     {`${spot?.city}, ${spot?.state}`}</h3>
                                 <h4 key={spot?.id + 'price'}>
                                     ${spot?.price} night</h4>
+                                <h5 key={spot?.id + 'name'}>
+                                    {spot?.name} </h5>
                             </div>
+
                         </div>
                     </>
                 )}
@@ -72,14 +74,7 @@ const GalleryCard = ({ spot, index }) => {
                         </div>
                     </>
                 )}
-
-
-
-                {/*
-                    <SpotInfo spot={spot} spotId={spotId} index={index} onClick={handleClick} /> */}
-
             </div>
-
         </>
     )
 }

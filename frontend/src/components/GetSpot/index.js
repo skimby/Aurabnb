@@ -32,11 +32,6 @@ const GetSpot = () => {
 
     useEffect(() => {
         dispatch(getOneSpot(spotId))
-        // .catch(async (res) => {
-        //     const data = await res.json()
-        //     console.log(data)
-        //     console.log(data.errors)
-        // });
         dispatch(getSpotReviews(spotId))
     }, [dispatch, spotId]);
 
@@ -75,20 +70,6 @@ const GetSpot = () => {
         }
     }, [spot])
 
-    // const handleClick = () => {
-    //     history.push(`/editSpot/${spotId}`)
-    // }
-
-    // const handleReviewClick = () => {
-    //     if (spot) {
-    //         history.push(`/spots/${spotId}/reviews`)
-    //     }
-    // }
-
-    // const handleAddImage = () => {
-    //     history.push(`/addImages/${spotId}`)
-    // }
-
     const handleDelete = async () => {
         await dispatch(deleteOneSpot(spotId));
         history.push(`/`)
@@ -124,7 +105,6 @@ const GetSpot = () => {
                                     <h3>You've stayed here recently. Write a review of your visit!</h3>
 
                                     <ReviewFormModal spotId={spotId} />
-                                    {/* <button onClick={handleReviewClick}>Write Review</button> */}
 
                                 </div>
                             )}
@@ -146,12 +126,7 @@ const GetSpot = () => {
                     {userOwned && (
                         <>
                             <SpotFormModal editForm={editForm} />
-                            {/* <button onClick={handleClick}>Edit Spot</button> */}
-
                             <AddImagesFormModal />
-                            {/* <button onClick={handleAddImage}>Add Images</button> */}
-
-
                             <button onClick={handleDelete}>Delete Spot</button>
                         </>
                     )}

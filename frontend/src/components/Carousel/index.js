@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { loadAllSpots } from "../../store/spot";
 
 import GalleryCard from "./GalleryCard";
-import './SpotGallery.css';
+import './Carousel.css';
 
+import './SpotGallery.css';
 const Carousel = () => {
     const dispatch = useDispatch();
-
 
     const spots = Object.values(useSelector(state => state.spot));
 
