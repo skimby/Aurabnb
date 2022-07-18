@@ -155,13 +155,13 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId, curReview }) =>
                     </div>
                 </fieldset> */}
 
-                <input
+                <textarea
                     placeholder="Please give us a detailed review of your stay."
                     type='text'
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                 >
-                </input>
+                </textarea>
 
 
                 <div className="errors">

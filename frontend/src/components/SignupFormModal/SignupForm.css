@@ -19,7 +19,16 @@ input {
     padding: 15px 0 5px 0;
     border-radius: 5px;
     border: 1px solid #dfdfdf;
+}
 
+textarea {
+    font-size: 14px;
+    font-family: 'Arimo', sans-serif;
+    display: block;
+    width: 90%;
+    padding: 15px 0 5px 0;
+    border-radius: 5px;
+    border: 1px solid #dfdfdf;
 }
 
 #no-outline-input {
@@ -28,6 +37,11 @@ input {
 }
 
 input[type=text] {
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+textarea[type=text] {
     padding-left: 10px;
     font-size: 14px;
 }
