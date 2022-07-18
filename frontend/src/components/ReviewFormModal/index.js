@@ -5,7 +5,7 @@ import { Modal } from '../../context/Modal.js';
 
 const ReviewFormModal = ({ curReview, spotId, reviewId }) => {
     const [showModal, setShowModal] = useState(false);
-    console.log(spotId)
+
 
     return (
         <>

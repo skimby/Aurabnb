@@ -144,7 +144,7 @@ router.post('/signup', validateSignup, async (req, res, next) => {
 
 
     } else {
-        console.log('gets here too!!!')
+
         const user = await User.signup({ firstName, lastName, email, password });
 
         await setTokenCookie(res, user);

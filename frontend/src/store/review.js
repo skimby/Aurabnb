@@ -121,7 +121,7 @@ export const addImgToReview = (uploadedImages, reviewId) => async (dispatch) => 
     }
 }
 export const updateReview = (formInput, reviewId) => async (dispatch) => {
-    console.log(formInput)
+
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: "PUT",
         body: JSON.stringify(formInput)
@@ -129,7 +129,7 @@ export const updateReview = (formInput, reviewId) => async (dispatch) => {
 
     if (response.ok) {
         const parsedRes = await response.json();
-        console.log(parsedRes)
+
         dispatch(editReview(parsedRes));
         return parsedRes;
     }

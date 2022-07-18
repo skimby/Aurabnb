@@ -30,15 +30,30 @@
 }
 
 .button-div-full-gallery {
-    color: white;
-    font-size: 30px;
+    background-color: transparent;
+    font-size: 90px;
     position: relative;
-    top: 280px;
-    right: 34px;
+    top: 250px;
+    right: 300px;
     /* display: block; */
     z-index: 1;
-    width: 100%;
+    width: 165%;
     display: flex;
     justify-content: space-between;
-    padding: 0 5%;
+    /* padding: 0 5%; */
+
 }
+
+#full-gall-prev,
+#full-gall-next {
+    background-color: transparent;
+    padding: 0;
+    font-size: 40px;
+
+}
+
+.full-gall-prev {
+    padding: 0;
+}
+
+.full-gall-next {}

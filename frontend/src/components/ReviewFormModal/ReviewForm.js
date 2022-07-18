@@ -22,8 +22,7 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId, curReview }) =>
             stars: starRating
         }
 
-        console.log(formInput);
-        // if (!errors.length) {
+
         if (reviewId) {
             setErrors([])
             const updatedReview = await dispatch(updateReview(formInput, reviewId))

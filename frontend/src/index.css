@@ -14,7 +14,7 @@ h2 {
 }
 
 h3 {
-    font-size: 16px;
+    font-size: 17px;
     color: rgb(39, 39, 39);
     font-weight: 500;
     padding: 0;
@@ -32,7 +32,7 @@ h4 {
 }
 
 h5 {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     padding: 0;
     padding-top: 3px;
@@ -45,14 +45,11 @@ p {
     font-size: 16px;
 }
 
-
 body {
     font-family: 'Arimo', sans-serif;
     padding: 0;
     margin: 0;
 }
-
-
 
 button {
     background-color: #ff385c;
@@ -63,18 +60,10 @@ button {
     border: none;
     border-radius: 10px;
     text-align: center;
+    /* margin: 0 10px; */
 }
 
-/* NAV BAR BUTTONS */
-#nav-button {
-    background-color: #ff385c;
-    color: white;
-    align-items: center;
-    white-space: nowrap;
-    padding: 20%;
-    border: none;
-    border-radius: 10px;
-    height: 40px;
-    width: auto;
-    text-align: center;
-}
+/*
+button:hover {
+    background-color: (255, 56, 92, .2)
+} */

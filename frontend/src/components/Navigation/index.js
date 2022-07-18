@@ -1,4 +1,4 @@
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 
@@ -14,11 +14,11 @@ const Navigation = ({ isLoaded }) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [newSpot, setNewSpot] = useState(true);
+    const [newSpot] = useState(true);
     const [showMenu, setShowMenu] = useState(false);
 
     const sessionUser = useSelector(state => state.session.user);
-    let sessionLinks;
+
 
 
 
@@ -74,7 +74,9 @@ const Navigation = ({ isLoaded }) => {
                     {isLoaded && !sessionUser && (
                         <>
                             <li >
+                                {/* <NavLink to="/"> */}
                                 <button id='nav-button' onClick={handleClick}>Demo User</button>
+
                             </li>
                             <li >
                                 <LoginFormModal />
@@ -117,8 +119,8 @@ const Navigation = ({ isLoaded }) => {
                             <li>{sessionUser?.firstName}</li>
                             <li>{sessionUser?.lastName}</li>
                             <li>{sessionUser?.email}</li>
-                            <li>
-                                <p className='bolded' onClick={logout}>Log Out</p>
+                            <li className='bolded' onClick={logout}>
+                                Log Out
                             </li>
                         </ul>
                     </div>

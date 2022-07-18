@@ -80,14 +80,14 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
             }
         });
-        console.log(allBookingsForSpot)
+        // console.log(allBookingsForSpot)
 
         allBookingsForSpot.forEach(booking => {
             if (((startDate <= booking.dataValues.startDate) && (endDate >= booking.dataValues.startDate)) || ((startDate >= booking.dataValues.startDate) && (booking.dataValues.endDate >= startDate))) {
                 isClearBooking = true;
             }
         })
-        console.log(`isClearBooking: ${isClearBooking}`)
+        // console.log(`isClearBooking: ${isClearBooking}`)
 
         if (req.user.id === booking.userId) {
 

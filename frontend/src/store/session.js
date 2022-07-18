@@ -53,7 +53,7 @@ export const signup = (user) => async (dispatch) => {
         body: JSON.stringify({ firstName, lastName, email, password }),
     });
     const data = await response.json();
-    console.log(data)
+
     dispatch(setUser(data));
     return response;
 };

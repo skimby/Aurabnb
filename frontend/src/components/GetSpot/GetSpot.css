@@ -3,6 +3,11 @@
 
 }
 
+.spot-header-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
 .review-header {
     display: inline-flex;
     padding-bottom: 25px;
@@ -13,4 +18,15 @@
     font-size: 13px;
     vertical-align: sub;
     padding-right: 4px;
+}
+
+.user-owned-functions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    column-gap: 5px;
+    ;
+    margin-top: 22px;
+    margin-bottom: 30px;
+    justify-items: end;
 }

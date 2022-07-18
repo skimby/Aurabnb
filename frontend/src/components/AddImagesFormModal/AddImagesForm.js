@@ -13,11 +13,7 @@ const AddImagesForm = ({ showModal, setShowModal }) => {
 
     const [images, setImages] = useState([]);
     const [errors, setErrors] = useState([]);
-    console.log('errors:')
-    console.log(errors.length)
-    console.log(errors)
-    console.log('images:')
-    console.log(images.length)
+
 
     const updateFiles = (e) => {
         const files = e.target.files;

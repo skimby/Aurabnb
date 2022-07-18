@@ -12,17 +12,12 @@ const Carousel = () => {
     const spots = Object.values(useSelector(state => state.spot));
 
     useEffect(() => {
-        if (spots?.currentSpot) {
-            delete spots[spots?.length - 1];
-        }
+        delete spots.currentSpot;
     }, [spots])
 
     useEffect(() => {
         dispatch(loadAllSpots())
-            .catch(async (res) => {
-                const data = await res.json()
 
-            });
     }, [dispatch])
 
     return (
@@ -31,7 +26,11 @@ const Carousel = () => {
                 <div className='spot-carousel'>
                     {spots?.map((spot, index) => {
                         return (
-                            <GalleryCard spot={spot} index={index} key={index} />
+                            <>
+                                {spot && (
+                                    <GalleryCard spot={spot} index={index} key={index} />
+                                )}
+                            </>
                         )
                     })}
                 </div>

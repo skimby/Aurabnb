@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Gallery from "./Gallery";
 import ButtonSlider from "./ButtonSlider";
 import Dots from "./Dots";
+import './SpotGallery.css'
 
 
 const GalleryCard = ({ spot, index }) => {
@@ -51,10 +52,11 @@ const GalleryCard = ({ spot, index }) => {
                                     {`${spot?.city}, ${spot?.state}`}</h3>
                                 <h5 key={spot?.id + 'price'}>
                                     ${spot?.price} night</h5>
-                                <h5 key={spot?.id + 'name'}>
-                                    {spot?.name} </h5>
+                                <div className="spot-name-div">
+                                    <h5 key={spot?.id + 'name'}>
+                                        {spot?.name} </h5>
+                                </div>
                             </div>
-
                         </div>
                     </>
                 )}
@@ -79,8 +81,11 @@ const GalleryCard = ({ spot, index }) => {
                                     {`${spot?.city}, ${spot?.state}`}</h3>
                                 <h5 key={spot?.id + 'price'}>
                                     ${spot?.price} night</h5>
-                                <h5 key={spot?.id + 'name'}>
-                                    {spot?.name} </h5>
+
+                                <div className="spot-name-div">
+                                    <h5 key={spot?.id + 'name'}>
+                                        {spot?.name} </h5>
+                                </div>
                             </div>
                         </div>
                     </>
