@@ -27,7 +27,7 @@ const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
                                 <div
                                     className={slideIndex === i + 1 ? `slide active ${index}` : `slide ${index}`} key={i + `div ${i}`} onClick={handleClick}>
 
-                                    <img src={image} key={i} width='295px' className='image-styling' alt={image} />
+                                    <img src={image} key={i} className='image-styling' alt={image} />
 
                                 </div>
                             )
@@ -39,7 +39,7 @@ const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
                             <div className="slide active"
                                 onClick={handleClick}>
 
-                                <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' width='295px' className='image-styling' alt='placeholder ' />
+                                <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' className='image-styling' alt='placeholder ' />
 
                             </div>
                             <div className="slide">

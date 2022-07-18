@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
 
 
 const SignupForm = () => {
-    const sessionUser = useSelector(state => state.session.user)
+    // const sessionUser = useSelector(state => state.session.user)
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -66,14 +66,14 @@ const SignupForm = () => {
 
 
                         <input
-                            type='text'
+                            type='password'
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required />
 
                         <input
-                            type='text'
+                            type='password'
                             placeholder="Confirm Password"
                             value={passwordConfirm}
                             onChange={(e) => setPasswordConfirm(e.target.value)}

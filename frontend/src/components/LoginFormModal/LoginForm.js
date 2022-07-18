@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import './LoginForm.css';
 import * as sessionActions from '../../store/session';
 
 const LoginForm = () => {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user)
+    // const sessionUser = useSelector(state => state.session.user)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
@@ -31,7 +31,6 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit} >
 
                     <label>
-
                         <input
                             type='text'
                             placeholder="email"
@@ -41,9 +40,8 @@ const LoginForm = () => {
                     </label>
 
                     <label>
-
                         <input
-                            type='text'
+                            type='password'
                             placeholder="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

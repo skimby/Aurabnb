@@ -41,6 +41,11 @@ input[type=text] {
     font-size: 14px;
 }
 
+input[type=password] {
+    padding-left: 10px;
+    font-size: 14px;
+}
+
 textarea[type=text] {
     padding-left: 10px;
     font-size: 14px;
