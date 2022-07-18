@@ -1,0 +1,66 @@
+#star-shaped-button1,
+#star-shaped-button2,
+#star-shaped-button3,
+#star-shaped-button4,
+#star-shaped-button5 {
+    color: rgba(255, 56, 92, .2);
+    background-color: white;
+    padding: 5px;
+}
+
+#star-shaped-button1:hover,
+#star-shaped-button2:hover,
+#star-shaped-button3:hover,
+#star-shaped-button4:hover,
+#star-shaped-button5:hover {
+    color: rgba(255, 56, 92, .8);
+    background-color: white;
+    padding: 5px;
+}
+
+
+#star-shaped-button1 {
+    color: rgba(255, 56, 92, .2);
+    background-color: white;
+    padding: 5px;
+}
+
+#star-shaped-button2 {
+    color: rgba(255, 56, 92, .3);
+    background-color: white;
+    padding: 5px;
+}
+
+#star-shaped-button3 {
+    color: rgba(255, 56, 92, .4);
+    background-color: white;
+    padding: 5px;
+}
+
+#star-shaped-button4 {
+    color: rgba(255, 56, 92, .5);
+    background-color: white;
+    padding: 5px;
+}
+
+#star-shaped-button5 {
+    color: rgba(255, 56, 92, .6);
+    background-color: white;
+    padding: 5px;
+}
+
+#star-shaped-button5:focus,
+#star-shaped-button4:focus,
+#star-shaped-button3:focus,
+#star-shaped-button2:focus,
+#star-shaped-button1:focus {
+    color: rgba(255, 56, 92, 1);
+    background-color: white;
+    padding: 5px;
+}
+
+
+.stars-container {
+    padding-top: 9px;
+    padding-bottom: 30px;
+}

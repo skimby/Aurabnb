@@ -3,9 +3,9 @@ import { useState } from "react";
 import ReviewForm from "./ReviewForm.js";
 import { Modal } from '../../context/Modal.js';
 
-const ReviewFormModal = ({ spotId, reviewId }) => {
+const ReviewFormModal = ({ curReview, spotId, reviewId }) => {
     const [showModal, setShowModal] = useState(false);
-
+    console.log(spotId)
 
     return (
         <>
@@ -25,7 +25,7 @@ const ReviewFormModal = ({ spotId, reviewId }) => {
 
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    <ReviewForm showModal={showModal} setShowModal={setShowModal} spotId={spotId} reviewId={reviewId} />
+                    <ReviewForm curReview={curReview} showModal={showModal} setShowModal={setShowModal} spotId={spotId} reviewId={reviewId} />
                 </Modal>
             )}
         </>

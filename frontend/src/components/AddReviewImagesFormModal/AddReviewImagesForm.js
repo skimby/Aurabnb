@@ -35,8 +35,8 @@ const AddReviewImagesForm = ({ spotId, showModal, setShowModal, reviewId }) => {
             await dispatch(addImgToReview(images, reviewId))
                 .catch(async (res) => {
                     const data = await res.json()
-                    console.log(data)
-                    console.log(data.errors)
+                    // console.log(data)
+                    // console.log(data.errors)
                 });
             // history.push(`/spots/${spotId}`)
             setShowModal(false)

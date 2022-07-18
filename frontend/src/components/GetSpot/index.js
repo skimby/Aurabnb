@@ -15,8 +15,6 @@ import './Reviews.css'
 
 const MONTHS_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-
-
 const GetSpot = () => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -34,6 +32,7 @@ const GetSpot = () => {
     const spot = useSelector(state => state.spot.currentSpot);
     const reviews = Object.values(useSelector(state => state.review));
     const userBookings = Object.values(useSelector(state => state.booking));
+
 
     useEffect(() => {
         if (spot) {
@@ -110,7 +109,6 @@ const GetSpot = () => {
                         )}
 
 
-
                         <div className="spot-information">
                             <h2>Entire home hosted by {spot?.Owner?.firstName}</h2>
                             <h4>Hosting this space since {MONTHS_ARR[dateMonth]} {dateYear}</h4>
@@ -145,7 +143,7 @@ const GetSpot = () => {
                                 {reviews && reviews?.map((review, index) => {
                                     return (
                                         <div className='each-review' key={index}>
-                                            <Reviews spot={spot} review={review} />
+                                            <Reviews review={review} spot={spot} spotId={spot?.id} />
                                         </div>
                                     )
                                 })}

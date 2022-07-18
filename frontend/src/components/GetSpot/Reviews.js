@@ -10,8 +10,6 @@ import ReviewFormModal from "../ReviewFormModal";
 
 const MONTHS_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-
-
 const Reviews = ({ review, spot }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -91,7 +89,7 @@ const Reviews = ({ review, spot }) => {
                     <AddReviewImagesFormModal
                         spotId={spot?.id} reviewId={review?.id} />
 
-                    <ReviewFormModal reviewId={review?.id} />
+                    <ReviewFormModal curReview={review} spotId={spot?.id} reviewId={review?.id} />
 
                     <button onClick={handleDelete}>Delete Review</button>
                 </>

@@ -125,11 +125,10 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     const { review, stars } = req.body;
     const editReview = await Review.findByPk(reviewId);
 
-
     if (editReview) {
         if (editReview.userId === req.user.id) {
             editReview.review = review;
-            editReview.start = stars;
+            editReview.stars = stars;
             await editReview.save();
             res.status(200);
             return res.json(editReview);
