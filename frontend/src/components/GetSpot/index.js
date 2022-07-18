@@ -107,7 +107,15 @@ const GetSpot = () => {
                         {!hasNoImages && (
                             <SpotGallery spot={spot} />
                         )}
-
+                        {
+                            userOwned && (
+                                <>
+                                    <SpotFormModal editForm={editForm} />
+                                    <AddImagesFormModal />
+                                    <button onClick={handleDelete}>Delete Spot</button>
+                                </>
+                            )
+                        }
 
                         <div className="spot-information">
                             <h2>Entire home hosted by {spot?.Owner?.firstName}</h2>
@@ -152,15 +160,7 @@ const GetSpot = () => {
                         </div>
                     </>
 
-                    {
-                        userOwned && (
-                            <>
-                                <SpotFormModal editForm={editForm} />
-                                <AddImagesFormModal />
-                                <button onClick={handleDelete}>Delete Spot</button>
-                            </>
-                        )
-                    }
+
 
                 </div >
             )
