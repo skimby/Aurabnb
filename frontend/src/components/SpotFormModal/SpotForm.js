@@ -76,7 +76,9 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
             const editSpot = await dispatch(updateSpot(spotFormInput, spotId))
                 .catch(async (res) => {
                     const data = await res.json()
-                    setErrors(data.errors);
+                    if (data) {
+                        setErrors(data.errors)
+                    }
                 });
 
             if (editSpot) {
@@ -85,10 +87,13 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
             }
 
         } else {
+            setErrors([]);
             const newSpot = await dispatch(createSpot(spotFormInput))
                 .catch(async (res) => {
                     const data = await res.json()
-                    setErrors(data.errors)
+                    if (data) {
+                        setErrors(data.errors)
+                    }
                 });
 
             if (newSpot) {
@@ -100,88 +105,82 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
 
     return (
         <>
-            {header()}
-            <form onSubmit={handleSubmit}>
-                <input
-                    placeholder="Address"
-                    type='text'
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="City"
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                ></input>
-                <input
-                    placeholder="State"
-                    type='text'
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="Country"
-                    type='text'
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="Latitude"
-                    type='text'
-                    value={lat}
-                    onChange={(e) => setLat(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="Longitude"
-                    type='text'
-                    value={lng}
-                    onChange={(e) => setLng(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="Name"
-                    type='text'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="Description"
-                    type='text'
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                >
-                </input>
-                <input
-                    placeholder="Price"
-                    type='text'
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                >
-                </input>
+            <div className="form-modal">
+                <div className="form-header">
+                    {header()}
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        placeholder="Address"
+                        type='text'
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="City"
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    ></input>
+                    <input
+                        placeholder="State"
+                        type='text'
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="Country"
+                        type='text'
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="Latitude"
+                        type='text'
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="Longitude"
+                        type='text'
+                        value={lng}
+                        onChange={(e) => setLng(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="Name"
+                        type='text'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="Description"
+                        type='text'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    >
+                    </input>
+                    <input
+                        placeholder="Price"
+                        type='text'
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    >
+                    </input>
 
-                {/*
-                {spotId && (
-                    <button type='submit'>Submit Edit</button>
-                )}
-                {!spotId && (
-                    <button type='submit'>Create New Spot</button>
-                )} */}
+                    <div className="errors">
+                        {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </div>
 
+                    {submitButton()}
 
-
-
-                {submitButton()}
-                <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                </ul>
-            </form >
-
+                </form >
+            </div>
         </>
     )
 }

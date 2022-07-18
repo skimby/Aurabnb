@@ -52,15 +52,23 @@ const AddReviewImagesForm = ({ spotId, showModal, setShowModal, reviewId }) => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <p>{errors}</p>
-                <label forhtml="images">Please upload images of your review:</label>
-                <input
-                    type="file"
-                    multiple
-                    onChange={updateFiles} />
-                <button>submit</button>
-            </form >
+            <div className="form-modal">
+                <div className="form-header">
+                    <h2>Upload Photos for your Review</h2>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <label forhtml="images">Share photos for your stay at this spot!</label>
+                    <input
+                        id='no-outline-input'
+                        type="file"
+                        multiple
+                        onChange={updateFiles} />
+                    <div className="errors">
+                        {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </div>
+                    <button id='block-button'>submit</button>
+                </form >
+            </div>
         </>
     )
 }

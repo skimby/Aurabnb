@@ -23,9 +23,6 @@ const SignupForm = () => {
             await dispatch(sessionActions.signup({ firstName, lastName, email, password }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
-                    console.log(data.errors)
-
                     if (data && data.errors) {
                         setErrors(data.errors);
                     }
@@ -38,7 +35,7 @@ const SignupForm = () => {
 
     return (
         <>
-            <div className='signup-form-modal'>
+            <div className='form-modal'>
                 <div className="form-header">
                     <h2>Welcome to Airbnb</h2>
                 </div>

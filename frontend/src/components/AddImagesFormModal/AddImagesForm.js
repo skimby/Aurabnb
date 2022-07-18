@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import { addSpotImage, getOneSpot } from "../../store/spot"
+import '../SignupFormModal/SignupForm.css'
 
 const AddImagesForm = ({ showModal, setShowModal }) => {
     const history = useHistory();
@@ -57,17 +58,25 @@ const AddImagesForm = ({ showModal, setShowModal }) => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <div className="form-modal">
+                <div className="form-header">
+                    <h2>Upload Photos of your Place</h2>
+                </div>
 
-                <label forhtml="images">Please upload a variety of images that best showcase your spot!</label>
-                <input
-                    type="file"
-                    multiple
-                    onChange={updateFiles} />
+                <form onSubmit={handleSubmit}>
+                    <label forhtml="images">Please upload a variety of images that best showcase your spot!</label>
+                    <input
+                        id='no-outline-input'
+                        type="file"
+                        multiple
+                        onChange={updateFiles} />
 
-                <p>{errors}</p>
-                <button>submit</button>
-            </form >
+                    <div className="errors">
+                        {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </div>
+                    <button id='block-button'>submit</button>
+                </form >
+            </div>
         </>
     )
 }

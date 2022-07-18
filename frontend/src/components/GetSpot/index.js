@@ -102,7 +102,7 @@ const GetSpot = () => {
 
                         {hasNoImages && (
                             <div className='default-img'>
-                                <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' width='100%' height='450px' objectFit='cover' alt='placeholder' className='default' />
+                                <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' width='100%' height='450px' alt='placeholder' className='default' />
                             </div>
                         )}
                         {!hasNoImages && (
@@ -112,7 +112,7 @@ const GetSpot = () => {
 
 
                         <div className="spot-information">
-                            <h2>Entire home hosted by {spot?.Owner.firstName}</h2>
+                            <h2>Entire home hosted by {spot?.Owner?.firstName}</h2>
                             <h4>Hosting this space since {MONTHS_ARR[dateMonth]} {dateYear}</h4>
                             <p>{spot?.description}</p>
                         </div>
