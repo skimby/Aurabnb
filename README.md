@@ -122,4 +122,4 @@ setShowModal(true)
 )}
 ```
 
-Original Design Docs
+[Original Design Docs](https://github.com/skimby/AirBnB/wiki/AirBnB-Clone-Original-Design-Doc)
