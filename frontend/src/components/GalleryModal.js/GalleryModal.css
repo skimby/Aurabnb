@@ -1,20 +1,18 @@
 .gallery-fullscreen {
-    /* padding: 10% 17%; */
+    width: 900px;
+    border-radius: 40px;
+    /* padding: 4% 5% 9% 5%; */
+    display: block;
+    position: relative;
+    bottom: 300px;
 }
-
-#modal.gallery-fullscreen {
-    background-color: red;
-}
-
-/* #modal-background {
-    background-color: rgba(0, 0, 0, 0.9);
-} */
 
 .image-gallery-styling {
     width: 500px;
     object-fit: cover;
     border-radius: 10px;
 }
+
 
 .each-img {
     width: 20%;
@@ -29,4 +27,18 @@
 
 .active2 {
     opacity: 1;
+}
+
+.button-div-full-gallery {
+    color: white;
+    font-size: 30px;
+    position: relative;
+    top: 280px;
+    right: 34px;
+    /* display: block; */
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
 }

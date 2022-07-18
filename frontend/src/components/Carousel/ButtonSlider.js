@@ -8,7 +8,7 @@ const ButtonSlider = ({ direction, spotIndex, spot, slideIndex, setSlideIndex })
 
         if (slideIndex !== allSlides.length) {
             setSlideIndex(slideIndex + 1);
-            console.log(slideIndex + 1)
+
         } else if (slideIndex === allSlides.length) {
             setSlideIndex(1);
         }
