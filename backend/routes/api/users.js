@@ -42,7 +42,7 @@ router.get('/restore-user', restoreUser, (req, res) => {
 // GET /api/require-auth
 // const { requireAuth } = require('../../utils/auth.js');
 router.get('/me', requireAuth, (req, res) => {
-    // *** where is user coming from??? utils>auth.js
+
     const { id, firstName, lastName, email } = req.user;
 
     res.status(200);
@@ -125,26 +125,27 @@ const validateSignup = [
 router.post('/signup', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
-    const ifDuplicateEmail = await User.findOne(
+    const isDuplicateEmail = await User.findOne(
         {
-            where: { email: email }
+            where: {
+                email
+            }
         }
     );
-    // find user by email,
-    //and if you find a user, if exists then create new error
-    //otherwise ...
-    if (ifDuplicateEmail) {
+
+    if (isDuplicateEmail) {
+        res.status(403)
         const err = new Error('User already exists');
-        // err.message = 'User already exists';
+        err.message = 'User already exists';
         err.status = 403;
-        err.errors = { email: "User with that email already exists" };
-        next(err);
+        err.errors = ['User with that email already exists'];
+        // err.errors = { email: "User with that email already exists" };
+        return next(err);
+
+
     } else {
+        console.log('gets here too!!!')
         const user = await User.signup({ firstName, lastName, email, password });
-
-
-
-
 
         await setTokenCookie(res, user);
 

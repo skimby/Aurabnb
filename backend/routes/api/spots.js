@@ -1,5 +1,5 @@
 const express = require('express');
-const { singlePublicFileUpload, singleMulterUpload, multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3.js');
+const { multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3.js');
 const asyncHandler = require('express-async-handler')
 
 //validator

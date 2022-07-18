@@ -18,40 +18,43 @@ const LoginForm = () => {
             .catch(async (res) => {
                 // console.log('catching error')
                 const data = await res.json();
-                // console.log('hello world');
                 if (data && data.errors) setErrors(data.errors);
             });
     }
 
     return (
         <>
-            <h1>Welcome to Airbnb</h1>
-            <form onSubmit={handleSubmit} >
-                <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                </ul>
-                <label>
+            <div className="login-form-modal">
+                <div className="form-header">
+                    <h2>Welcome Back</h2>
+                </div>
+                <form onSubmit={handleSubmit} >
 
-                    <input
-                        type='text'
-                        placeholder="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required />
-                </label>
+                    <label>
 
-                <label>
+                        <input
+                            type='text'
+                            placeholder="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required />
+                    </label>
 
-                    <input
-                        type='text'
-                        placeholder="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required />
-                </label>
+                    <label>
 
-                <button type="submit">Continue</button>
-            </form >
+                        <input
+                            type='text'
+                            placeholder="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required />
+                    </label>
+                    <div className="errors">
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </div>
+                    <button type="submit" id='block-button'>Continue</button>
+                </form >
+            </div>
         </>
     )
 }

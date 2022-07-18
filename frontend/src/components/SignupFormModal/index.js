@@ -12,9 +12,11 @@ const SignupFormModal = () => {
             </button>
             {
                 showModal && (
+
                     <Modal onClose={() => setShowModal(false)}>
                         <SignupForm />
                     </Modal>
+
                 )
             }
         </>
