@@ -23,13 +23,20 @@ module.exports = {
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/deep-ellum/cdd53f5e-4348-41c0-8999-21735b29c145.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/deep-ellum/ac14d556-a330-48a4-ac44-642bc7562c57.jpg',
         spotId: 9,
         reviewId: null
       },
       {
         imageableType: 'Spot',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/deep-ellum/ebd46eaf-3fce-4a7a-a614-66586037a8e1.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/deep-ellum/cdd53f5e-4348-41c0-8999-21735b29c145.jpeg',
+        spotId: 9,
+        reviewId: null
+      }
+      ,
+      {
+        imageableType: 'Spot',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/deep-ellum/f91bea51-9548-45b8-b9b5-48ae65773b2b.jpg',
         spotId: 9,
         reviewId: null
       }

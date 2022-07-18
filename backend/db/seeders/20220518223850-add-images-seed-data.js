@@ -55,7 +55,7 @@ module.exports = {
 
       {
         imageableType: 'Review',
-        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/review-img/Moms+Place-01.jpg',
+        url: 'https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/review-img/ebd46eaf-3fce-4a7a-a614-66586037a8e1.jpg',
         spotId: null,
         reviewId: 1
       },
