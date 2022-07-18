@@ -49,8 +49,8 @@ const GalleryCard = ({ spot, index }) => {
                             <div className='spot-card-header' key={spot?.id + 'card'}>
                                 <h3 key={spot?.id + 'location'}>
                                     {`${spot?.city}, ${spot?.state}`}</h3>
-                                <h4 key={spot?.id + 'price'}>
-                                    ${spot?.price} night</h4>
+                                <h5 key={spot?.id + 'price'}>
+                                    ${spot?.price} night</h5>
                                 <h5 key={spot?.id + 'name'}>
                                     {spot?.name} </h5>
                             </div>
@@ -77,8 +77,8 @@ const GalleryCard = ({ spot, index }) => {
                             <div className='spot-card-header' key={spot?.id + 'card'}>
                                 <h3 key={spot?.id + 'location'}>
                                     {`${spot?.city}, ${spot?.state}`}</h3>
-                                <h4 key={spot?.id + 'price'}>
-                                    ${spot?.price} night</h4>
+                                <h5 key={spot?.id + 'price'}>
+                                    ${spot?.price} night</h5>
                                 <h5 key={spot?.id + 'name'}>
                                     {spot?.name} </h5>
                             </div>

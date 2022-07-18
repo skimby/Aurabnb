@@ -8,7 +8,7 @@ import { getOneSpot } from "../../store/spot";
 import AddReviewImagesFormModal from "../AddReviewImagesFormModal";
 import ReviewFormModal from "../ReviewFormModal";
 
-const monthArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const MONTHS_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 
 
@@ -57,16 +57,6 @@ const Reviews = ({ review, spot }) => {
         }
     }, [bookedUser, spot, bookings])
 
-    // const handleImages = (e) => {
-    //     e.preventDefault();
-    //     history.push(`/addImages/spots/${spot?.id}/reviews/${review?.id}`)
-    // }
-
-    const handleEdit = (e) => {
-        e.preventDefault();
-        history.push(`/spots/${spot?.id}/reviews/${review?.id}`)
-    }
-
     const handleDelete = async (e) => {
         e.preventDefault();
         await dispatch(deleteUserReview(review?.id));
@@ -79,7 +69,7 @@ const Reviews = ({ review, spot }) => {
             <div className="user-info">
                 <h3>{review?.User?.firstName}</h3>
                 {dateMonth && dateYear && (
-                    <h4>{monthArr[dateMonth]} {dateYear}</h4>
+                    <h5>{MONTHS_ARR[dateMonth]} {dateYear}</h5>
                 )}
             </div>
             <div className="review">
@@ -100,10 +90,8 @@ const Reviews = ({ review, spot }) => {
                 <>
                     <AddReviewImagesFormModal
                         spotId={spot?.id} reviewId={review?.id} />
-                    {/* <button onClick={handleImages}>Add Photos to your Review</button> */}
 
                     <ReviewFormModal reviewId={review?.id} />
-                    {/* < button onClick={handleEdit}>Edit your Review</button> */}
 
                     <button onClick={handleDelete}>Delete Review</button>
                 </>

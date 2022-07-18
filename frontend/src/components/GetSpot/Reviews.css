@@ -1,8 +1,44 @@
 .reviews-container {
-    display: inline-flex
-        /* grid-auto-columns: 1fr, 1fr; */
+    padding-top: 70px;
 }
 
+.reviews-header {
+    display: inline-flex;
+    padding-bottom: 30px;
+}
+
+.review-top {
+    display: inline-flex;
+}
+
+.reviews-star {
+    display: inline-flex;
+    vertical-align: bottom;
+    text-align: center;
+    font-size: 20px;
+    padding-right: 6px;
+    padding-top: 29px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 70px;
+    padding-top: 20px;
+}
+
+.text {
+    padding-bottom: 10px;
+
+}
+
+.write-review {
+    padding: 10px 0 30px 0;
+}
+
+
+
+/*
 .each-review {
     width: 50%;
 }
@@ -28,3 +64,9 @@ h4 {
 .review-img-styling {
     display: inline-flex;
 }
+
+.reviews-header {
+    display: inline-flex;
+    margin-top: 50px;
+
+} */

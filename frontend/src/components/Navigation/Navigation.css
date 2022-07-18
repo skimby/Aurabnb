@@ -61,7 +61,7 @@ li {
     align-items: center;
 }
 
-.fa-solid {
+.icon .fa-solid {
     color: #717171;
     padding: 1%;
     display: inline-flex;

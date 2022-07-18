@@ -1,8 +1,9 @@
 .spot-gallery-main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 35.813rem 35.813rem;
+    grid-template-rows: 28.125rem;
     gap: 7px;
+    object-fit: cover;
 
 }
 
@@ -14,13 +15,13 @@
     gap: 7px;
 }
 
-.img-0 .img-1,
-.img-2,
-.img-3,
-.img-4 {
-    /* object-fit: cover; */
-    height: 100%;
+
+
+.img {
+    object-fit: cover;
+
 }
+
 
 .img-0-class {
     /* border-top-left-radius: 10px; */
@@ -50,4 +51,6 @@
     width: 160px;
 }
 
-.default-img {}
+.default-img {
+    object-fit: cover;
+}

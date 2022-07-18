@@ -37,6 +37,8 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
             if (updatedReview) {
                 setShowModal(false)
                 await dispatch(getOneSpot(spotId))
+                await dispatch(getSpotReviews(spotId));
+
             }
         } else {
             const newReview = await dispatch(createNewReview(formInput, spotId))
@@ -48,6 +50,8 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId }) => {
             if (newReview) {
                 setShowModal(false)
                 await dispatch(getOneSpot(spotId))
+                await dispatch(getSpotReviews(spotId));
+
             }
         }
     }

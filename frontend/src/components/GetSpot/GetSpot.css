@@ -1,13 +1,16 @@
 .spot-container {
-    padding: 1% 20%;
+    padding: 3% 20% 10% 20%;
 
 }
 
-.spot-container h2 {
-    margin-bottom: 7px;
+.review-header {
+    display: inline-flex;
+    padding-bottom: 25px;
 }
 
-/* .spot-gallery {
-    width: 1120px;
-    height: 300px;
-} */
+
+.spots-star {
+    font-size: 13px;
+    vertical-align: sub;
+    padding-right: 4px;
+}
