@@ -1,6 +1,7 @@
 .spot-gallery-main {
     display: grid;
-    grid-template-columns: 35.813rem 35.813rem;
+    /* grid-template-columns: 35.813rem 35.813rem; */
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 28.125rem;
     gap: 7px;
     /* object-fit: cover; */

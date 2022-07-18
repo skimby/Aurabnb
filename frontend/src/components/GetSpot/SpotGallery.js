@@ -32,19 +32,21 @@ const SpotGallery = ({ spot }) => {
                                 <img src={spot?.images[4]?.url} width='100%' height='100%' alt={spot?.images[4]?.name} className='img-4-class img' />
                             </div>
                         </div>
+
+
+                        <div className='show-all-button'>
+                            <button onClick={() => setShowModal(true)}>
+                                <i className="fa-solid fa-grid"></i>
+                                Show all Photos</button>
+                            {showModal && (
+                                <Modal onClose={() => setShowModal(false)}>
+                                    <FullGallery spot={spot} />
+                                </Modal>
+                            )}
+                        </div>
                     </div>
 
-                    <div className='show-all-button'>
-                        <button onClick={() => setShowModal(true)}>
-                            <i className="fa-solid fa-grid"></i>
-                            Show all Photos</button>
 
-                        {showModal && (
-                            <Modal onClose={() => setShowModal(false)}>
-                                <FullGallery spot={spot} />
-                            </Modal>
-                        )}
-                    </div>
                 </>
             )}
         </>
