@@ -3,7 +3,7 @@
 Welcome to the AirBnB Clone site. AirBnB is an online space-sharing platform that allows guests to book places for their vacations, business trips and more. 
 
 Explore AirBnB Clone Site: https://airbnb-skimby.herokuapp.com/
-Backend README: https://github.com/skimby/AirBnB/blob/main/backend/README.md
+
 ## Technologies
  - JavaScript
  - HTML
