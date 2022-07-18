@@ -39,17 +39,15 @@
 }
 
 .img-2-class {
-
     border-top-right-radius: 10px;
 }
 
 .img-4-class {
-
     border-bottom-right-radius: 10px;
 }
 
 .show-all-button button {
-    z-index: 3;
+    z-index: 2;
     border-radius: 8px;
     padding: 9px;
     position: relative;

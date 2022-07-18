@@ -78,9 +78,16 @@ const SignupForm = () => {
                             value={passwordConfirm}
                             onChange={(e) => setPasswordConfirm(e.target.value)}
                             required />
-                        <div className="errors">
-                            {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
-                        </div>
+                        {errors && (
+                            <div className="errors">
+                                {errors?.map((error, idx) => {
+                                    return (
+                                        <li key={idx}>{error}</li>
+                                    )
+                                })}
+
+                            </div>
+                        )}
 
                         <button id='block-button' type="submit">Continue</button>
                     </form >

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { addImgToReview } from "../../store/review";
-import { getOneSpot } from "../../store/spot";
+
 import { getSpotReviews } from "../../store/review";
 
 const AddReviewImagesForm = ({ spotId, showModal, setShowModal, reviewId }) => {
@@ -33,11 +33,11 @@ const AddReviewImagesForm = ({ spotId, showModal, setShowModal, reviewId }) => {
 
         if (errors[0] === '') {
             await dispatch(addImgToReview(images, reviewId))
-                .catch(async (res) => {
-                    const data = await res.json()
-                    // console.log(data)
-                    // console.log(data.errors)
-                });
+            // .catch(async (res) => {
+            //     const data = await res.json()
+            //     // console.log(data)
+            //     // console.log(data.errors)
+            // });
             // history.push(`/spots/${spotId}`)
             setShowModal(false)
             await dispatch(getSpotReviews(spotId))
@@ -63,9 +63,18 @@ const AddReviewImagesForm = ({ spotId, showModal, setShowModal, reviewId }) => {
                         type="file"
                         multiple
                         onChange={updateFiles} />
-                    <div className="errors">
-                        {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
-                    </div>
+
+
+                    {errors && (
+                        <div className="errors">
+                            {errors?.map((error, idx) => {
+                                return (
+                                    <li key={idx}>{error}</li>
+                                )
+                            })}
+
+                        </div>
+                    )}
                     <button id='block-button'>submit</button>
                 </form >
             </div>

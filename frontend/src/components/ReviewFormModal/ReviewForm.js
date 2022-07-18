@@ -163,9 +163,16 @@ const ReviewForm = ({ showModal, setShowModal, spotId, reviewId, curReview }) =>
                 </textarea>
 
 
-                <div className="errors">
-                    {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
-                </div>
+                {errors && (
+                    <div className="errors">
+                        {errors?.map((error, idx) => {
+                            return (
+                                <li key={idx}>{error}</li>
+                            )
+                        })}
+
+                    </div>
+                )}
                 {submitButton()}
 
 

@@ -50,9 +50,9 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
 
     const submitButton = () => {
         if (!isNewForm) {
-            return (<button type='submit'>Submit Edit</button>)
+            return (<button id='block-button' type='submit'>Submit Edit</button>)
         } else {
-            return (<button type='submit'>Create New Spot</button>)
+            return (<button id='block-button' type='submit'>Create New Spot</button>)
         }
     }
 
@@ -173,9 +173,16 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                     >
                     </input>
 
-                    <div className="errors">
-                        {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
-                    </div>
+                    {errors && (
+                        <div className="errors">
+                            {errors?.map((error, idx) => {
+                                return (
+                                    <li key={idx}>{error}</li>
+                                )
+                            })}
+
+                        </div>
+                    )}
 
                     {submitButton()}
 

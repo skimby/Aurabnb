@@ -67,9 +67,16 @@ const AddImagesForm = ({ showModal, setShowModal }) => {
                         multiple
                         onChange={updateFiles} />
 
-                    <div className="errors">
-                        {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
-                    </div>
+                    {errors && (
+                        <div className="errors">
+                            {errors?.map((error, idx) => {
+                                return (
+                                    <li key={idx}>{error}</li>
+                                )
+                            })}
+
+                        </div>
+                    )}
                     <button id='block-button'>submit</button>
                 </form >
             </div>
