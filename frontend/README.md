@@ -1,76 +1,125 @@
+# AirBnB Clone
 
-# Create React App Template
+Welcome to the AirBnB Clone site. AirBnB is an online space-sharing platform that allows guests to book places for their vacations, business trips and more.
 
-A no-frills template from which to create React + Redux applications with
-[Create React App](https://github.com/facebook/create-react-app).
+Explore AirBnB Clone Site: https://airbnb-skimby.herokuapp.com/
+Backend README: https://github.com/skimby/AirBnB/blob/main/backend/README.md
+## Technologies
+ - JavaScript
+ - HTML
+ - CSS
+ - React
+ - Redux
+ - Node.js
+ - Express.js
+ - Sequelize
+ - Sqlite3
+ - Heroku
+ - AWS
 
-```sh
-npx create-react-app my-app --template @appacademy/react-redux-v17 --use-npm
+## Site Overview
+
+#### Landing Page:
+![Landing Page](https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/read-me/Screen+Shot+2022-07-18+at+1.52.59+PM.png)
+
+#### Spots Page:
+![enter image description here](https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/read-me/Screen+Shot+2022-07-18+at+1.50.49+PM.png)
+#### Secondary Reviews Feature:
+![enter image description here](https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/read-me/Screen+Shot+2022-07-18+at+1.50.15+PM.png)
+
+
+## Features
+
+#### Primary Features
+ - Create a new user
+ - Log In user
+ - Demo user login
+ - Create new spot, edit, view and delete spot (Add images to the spot included in edit feature.)
+#### Secondary Features
+ - Create new review, edit, view and delete review (Add images to the review included edit feature.)
+ - Allows users to create, edit and delete review if the user has an existing booking at the spot.
+ #### Site Features
+ - Carousel gallery on landing page to view images prior to clicking to the individual spot.
+ - Full screen gallery once on spot page to get detailed look of images.
+ - Modal forms allow you to create a spot at whatever page you are on as opposed to taking you to a specified route.
+
+
+## Technical Implementation Challenges:
+The 'Create a Spot' form was initially implemented as a link to a route. In converting it into a modal form, I lost information that would be obtained from the route's parameters (ex: :spotId and :reviewId). My 'Create a Spot' form also functioned as my 'Edit a Spot' form and the type of form was dependent on whether a 'SpotId' was present or not. If the 'SpotId' is presents, that means the spot exists and it is an 'Edit a Spot' form. If the spotId is null, then the spot does not exist and it is a 'Create a Spot' form.
+
+Because I removed the form's parameters, I had to strategize a new way to determine if the spot existed or not. I decided to prop thread a state (either 'newSpot' or 'editForm') into the 'SpotFormModal' and replace the conditions that determined which form it should render.
+
+```
+// 'newSpot' is a state that is prop threaded into the 'SpotFormModal' to signal the form
+    should 'Create a Spot'.
+
+const  Navigation  = ({ isLoaded }) => {
+const  history  =  useHistory();
+const  dispatch  =  useDispatch();
+
+const [newSpot] = useState(true);
+
+const [showMenu, setShowMenu] =  useState(false);
+
+...
+{/* IF LOGGED IN ... */}
+{isLoaded  &&  sessionUser  && (
+<>
+<li >
+<SpotFormModal  newSpot={newSpot}  />
+</li>
+...
+
+```
+ ```
+ // 'editForm' is a state that is prop threaded into the 'SpotFormModal' to signal the form
+    should 'Edit a Spot'.
+ const  GetSpot  = () => {
+const  dispatch  =  useDispatch();
+const  history  =  useHistory();
+let { spotId } =  useParams();
+spotId  =  parseInt(spotId);
+
+const [userOwned, setUserOwned] =  useState();
+const [bookedUser, setBookedUser] =  useState(false);
+const [hasNoImages, setHasNoImages] =  useState();
+const [editForm] =  useState(true);
+
+...
+
+{userOwned  && (
+<>
+<div  className="user-owned-functions">
+<SpotFormModal  editForm={editForm}  />
+<AddImagesFormModal />
+<button  onClick={handleDelete}>Delete Spot</button>
+</div>
+</>
+)}
 ```
 
-## Available Scripts
+```
+ // Both props passed in determine which form should be rendered for the viewer.
+const  SpotFormModal  = ({ editForm, newSpot }) => {
+const [showModal, setShowModal] =  useState(false);
+const [isNewForm, setIsNewForm] =  useState()
+return (
+<>
+{newSpot  && (
+<li>
+<button  id='nav-button'  onClick={() => {
+setIsNewForm(true)
+setShowModal(true)
+}}>Create a Spot</button>
+</li>
+)}
 
-In the project directory, you can run:
+{editForm  && (
+<button  onClick={() => {
+setIsNewForm(false)
+setShowModal(true)
+}}>Edit Spot</button>
+)}
+```
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Original Design Docs

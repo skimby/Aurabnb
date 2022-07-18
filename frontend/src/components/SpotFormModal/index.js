@@ -22,7 +22,6 @@ const SpotFormModal = ({ editForm, newSpot }) => {
                     setIsNewForm(false)
                     setShowModal(true)
                 }}>Edit Spot</button>
-
             )}
 
             {showModal && (
