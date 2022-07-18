@@ -3,7 +3,7 @@
     grid-template-columns: 35.813rem 35.813rem;
     grid-template-rows: 28.125rem;
     gap: 7px;
-    object-fit: cover;
+    /* object-fit: cover; */
 
 }
 
@@ -15,26 +15,35 @@
     gap: 7px;
 }
 
+.img-1,
+.img-2,
+.img-3,
+.img-4 {
+
+    object-fit: cover;
+}
 
 
 .img {
     object-fit: cover;
-
 }
 
 
 .img-0-class {
     /* border-top-left-radius: 10px; */
     /* display: none; */
+    object-fit: cover;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
 .img-2-class {
+
     border-top-right-radius: 10px;
 }
 
 .img-4-class {
+
     border-bottom-right-radius: 10px;
 }
 
