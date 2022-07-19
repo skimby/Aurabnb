@@ -42,9 +42,7 @@ const Gallery = ({ spot, index, slideIndex, setSlideIndex }) => {
                                 <img src='https://airbnb-images-bucket.s3.us-east-2.amazonaws.com/placeholder-image.png' className='image-styling' alt='placeholder ' width='100%' />
 
                             </div>
-                            <div className="slide">
 
-                            </div>
                         </>
                     )}
                 </>
