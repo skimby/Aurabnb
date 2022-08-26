@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { loadAllSpots } from "../../store/spot";
 
 import GalleryCard from "./GalleryCard";
-import './Carousel.css';
 
 import './SpotGallery.css';
+
 const Carousel = () => {
     const dispatch = useDispatch();
 
@@ -17,7 +17,6 @@ const Carousel = () => {
 
     useEffect(() => {
         dispatch(loadAllSpots())
-
     }, [dispatch])
 
     return (

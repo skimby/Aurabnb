@@ -77,7 +77,7 @@ const SpotForm = ({ showModal, setShowModal, isNewForm }) => {
                 .catch(async (res) => {
                     const data = await res.json()
                     if (data) {
-                        setErrors(data.errors)
+                        // setErrors(data.errors)
                     }
                 });
 

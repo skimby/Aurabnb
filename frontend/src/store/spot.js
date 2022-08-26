@@ -89,12 +89,6 @@ export const updateSpot = (spotFormInput, spotId) => async (dispatch) => {
         method: "PUT",
         body: JSON.stringify(spotFormInput)
     });
-
-    // if (response.ok) {
-    //     const parsedRes = await response.json();
-    //     dispatch(editSpot(parsedRes));
-    //     return parsedRes;
-    // }
     if (response.ok) {
         const parsedRes = await response.json();
         dispatch(editSpot(parsedRes));

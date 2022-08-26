@@ -80,19 +80,19 @@ const Navigation = ({ isLoaded }) => {
                             </li>
                             <li >
                                 <LoginFormModal />
-                            </li>
-                            <li>
+                            </li >
+                            <li >
                                 <SignupFormModal />
-                            </li>
+                            </li >
                         </>
                     )}
 
                     {/* IF LOGGED IN ... */}
                     {isLoaded && sessionUser && (
                         <>
-                            <li >
-                                <SpotFormModal newSpot={newSpot} />
-                            </li>
+                            {/* <li > */}
+                            <SpotFormModal newSpot={newSpot} />
+                            {/* </li> */}
 
                             <li>
                                 <div className="user-button-box">

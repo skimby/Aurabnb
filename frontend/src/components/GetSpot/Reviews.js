@@ -12,7 +12,6 @@ const MONTHS_ARR = ["January", "February", "March", "April", "May", "June", "Jul
 
 const Reviews = ({ review, spot }) => {
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const user = useSelector(state => state.session.user);
     const bookings = Object.values(useSelector(state => state.booking));
@@ -76,7 +75,7 @@ const Reviews = ({ review, spot }) => {
             <div className="review-img">
                 {review?.images?.map((image, index) => {
                     return (
-                        <div className='review-img-styling'>
+                        <div className='review-img-styling' key={index}>
                             <img src={image.url} alt={image.url} key={index} width='30%' />
                         </div>
                     )

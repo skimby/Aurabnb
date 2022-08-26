@@ -36,7 +36,6 @@ const SpotGallery = ({ spot }) => {
 
                         <div className='show-all-button'>
                             <button onClick={() => setShowModal(true)}>
-                                <i className="fa-solid fa-grid"></i>
                                 Show all Photos</button>
 
                             {showModal && (
