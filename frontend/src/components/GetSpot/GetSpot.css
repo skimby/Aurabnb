@@ -25,7 +25,6 @@
     grid-template-columns: repeat(3, 1fr);
     width: 100%;
     column-gap: 5px;
-    ;
     margin-top: 22px;
     margin-bottom: 30px;
     justify-items: end;
