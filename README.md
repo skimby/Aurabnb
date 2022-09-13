@@ -1,8 +1,8 @@
-# AirBnB Clone
+# Airbnb Clone
 
-Welcome to the AirBnB Clone site. AirBnB is an online space-sharing platform that allows guests to book places for their vacations, business trips and more. 
+Welcome to the Airbnb Clone site. Airbnb is an online space-sharing platform that allows guests to book places for their vacations, business trips and more. 
 
-Explore AirBnB Clone Site: https://airbnb-skimby.herokuapp.com/
+Explore Airbnb Clone Site: https://airbnb-skimby.herokuapp.com/
 
 ## Technologies
  - JavaScript
