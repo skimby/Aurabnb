@@ -1,6 +1,6 @@
 # AirBnB Clone
 
-Welcome to the AirBnB Clone site. AirBnB is an online space-sharing platform that allows guests to book places for their vacations, business trips and more. 
+Welcome to the AirBnB Clone site. AirBnB is an online space-sharing platform that allows guests to book places for their vacations, business trips and more.
 
 Explore AirBnB Clone Site: https://airbnb-skimby.herokuapp.com/
 
@@ -16,7 +16,7 @@ Explore AirBnB Clone Site: https://airbnb-skimby.herokuapp.com/
  - Sqlite3
  - Heroku
  - AWS
- 
+
 ## Site Overview
 
 #### Landing Page:
@@ -42,8 +42,8 @@ Explore AirBnB Clone Site: https://airbnb-skimby.herokuapp.com/
  - Carousel gallery on landing page to view images prior to clicking to the individual spot.
  - Full screen gallery once on spot page to get detailed look of images.
  - Modal forms allow you to create a spot at whatever page you are on as opposed to taking you to a specified route.
- 
- 
+
+
 ## Technical Implementation Challenges:
 The 'Create a Spot' form was initially implemented as a link to a route. In converting it into a modal form, I lost information that would be obtained from the route's parameters (ex: :spotId and :reviewId). My 'Create a Spot' form also functioned as my 'Edit a Spot' form and the type of form was dependent on whether a 'SpotId' was present or not. If the 'SpotId' is presents, that means the spot exists and it is an 'Edit a Spot' form. If the spotId is null, then the spot does not exist and it is a 'Create a Spot' form.
 
@@ -52,12 +52,12 @@ Because I removed the form's parameters, I had to strategize a new way to determ
 ```
 // 'newSpot' is a state that is prop threaded into the 'SpotFormModal' to signal the form
     should 'Create a Spot'.
-    
+
 const  Navigation  = ({ isLoaded }) => {
 const  history  =  useHistory();
 const  dispatch  =  useDispatch();
 
-const [newSpot] = useState(true);
+const [newSpot] = (true);
 
 const [showMenu, setShowMenu] =  useState(false);
 

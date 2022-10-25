@@ -1,5 +1,5 @@
 {
-  "name": "AirBnB",
+  "name": "aurabnb",
   "version": "1.0.0",
   "description": "## Database Schema Design",
   "main": "index.js",
@@ -17,13 +17,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skimby/AirBnB.git"
+    "url": "git+https://github.com/skimby/aurabnb.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/skimby/AirBnB/issues"
+    "url": "https://github.com/skimby/aurabnb/issues"
   },
-  "homepage": "https://github.com/skimby/AirBnB#readme"
+  "homepage": "https://github.com/skimby/aurabnb#readme"
 }
