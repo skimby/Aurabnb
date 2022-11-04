@@ -76,6 +76,11 @@
     row-gap: 2em;
 }
 
+.spot-carousel:after {
+    content: "";
+    flex-basis: 46.5%;
+}
+
 .gallery-card {
     width: 18.5rem;
     height: 25rem;
