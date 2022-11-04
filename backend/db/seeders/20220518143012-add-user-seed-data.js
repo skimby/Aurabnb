@@ -34,9 +34,9 @@ module.exports = {
         isHost: true
       },
       {
-        firstName: 'Princess',
-        lastName: 'Peach',
-        email: 'princesspeach@gmail.com',
+        firstName: 'Michael',
+        lastName: 'Biggy',
+        email: 'mb@gmail.com',
         password: bcrypt.hashSync('password5'),
         isHost: true
       },
