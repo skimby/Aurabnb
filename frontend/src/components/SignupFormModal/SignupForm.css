@@ -36,9 +36,12 @@ textarea {
     padding-bottom: 30px;
 }
 
+
+
 input[type=text] {
     padding-left: 10px;
     font-size: 14px;
+
 }
 
 input[type=password] {
