@@ -13,6 +13,7 @@ a {
 .bolded {
     color: rgb(39, 39, 39);
     font-weight: 600;
+    cursor: pointer;
 }
 
 
@@ -55,6 +56,7 @@ a {
 .logo-box {
     width: 25%;
     align-items: center;
+    cursor: pointer;
 }
 
 .icon .fa-solid {
@@ -70,7 +72,7 @@ a {
     border: 1px solid #dfdfdf;
     border-radius: 25px;
     margin-left: 30px;
-
+    cursor: pointer;
 }
 
 .user-button {

@@ -67,6 +67,7 @@ textarea[type=text] {
 
 
 #block-button {
+    margin-top: 20px;
     display: block;
     width: 92%;
     padding: 15px;

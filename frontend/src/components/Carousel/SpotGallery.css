@@ -87,6 +87,7 @@
 }
 
 .spot-card-header {
+    cursor: pointer;
     display: block;
 
 }
@@ -101,6 +102,7 @@
 }
 
 .slide {
+    cursor: pointer;
     position: absolute;
     opacity: 0;
     object-fit: cover;

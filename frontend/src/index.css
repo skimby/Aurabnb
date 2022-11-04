@@ -63,6 +63,18 @@ button {
     /* margin: 0 10px; */
 }
 
+.btn-slide {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+input {
+    margin: 10px 0;
+}
+
 /*
 button:hover {
     background-color: (255, 56, 92, .2)
