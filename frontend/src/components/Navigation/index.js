@@ -8,6 +8,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import SpotFormModal from '../SpotFormModal';
 import logo from '../../images/airbnb-logo.png';
+import mobileLogo from '../../images/airbnb.png'
 
 
 const Navigation = ({ isLoaded }) => {
@@ -62,7 +63,9 @@ const Navigation = ({ isLoaded }) => {
                 <ul className='nav-left'>
                     <li >
                         <div className='logo-box' onClick={clickLogo}>
-                            <img src={logo} alt='airbnb logo' width='100%' />
+                            <img src={logo} className='desktop-logo' alt='airbnb logo' width='100%' />
+
+                            <img src={mobileLogo} className='mobile-logo' alt='airbnb logo' width='50px' />
                         </div>
                     </li>
                 </ul>

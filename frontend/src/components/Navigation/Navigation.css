@@ -59,6 +59,42 @@ a {
     cursor: pointer;
 }
 
+/* .desktop-logo {
+    display: block;
+} */
+
+.mobile-logo {
+    display: none;
+}
+
+@media only screen and (max-width: 1400px) {
+    .logo-box {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .logo-box {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .logo-box {
+        width: 100%;
+    }
+
+    .desktop-logo {
+        display: none;
+        /* visibility: collapse; */
+    }
+
+    .mobile-logo {
+        display: block;
+    }
+}
+
+
 .icon .fa-solid {
     color: #717171;
     padding: 1%;
