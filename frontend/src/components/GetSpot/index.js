@@ -47,7 +47,9 @@ const GetSpot = () => {
     }, [dispatch, spotId]);
 
     useEffect(() => {
-        dispatch(getUsersBookings(user?.id));
+        if(user){
+            dispatch(getUsersBookings(user?.id));
+        }
     }, [dispatch, user]);
 
     useEffect(() => {

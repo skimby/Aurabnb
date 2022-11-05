@@ -13,17 +13,10 @@ export const getBookings = (bookings) => {
 }
 
 // THUNKS
-export const getUsersBookings = () => async (dispatch) => {
+export const getUsersBookings = (userId) => async (dispatch) => {
     const res = await csrfFetch('/api/bookings/me');
     const parsedRes = await res.json();
     await dispatch(getBookings(parsedRes))
-
-    // .catch(async (res) => {
-    //     const data = await res.json()
-    //     if (data) {
-    //         console.clear()
-    //     }
-    // });
 
     return res;
 }

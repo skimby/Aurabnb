@@ -15,6 +15,7 @@ const Reviews = ({ review, spot }) => {
 
     const user = useSelector(state => state.session.user);
     const bookings = Object.values(useSelector(state => state.booking));
+
     // const currentSpot = useSelector(state => state.spot.currentSpot);
 
     const [isUser, setIsUser] = useState(false);
@@ -38,7 +39,10 @@ const Reviews = ({ review, spot }) => {
     }, [user, review]);
 
     useEffect(() => {
-        dispatch(getUsersBookings(user?.id))
+
+        if(user){
+            dispatch(getUsersBookings(user?.id))
+        }
     }, [dispatch, user])
 
 

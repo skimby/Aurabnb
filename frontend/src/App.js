@@ -5,11 +5,8 @@ import * as sessionActions from "./store/session";
 
 import Navigation from './components/Navigation';
 import GetSpot from "./components/GetSpot";
-// import AddImagesForm from "./components/AddImagesFormModal/AddImagesForm";
-// import AddReviewImagesForm from "./components/AddReviewImagesFormModal/AddReviewImagesForm";
 import Carousel from "./components/Carousel";
-// import ReviewForm from "./components/ReviewForm";
-// import SpotForm from "./components/SpotForm";
+
 
 function App() {
   const dispatch = useDispatch();
