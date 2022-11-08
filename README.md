@@ -1,7 +1,6 @@
 # Airbnb Clone
 
-<<<<<<< HEAD
-Welcome to the AirBnB Clone site. AirBnB is an online space-sharing platform that allows guests to book places for their vacations, business trips and more.
+
 =======
 Welcome to the Airbnb Clone site. Airbnb is an online space-sharing platform that allows guests to book places for their vacations, business trips and more. 
 >>>>>>> 13329d119fced8ae490fb52502c350b6c99993cb
