@@ -1,10 +1,10 @@
-# Airbnb Clone
+# Aurabnb Clone
 
 
-Welcome to the Airbnb Clone site. Airbnb is an online space-sharing platform that allows guests to book places for their vacations, business trips and more. 
+Welcome to Aurabnb. Aurabnb is an online space-sharing platform that allows guests to book places for their vacations, business trips and more inspired by Airbnb
 
 
-Explore Airbnb Clone Site: https://airbnb-skimby.herokuapp.com/
+Explore Aurabnb Clone Site: https://airbnb-skimby.herokuapp.com/
 
 ## Technologies
  - JavaScript
