@@ -20,9 +20,8 @@ Explore Aurabnb Clone Site: https://airbnb-skimby.herokuapp.com/
  - AWS
 
 ## Site Overview
-![enter image description here](https://airbnb-user-uploads.s3.us-east-2.amazonaws.com/Screen+Shot+2022-11-11+at+11.04.57+AM.png)
 #### Landing Page:
-![Landing Page](https://airbnb-user-uploads.s3.us-east-2.amazonaws.com/Screen+Shot+2022-11-11+at+11.04.57+AM.png)
+![enter image description here](https://airbnb-user-uploads.s3.us-east-2.amazonaws.com/Screen+Shot+2022-11-11+at+11.21.16+AM.png)
 #### Spots Page:
 ![Each Spot Profile](https://airbnb-user-uploads.s3.us-east-2.amazonaws.com/Screen+Shot+2022-11-11+at+11.06.02+AM.png)
 
