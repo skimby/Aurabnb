@@ -1,10 +1,10 @@
-# Aurabnb Clone
+# Aurabnb 
 
 
 Welcome to Aurabnb. Aurabnb is an online space-sharing platform that allows guests to book places for their vacations, business trips and more inspired by Airbnb
 
 
-Explore Aurabnb Clone Site: https://airbnb-skimby.herokuapp.com/
+Explore Aurabnb Site: https://airbnb-skimby.herokuapp.com/
 
 ## Technologies
  - JavaScript
@@ -22,7 +22,7 @@ Explore Aurabnb Clone Site: https://airbnb-skimby.herokuapp.com/
 ## Site Overview
 
 #### Landing Page:
-![enter image description here](https://airbnb-user-uploads.s3.us-east-2.amazonaws.com/landing.png)
+![enter image description here](https://github.com/skimby/AuraBnb/blob/main/landing.png?raw=true)
 #### Spots Page:
 ![enter image description here](https://airbnb-user-uploads.s3.us-east-2.amazonaws.com/spots.png)
 #### Secondary Reviews Feature:
