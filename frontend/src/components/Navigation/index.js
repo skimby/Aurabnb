@@ -20,9 +20,6 @@ const Navigation = ({ isLoaded }) => {
 
     const sessionUser = useSelector(state => state.session.user);
 
-
-
-
     useEffect(() => {
         if (!showMenu) return;
         const closeMenu = () => {
